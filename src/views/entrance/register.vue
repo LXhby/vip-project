@@ -1,5 +1,8 @@
 <template>
-  <div>入口</div>
+  <div>
+    入口
+    <v-btn color="primary" depressed round large>注册会员</v-btn>
+  </div>
 </template>
 
 <script>
