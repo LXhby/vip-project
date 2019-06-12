@@ -1,0 +1,16 @@
+body {
+    width: 16rem;
+    margin: 0 auto;
+}
+
+p {
+    margin: 0;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
