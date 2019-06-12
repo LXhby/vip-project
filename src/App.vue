@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <router-view/>
+    <router-view v-wechat-title="$store.state.app.title"/>
   </v-app>
 </template>
 

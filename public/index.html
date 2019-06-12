@@ -22,3 +22,14 @@
 </body>
 
 </html>
+<script>
+  //兼容微信6.74 ios12版本
+  if (navigator.userAgent.toLowerCase().indexOf('iphone') != -1) {
+    window.addEventListener('focusout', function () {
+      //软键盘收起的事件处理
+      setTimeout(function () {
+        window.scrollTo(0, document.documentElement.scrollTop || document.body.scrollTop);
+      })
+    });
+  }
+</script>

@@ -6,6 +6,10 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'Register',
-        component: Register
+        component: Register,
+        meta: {
+            title: '注册会员',
+            auth: false
+        },
     }]
 })
