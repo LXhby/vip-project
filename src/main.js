@@ -8,6 +8,7 @@ import VueWechatTitle from 'vue-wechat-title'
 Vue.config.productionTip = false
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import "./plugins/hotcss.js"
 Vue.use(Vuetify, {
   theme: {
     primary: '#ff4101',
