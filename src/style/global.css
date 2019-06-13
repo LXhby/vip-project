@@ -1,0 +1,301 @@
+.txt-line-two {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #fbf9fe;
+    font-size: 1.2rem;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.router-view {
+    width: 100%;
+}
+
+.vux-pop-out-enter-active,
+.vux-pop-out-leave-active,
+.vux-pop-in-enter-active,
+.vux-pop-in-leave-active {
+    will-change: transform;
+    transition: all 250ms;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    perspective: 500;
+}
+
+.vux-pop-out-enter {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.vux-pop-out-leave-active {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
+
+.vux-pop-in-enter {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
+
+.vux-pop-in-leave-active {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.weui-cells {
+    margin-top: 10px !important;
+}
+
+.weui-panel__hd {
+    color: #333;
+    font-size: 15px !important;
+}
+
+.weui-btn::after {
+    width: calc(200% - 1px) !important;
+}
+
+.weui-dialog {
+    line-height: normal;
+}
+
+.weui-btn_plain-primary {
+    color: @green  !important;
+    border-color: @green  !important;
+}
+
+.page {
+    height: 100%;
+    box-sizing: border-box;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.page.with-hd {
+    padding-top: 44px;
+}
+
+.page.with-ft {
+    padding-bottom: 48px;
+}
+
+.page-hd {
+    position: fixed;
+    min-height: 44px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.page-ft {
+    position: fixed;
+    min-height: 48px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+
+    .weui-btn {
+        border-radius: 0;
+        line-height: 2.66666666;
+
+        &::after {
+            border-radius: 0;
+            border-width: 0;
+        }
+
+        .iconfont {
+            font-size: 2.4rem;
+            vertical-align: -3px;
+        }
+    }
+}
+
+.mygrid {
+    background: #fff;
+
+    .weui-grid__icon {
+        .myfont {
+            font-size: 28px;
+            color: @orange;
+        }
+    }
+
+    .weui-grid__label {
+        font-size: 12px;
+        color: #555;
+    }
+}
+
+.myform {
+    .weui-cells {
+        font-size: 15px;
+    }
+}
+
+/*banner*/
+.banner {
+    position: relative;
+    max-width: 1024px;
+    margin: 0 auto;
+
+    .banner-img {
+        img {
+            vertical-align: middle;
+            width: 100%;
+        }
+    }
+
+    .banner-t {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px 10px;
+        line-height: 20px;
+        font-size: 15px;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+// 登录注册
+.mylogin {
+    .weui-cells {
+        margin-top: 0 !important;
+    }
+
+    .weui-cell {
+        padding: 12px 15px;
+    }
+
+    .weui-label {
+        color: #666;
+
+        .iconfont {
+            font-size: 1.7rem;
+        }
+    }
+
+    .weui-cell__bd {
+        font-size: 16px;
+    }
+}
+
+.mylogin-change {
+    text-align: right;
+    padding: 10px 15px;
+    color: #999;
+
+    a {
+        color: @orange;
+    }
+}
+
+.mylogin-tips {
+    background: #f4f5f6;
+    border: #e4e4e4 solid 1px;
+    padding: 10px 15px;
+    font-size: 1.4rem;
+    color: #666;
+    border-radius: 5px;
+}
+
+.no-data {
+    padding: 30px;
+    text-align: center;
+
+    .iconfont {
+        font-size: 184px;
+        color: @green;
+        opacity: 0.5;
+    }
+
+    p {
+        font-size: 1.4rem;
+        color: @green;
+    }
+}
+
+//热线电话
+.hotphone {
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    padding: 6px;
+    box-sizing: border-box;
+    .gradient-bg;
+    color: #fff;
+    text-align: center;
+    animation: phoneshadow 2s ease infinite;
+
+    .iconfont {
+        font-size: 3rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+}
+
+@keyframes phoneshadow {
+    0% {
+        box-shadow: 0 0 0 fade(@theme-color, 0%);
+    }
+
+    25% {
+        box-shadow: 0 0 10px fade(@theme-color, 60%);
+    }
+
+    50% {
+        box-shadow: 0 0 15px fade(@theme-color, 80%);
+    }
+
+    75% {
+        box-shadow: 0 0 10px fade(@theme-color, 60%);
+    }
+
+    100% {
+        box-shadow: 0 0 0 fade(@theme-color, 0%);
+    }
+}
+
+@media only screen and (min-width: 481px) {
+    html {
+        font-size: 94% !important;
+    }
+}
+
+@media only screen and (min-width: 561px) {
+    html {
+        font-size: 109% !important;
+    }
+}
+
+@media only screen and (min-width: 641px) {
+    html {
+        font-size: 125% !important;
+    }
+}
