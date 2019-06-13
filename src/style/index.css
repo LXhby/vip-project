@@ -7,6 +7,10 @@ p {
     margin: 0;
 }
 
+li{
+    list-style: none;
+}
+
 .fl {
     float: left;
 }
