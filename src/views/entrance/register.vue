@@ -11,7 +11,7 @@
     </div>
     <div class="main">
       <div class="bd">
-        <v-form v-model="valid">
+        <v-form>
           <v-text-field v-model="mobile" label="请输入手机号" required></v-text-field>
 
           <v-text-field v-model="code" label="请输入验证码" required></v-text-field>
@@ -38,47 +38,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/px2rem.scss";
 @import "@/style/public.scss";
-$designWidth: 750;
+
 .enter-regist {
-  width: px2rem(750);
+  width: 750px;
 
   .hd {
-    padding: px2rem(30);
-    height: px2rem(640);
+    padding: 30px;
+    height: 640px;
     background: $bg-color;
     .hd-detail {
       display: inline-block;
-      padding: px2rem(14);
+      padding: 14px;
       background-color: $bg-yellow;
-      font-size: px2rem(24);
+      font-size: 24px;
       color: #fff;
-      border-radius: px2rem(30);
+      border-radius: 30px;
       .img {
-        width: px2rem(36);
-        height: px2rem(36);
-        margin-right: px2rem(16);
+        width: 36px;
+        height: 36px;
+        margin-right: 16px;
         border-radius: 50%;
         background-color: #fff;
       }
     }
   }
   .main {
-    margin-top: px2rem(-168);
-    padding: 0 px2rem(30);
+    margin-top: -168px;
+    padding: 0 30px;
 
     .bd {
       overflow: hidden;
-      padding: px2rem(60);
+      padding: 60px;
       background-color: #fff;
-      border-radius: px2rem(6);
-      .v-form {
-        font-size: px2rem(24);
-        .v-label {
-          font-size: px2rem(24);
-        }
-      }
+      border-radius: 6px;
     }
   }
 }
