@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import '@/style/index.css'
-import "./plugins/hotcss.js"
+import 'lib-flexible/flexible'
 Vue.use(Vuetify, {
   theme: {
     primary: '#ff4101',
