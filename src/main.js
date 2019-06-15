@@ -8,7 +8,7 @@ import VueWechatTitle from 'vue-wechat-title'
 Vue.config.productionTip = false
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import '@/style/index.css'
+import '@/style/index.scss'
 import 'lib-flexible/flexible'
 Vue.use(Vuetify, {
   theme: {
