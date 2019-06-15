@@ -50,15 +50,6 @@
       "parser": "babel-eslint"
     }
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {},
-      "postcss-px2rem-exclude": {
-        "remUnit": 75,
-        "exclude": "/node_modules|floder_name/i"
-      }
-    }
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions"
