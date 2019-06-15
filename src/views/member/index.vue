@@ -1,9 +1,16 @@
 <template>
-  <div></div>
+  <div>
+    <member-detail></member-detail>
+  </div>
 </template>
 
 <script>
-export default {};
+import MemberDetail from "@/component/member_detail";
+export default {
+  components: {
+    MemberDetail
+  }
+};
 </script>
 
 <style lang="scss" scoped>
