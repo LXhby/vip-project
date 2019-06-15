@@ -6,6 +6,7 @@ import Buyer from '../views/entrance/buyer'
 import Success from '../views/enrollment/success'
 import Authentication from '../views/enrollment/authentication'
 import Infoprefect from '../views/enrollment/infoprefect'
+import ServerCenter from '../views/course/servercenter'
 
 /**会员中心 */
 import Member from "@/views/member/index"
@@ -71,6 +72,15 @@ export default new Router({
             component: Member,
             meta: {
                 title: '会员服务中心',
+                auth: false
+            }
+        },
+        {
+            path: '/servercenter',
+            name: 'ServerCenter',
+            component: ServerCenter,
+            meta: {
+                title: '课程服务中心',
                 auth: false
             }
         }
