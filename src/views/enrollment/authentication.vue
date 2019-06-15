@@ -82,7 +82,7 @@ export default {
       background-color: #fff;
       border-radius: 6px;
       font-size: 30px;
-      .ipt-one {
+      .phone {
         position: relative;
         .code-btn {
           position: absolute;
@@ -97,7 +97,7 @@ export default {
   .content-tip {
     margin: 40px 0 0 40px;
     color: grey;
-    font-size: 25px;
+    font-size: 20px;
   }
   .content-btn {
     margin-top: 50px;
