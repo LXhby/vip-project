@@ -15,7 +15,8 @@ Vue.use(Vuetify, {
     primary: '#ff4101',
     secondary: '#b0bec5',
     accent: '#8c9eff',
-    error: '#b71c1c'
+    error: '#b71c1c',
+    indigo: '#ffcd9e'
   }
 })
 Vue.use(VueWechatTitle)

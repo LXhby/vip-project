@@ -14,6 +14,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style >
+@import "//at.alicdn.com/t/font_1244621_lys3own7cz.css";
 </style>
 

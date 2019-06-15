@@ -26,6 +26,16 @@ li {
     float: right;
 }
 
+.clearfix {
+    &:after {
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+}
+
 .v-form {
     .v-input {
         .v-input__control {
