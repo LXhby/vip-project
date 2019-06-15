@@ -36,7 +36,12 @@
           </li>
           <li>
             <v-icon>access_time</v-icon>
-            <span>课程简介</span>
+            <span>
+              课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介
+              课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介
+              课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介
+              课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介
+            </span>
           </li>
         </ul>
       </div>
@@ -56,6 +61,7 @@ export default {};
   border-radius: 10px;
   p {
     font-size: 25px;
+    font-weight: bold;
   }
   .course-plan {
     display: flex;
@@ -89,19 +95,19 @@ export default {};
       }
     }
   }
-  .course-info{
-      margin-top: 30px;
-      ul{
-          li{
-              display: flex;
-              align-items: center;
-              padding: 10px 0;
-              border-bottom: 1px solid rgb(241, 240, 240);
-              span{
-                  margin-left: 10px;
-              }
-          }
+  .course-info {
+    margin-top: 30px;
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgb(241, 240, 240);
+        span {
+          margin-left: 10px;
+        }
       }
+    }
   }
 }
 </style>
