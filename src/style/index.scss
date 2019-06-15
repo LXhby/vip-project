@@ -1,7 +1,4 @@
-@import "@/style/public.scss";
-
 body {
-
     margin: 0 auto;
 
     #app {
@@ -14,7 +11,7 @@ p {
     margin: 0;
 }
 
-li {
+li{
     list-style: none;
 }
 
@@ -24,18 +21,4 @@ li {
 
 .fr {
     float: right;
-}
-
-.v-form {
-    .v-input {
-        .v-input__control {
-            .v-input__slot {
-                &:before {
-                    border-color: rgb(225, 225, 225);
-                    bottom: -14px;
-                }
-            }
-        }
-    }
-
 }

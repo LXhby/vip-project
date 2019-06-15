@@ -42,32 +42,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/px2rem.scss";
-@import "../../style/public.scss";
-$designWidth: 750;
+@import "@/style/public.scss";
+
 .successpage {
-  padding: px2rem(30);
+  padding: 30px;
   height: 100%;
   background-color: $bg-color;
   text-align: center;
 
   .success-info {
-    padding: 0 px2rem(40) px2rem(60) px2rem(40);
-    margin-top: px2rem(100);
+    padding: 0 40px 60px 40px;
+    margin-top:100px;
     background-color: white;
-    border-radius: px2rem(5);
+    border-radius: 5px;
 
     .head-img {
       position: relative;
-      top: px2rem(-30);
+      top: -30px;
       img {
-        width: px2rem(60);
-        height: px2rem(60);
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         background-color: grey;
       }
       p {
-        font-size: px2rem(30);
+        font-size: 30px;
       }
     }
     .success-content {
@@ -78,38 +77,36 @@ $designWidth: 750;
         display: flex;
         align-content: center;
         p{
-          margin-right: px2rem(10);
-          width: px2rem(10);
-          height: px2rem(35);
-          border-radius: px2rem(5);
+          margin-right: 10px;
+          width: 10px;
+          height: 35px;
+          border-radius: 5px;
           background-color: $bg-color;
         }
         span {
-          font-size: px2rem(40);
-          font-weight: bold;
+          font-size: 40px;
         }
       }
       .content {
-        margin-top: px2rem(40);
-        font-size: px2rem(30);
-        font-weight: bold;
+        margin-top: 40px;
+        font-size: 30px;
       }
       .foot {
-        margin-top: px2rem(40);
-        font-size: px2rem(40);
+        margin-top: 40px;
+        font-size: 40px;
 
         span {
           color: $bg-color;
-          font-size: px2rem(60);
+          font-size: 60px;
         }
       }
     }
   }
   .tip {
     p {
-      margin-top: px2rem(30);
+      margin-top: 30px;
       color: #fff;
-      font-size: px2rem(30);
+      font-size: 30px;
     }
   }
 }
