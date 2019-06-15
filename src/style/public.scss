@@ -1,2 +1,6 @@
 $bg-color:rgb(255, 64, 0);
 $bg-yellow: rgb(255, 145, 46);
+
+@mixin gradient-bg {
+    background: linear-gradient(to right, rgb(255, 218, 115), rgb(255, 179, 63))
+}
