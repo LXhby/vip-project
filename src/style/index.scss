@@ -30,9 +30,11 @@ li {
     .v-input {
         .v-input__control {
             .v-input__slot {
+                padding-bottom: 14px;
+
                 &:before {
                     border-color: rgb(225, 225, 225);
-                    bottom: -14px;
+
                 }
             }
         }
