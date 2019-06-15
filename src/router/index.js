@@ -6,10 +6,12 @@ import Buyer from '../views/entrance/buyer'
 import Success from '../views/enrollment/success'
 import Authentication from '../views/enrollment/authentication'
 import Infoprefect from '../views/enrollment/infoprefect'
+
+/**会员中心 */
+import Member from "@/views/member/index"
 Vue.use(Router);
 export default new Router({
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: 'Register',
             component: Register,
@@ -60,6 +62,15 @@ export default new Router({
             component: Infoprefect,
             meta: {
                 title: '企业信息完善',
+                auth: false
+            }
+        },
+        {
+            path: '/member',
+            name: 'member',
+            component: Member,
+            meta: {
+                title: '会员服务中心',
                 auth: false
             }
         }
