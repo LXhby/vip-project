@@ -12,7 +12,10 @@
           <v-form>
             <v-text-field v-model="name" label="请输入真实姓名" required></v-text-field>
             <v-text-field v-model="IDcode" label="请输入真实身份证号码" required></v-text-field>
-            <v-text-field v-model="mobile" label="请输入手机号" required></v-text-field>
+            <div class="phone">
+              <v-text-field v-model="mobile" label="请输入手机号" required></v-text-field>
+              <v-btn color="primary" round depressed class="code-btn">获取验证码</v-btn>
+            </div>
             <v-text-field v-model="code" label="请输入验证码" required></v-text-field>
           </v-form>
         </div>
@@ -24,7 +27,7 @@
         </ul>
       </div>
       <div class="content-btn">
-        <v-btn class="btn" color="primary" round depressed @click="finishName">完成实名认证</v-btn>
+        <v-btn class="btn" color="primary" round depressed large @click="finishName">完成实名认证</v-btn>
       </div>
     </div>
   </div>
@@ -51,7 +54,7 @@ export default {
 @import "@/style/public.scss";
 .content-head {
   padding: 50px 0 0 30px;
-  height: 640px;
+  height: 540px;
   background-color: $bg-color;
   color: #fff;
   .title {
@@ -79,10 +82,20 @@ export default {
       background-color: #fff;
       border-radius: 6px;
       font-size: 30px;
+      .ipt-one {
+        position: relative;
+        .code-btn {
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          margin-right: 0px;
+          @include gradient-bg;
+        }
+      }
     }
   }
   .content-tip {
-    margin-left: 40px;
+    margin: 40px 0 0 40px;
     color: grey;
     font-size: 25px;
   }
@@ -92,9 +105,8 @@ export default {
     text-align: center;
     .btn {
       width: 100%;
-      height: 100px;
-      font-size: 40px;
-      border-radius: 50px;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }
