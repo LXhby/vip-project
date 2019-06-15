@@ -36,7 +36,7 @@
 
       <v-btn flat color="primary">
         <span>我的</span>
-        <v-icon>place</v-icon>
+        <v-icon>perm_identity</v-icon>
       </v-btn>
     </v-bottom-nav>
   </v-card>
