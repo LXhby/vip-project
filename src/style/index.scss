@@ -1,0 +1,36 @@
+@import "@/style/public.scss";
+
+body {
+    width: 10rem;
+    margin: 0 auto;
+}
+
+p {
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.v-form {
+    .v-input {
+        .v-input__control {
+            .v-input__slot {
+                &:before {
+                    border-color: rgb(225, 225, 225);
+                    bottom: -14px;
+                }
+            }
+        }
+    }
+
+}
