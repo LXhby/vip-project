@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-nav :active.sync="activeBtn" :value="showNav" absolute color="transparent">
+  <v-bottom-nav fixed="true" :active.sync="activeBtn" :value="showNav" absolute color="transparent">
     <v-btn flat color="primary">
       <span>首页</span>
       <v-icon>home</v-icon>
