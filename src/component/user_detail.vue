@@ -1,6 +1,6 @@
 <template>
   <div class="user-detail">
-    <v-card color="primary" class="white--text">
+    <v-card color="primary" class="white--text border-radius">
       <v-list two-line subheader class="list-bg">
         <v-list-tile avatar>
           <v-list-tile-avatar size="60px">

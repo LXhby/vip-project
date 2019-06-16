@@ -67,15 +67,7 @@ export default new Router({
                 auth: false
             }
         },
-        {
-            path: '/member',
-            name: 'member',
-            component: Member,
-            meta: {
-                title: '会员服务中心',
-                auth: false
-            }
-        },
+
         {
             path: '/servercenter',
             name: 'ServerCenter',
@@ -93,6 +85,15 @@ export default new Router({
                 title: '某某课程名称',
                 auth: false
             }
-        }
+        },
+        {
+            path: '/member',
+            name: 'member',
+            component: Member,
+            meta: {
+                title: '会员服务中心',
+                auth: false
+            }
+        },
     ]
 })
