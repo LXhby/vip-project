@@ -43,14 +43,14 @@ export default {
       display: flex;
       align-items: center;
       p {
-        margin-right: 10px;
-        width: 6px;
-        height: 25px;
-        border-radius: 3px;
+        margin-right: 14px;
+        width: 8px;
+        height: 30px;
+        border-radius: 4px;
         background-color: $bg-color;
       }
       span {
-        color: gray;
+        color: rgb(183, 183, 183);
         font-size: 30px;
       }
     }
