@@ -41,11 +41,7 @@
           <p>奖金</p>
         </v-flex>
       </v-layout>
-      <div class="bg-weave">
-        <p></p>
-        <p></p>
-        <p></p>
-      </div>
+      <div class="bg-weave"></div>
     </v-card>
   </div>
 </template>
@@ -57,6 +53,7 @@ export default {};
 <style lang="scss" >
 @import "@/style/public.scss";
 .user-detail {
+  position: relative;
   font-size: 28px;
   .star-cart {
     margin-right: -34px;
@@ -75,7 +72,7 @@ export default {};
   }
   .list-num {
     padding: 0px 34px 34px 34px;
-    margin-top: 60px;
+    margin-top: 50px;
     text-align: center;
     font-size: 28px;
     p {
@@ -107,13 +104,6 @@ export default {};
     }
   }
   .bg-weave {
-    position: relative;
-    width: 100%;
-    p {
-      width: 100%;
-      height: 70px;
-      background: rgba(255, 255, 255, 0.2) url("../assets/wave.png") 100% center;
-    }
   }
 }
 </style>
