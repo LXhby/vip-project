@@ -5,6 +5,10 @@ $bg-huang: rgb(255, 210, 77);
 $bg-gray: rgb(238, 238, 238);
 $padding-20:20px;
 
+.padding-20 {
+    padding: 20px;
+}
+
 @mixin gradient-bg {
     background: linear-gradient(to right, rgb(255, 218, 115), rgb(255, 179, 63))
 }

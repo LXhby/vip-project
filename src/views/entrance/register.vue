@@ -44,6 +44,7 @@ export default {
 
 .enter-regist {
   width: 750px;
+  background: rgb(241, 241, 241);
 
   .hd {
     padding: 30px;
