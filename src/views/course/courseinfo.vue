@@ -103,11 +103,15 @@ export default {
         color: rgb(172, 172, 172);
         border-bottom: 1px solid rgb(241, 240, 240);
         p {
-          margin-right: 10px;
+          margin-right: 14px;
           width: 6px;
           height: 25px;
           border-radius: 3px;
           background-color: $bg-color;
+        }
+        span {
+          color: rgb(183, 183, 183);
+          font-size: 25px;
         }
       }
     }
