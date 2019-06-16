@@ -48,7 +48,7 @@ export default {
         font-size: 25px;
         color: rgb(102, 102, 102);
         background: rgb(244, 244, 244);
-        border-radius: 6px;
+        border-radius: 8px;
       }
     }
   }
