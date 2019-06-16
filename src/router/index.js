@@ -7,6 +7,7 @@ import Success from '../views/enrollment/success'
 import Authentication from '../views/enrollment/authentication'
 import Infoprefect from '../views/enrollment/infoprefect'
 import ServerCenter from '../views/course/servercenter'
+import Courseinfo from '../views/course/courseinfo'
 
 /**会员中心 */
 import Member from "@/views/member/index"
@@ -81,6 +82,15 @@ export default new Router({
             component: ServerCenter,
             meta: {
                 title: '课程服务中心',
+                auth: false
+            }
+        },
+        {
+            path: '/courseinfo',
+            name: 'Courseinfo',
+            component: Courseinfo,
+            meta: {
+                title: '某某课程名称',
                 auth: false
             }
         }
