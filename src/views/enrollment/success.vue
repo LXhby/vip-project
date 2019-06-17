@@ -2,7 +2,7 @@
   <div class="successpage">
     <div class="success-info">
       <div class="head-img">
-        <img src>
+        <img>
         <p>微信昵称</p>
       </div>
       <div class="success-content">
@@ -10,19 +10,21 @@
           <p></p>
           <span>学创会</span>
         </div>
-        <div class="content">
-          <ul>
-            <li>学习，只为创造美好生活！</li>
-            <li>打造学习型个人、学习型家庭、学习型企业的创富平台</li>
-            <li>我们的信仰：良知、真理、精进、爱</li>
-          </ul>
-        </div>
-        <div class="foot">
-          <p>
-            恭喜你成为学创会第
-            <span>1980</span>
-            个会员
-          </p>
+        <div class="main">
+          <div class="content">
+            <ul>
+              <li>学习，只为创造美好生活！</li>
+              <li>打造学习型个人、学习型家庭、学习型企业的创富平台</li>
+              <li>我们的信仰：良知、真理、精进、爱</li>
+            </ul>
+          </div>
+          <div class="foot">
+            <p>
+              恭喜你成为学创会第
+              <span>1980</span>
+              个会员
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -52,7 +54,7 @@ export default {
 
   .success-info {
     padding: 0 40px 60px 40px;
-    margin-top:100px;
+    margin-top: 100px;
     background-color: white;
     border-radius: 5px;
 
@@ -76,7 +78,9 @@ export default {
       .title {
         display: flex;
         align-content: center;
-        p{
+        padding: 20px 0;
+        border: 1px solid rgb(243, 242, 242);
+        p {
           margin-right: 10px;
           width: 10px;
           height: 35px;
@@ -87,17 +91,20 @@ export default {
           font-size: 40px;
         }
       }
-      .content {
-        margin-top: 40px;
-        font-size: 30px;
-      }
-      .foot {
-        margin-top: 40px;
-        font-size: 40px;
+      .main {
+        padding: 0 20px;
+        .content {
+          margin-top: 40px;
+          font-size: 30px;
+        }
+        .foot {
+          margin-top: 40px;
+          font-size: 40px;
 
-        span {
-          color: $bg-color;
-          font-size: 60px;
+          span {
+            color: $bg-color;
+            font-size: 60px;
+          }
         }
       }
     }

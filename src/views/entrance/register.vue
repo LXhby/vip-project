@@ -48,8 +48,9 @@ export default {
 
   .hd {
     padding: 30px;
+    width: 100%;
     height: 640px;
-    background: $bg-color;
+    background: url(https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2867283936,2934832180&fm=26&gp=0.jpg);
     .hd-detail {
       display: inline-block;
       padding: 14px;

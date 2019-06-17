@@ -62,19 +62,19 @@ export default {
     align-content: center;
     p {
       margin-right: 10px;
-      width: 10px;
-      height: 35px;
-      border-radius: 5px;
+      width: 8px;
+      height: 30px;
+      border-radius: 4px;
       background-color: #fff;
     }
     span {
-      font-size: 35px;
+      font-size: 30px;
     }
   }
 }
 .content-foot {
   .content-form {
-    margin-top: -300px;
+    margin-top: -400px;
     padding: 0 30px;
     .form {
       overflow: hidden;
@@ -95,7 +95,7 @@ export default {
     }
   }
   .content-tip {
-    margin: 40px 0 0 40px;
+    margin: 0 0 0 40px;
     color: grey;
     font-size: 20px;
   }

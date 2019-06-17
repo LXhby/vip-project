@@ -71,13 +71,13 @@ export default {
     align-content: center;
     p {
       margin-right: 10px;
-      width: 10px;
-      height: 35px;
-      border-radius: 5px;
+      width: 8px;
+      height: 30px;
+      border-radius: 4px;
       background-color: #fff;
     }
     span {
-      font-size: 35px;
+      font-size: 30px;
     }
   }
 }
@@ -94,9 +94,9 @@ export default {
     }
   }
   .content-tip {
-    margin-left: 40px;
+    margin: 0 0 0 40px;
     color: grey;
-    font-size: 25px;
+    font-size: 20px;
   }
   .content-btn {
     margin-top: 50px;
@@ -104,9 +104,8 @@ export default {
     text-align: center;
     .btn {
       width: 100%;
-      height: 100px;
-      font-size: 40px;
-      border-radius: 50px;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }
