@@ -6,6 +6,7 @@
         <p></p>
         <span>提现申请</span>
       </div>
+      
     </div>
   </div>
 </template>
