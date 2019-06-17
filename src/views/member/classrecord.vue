@@ -1,17 +1,59 @@
 <template>
-  <div class="padding-20">
-    <member-detail></member-detail>
+  <div>
+    <div class="class-record">
+      <member-detail></member-detail>
+      <div class="course-herald">
+        <div class="herald-title">
+          <p></p>
+          <span>上课记录</span>
+        </div>
+        <div class="herald-info">
+          <course-list></course-list>
+          <course-list></course-list>
+          <course-list></course-list>
+        </div>
+      </div>
+      <CommonBottom></CommonBottom>
+    </div>
   </div>
 </template>
 
 <script>
 import MemberDetail from "@/component/user_detail";
+import CourseList from "@/component/course_list";
+import CommonBottom from "@/component/common_bottom";
+
 export default {
+  name: "ServerCenter",
   components: {
-    MemberDetail
+    MemberDetail,
+    CourseList,
+    CommonBottom
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/style/public.scss";
+.class-record {
+  padding: 20px;
+  .course-herald {
+    padding: 30px 0 0 0;
+    .herald-title {
+      display: flex;
+      align-items: center;
+      p {
+        margin-right: 14px;
+        width: 8px;
+        height: 30px;
+        border-radius: 4px;
+        background-color: $bg-color;
+      }
+      span {
+        color: rgb(183, 183, 183);
+        font-size: 30px;
+      }
+    }
+  }
+}
 </style>

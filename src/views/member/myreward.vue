@@ -2,6 +2,10 @@
   <div class="padding-20 my-reward-page">
     <member-detail></member-detail>
     <div class="main">
+      <div class="reward-title">
+        <p></p>
+        <span>我的奖金</span>
+      </div>
       <v-list two-line>
         <template v-for="(item) in list">
           <v-list-tile>
@@ -30,14 +34,17 @@
         </template>
       </v-list>
     </div>
+    <common-bottom></common-bottom>
   </div>
 </template>
 
 <script>
 import MemberDetail from "@/component/user_detail";
+import CommonBottom from "@/component/common_bottom";
 export default {
   components: {
-    MemberDetail
+    MemberDetail,
+    CommonBottom
   },
   data() {
     return {
@@ -50,6 +57,22 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/public.scss";
 .my-reward-page {
+  .reward-title {
+    display: flex;
+    align-items: center;
+    padding: 30px 0 0 0;
+    p {
+      margin-right: 14px;
+      width: 8px;
+      height: 30px;
+      border-radius: 4px;
+      background-color: $bg-color;
+    }
+    span {
+      color: rgb(183, 183, 183);
+      font-size: 30px;
+    }
+  }
   .list-detail {
     width: 100%;
     color: rgba(102, 102, 102, 0.6);
