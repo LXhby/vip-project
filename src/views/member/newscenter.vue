@@ -9,13 +9,13 @@
             <span>消息中心</span>
           </div>
           <div class="news-select">
-            <v-menu transition="slide-y-transition" bottom>
+            <v-menu transition="slide-y-transition" offset-y>
               <template v-slot:activator="{ on }">
                 <v-btn flat small v-on="on">
-                  <v-icon>fas fa-bars</v-icon>筛选
+                  <v-icon class="nav-btn">fas fa-bars</v-icon>筛选
                 </v-btn>
               </template>
-              <v-list>
+              <v-list class="list-btn">
                 <v-list-tile v-for="(item, i) in items" :key="i" @click>
                   <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                 </v-list-tile>
@@ -81,7 +81,7 @@ export default {
             background-color: $bg-color;
           }
           span {
-            color: rgb(183, 183, 183);
+            color: $text-gray-color;
             font-size: 30px;
           }
         }
@@ -106,6 +106,35 @@ export default {
         color: rgb(102, 102, 102);
         background: rgb(244, 244, 244);
         border-radius: 8px;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@import "@/style/public.scss";
+.news-center-page {
+  .news-select {
+    .v-btn {
+      color: #c2c2c2;
+      font-size: 30px;
+      font-weight: normal;
+      .v-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+.v-menu__content {
+  .list-btn {
+    background: rgb(255, 224, 134) !important;
+    .v-list__tile {
+      height: 32px;
+      padding: 0 16px;
+      color: #666;
+      font-size: 22px;
+      .v-list__tile__title {
+        text-align: center;
       }
     }
   }

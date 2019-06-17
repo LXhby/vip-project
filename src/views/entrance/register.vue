@@ -21,6 +21,7 @@
         </v-form>
       </div>
     </div>
+    <div class="footer">版权所有由后台设置</div>
   </div>
 </template>
 
@@ -44,6 +45,7 @@ export default {
 
 .enter-regist {
   width: 750px;
+  height: 100%;
   background: rgb(241, 241, 241);
 
   .hd {
@@ -93,6 +95,12 @@ export default {
         margin-right: 0px;
       }
     }
+  }
+  .footer {
+    margin-top: 60px;
+    text-align: center;
+    color: $text-gray-color;
+    font-size: 28px;
   }
 }
 </style>

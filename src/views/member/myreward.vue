@@ -69,7 +69,7 @@ export default {
       background-color: $bg-color;
     }
     span {
-      color: rgb(183, 183, 183);
+      color: $text-gray-color;
       font-size: 30px;
     }
   }
