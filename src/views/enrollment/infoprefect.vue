@@ -26,6 +26,8 @@
               label="请选择公司规模"
               required
             ></v-select>
+            <v-text-field v-model="IDcode" label="请输入企业简介" required></v-text-field>
+            <v-text-field v-model="IDcode" label="请输入服务内容" required></v-text-field>
           </v-form>
         </div>
       </div>
@@ -63,7 +65,7 @@ export default {
 @import "@/style/public.scss";
 .content-head {
   padding: 50px 0 0 30px;
-  height: 640px;
+  height: 420px;
   background-color: $bg-color;
   color: #fff;
   .title {
@@ -87,7 +89,7 @@ export default {
     padding: 0 30px;
     .form {
       overflow: hidden;
-      padding: 60px;
+      padding: 10px 60px;
       background-color: #fff;
       border-radius: 6px;
       font-size: 30px;
