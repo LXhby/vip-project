@@ -6,16 +6,20 @@
       </v-carousel>
     </div>
     <div class="main">
-      <div class="bd">
-        <div class="bd-title">
-          <div class="title-img">
-            <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
-            <p>王*文购买了学习型中国会员</p>
+      <div style="height:calc(100% - 56px);" class="main-box">
+        <div class="bd">
+          <div class="card">
+            <div class="bd-title">
+              <div class="title-img">
+                <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
+                <p>王*文购买了学习型中国会员</p>
+              </div>
+              <div class="erweima">
+                <img src="../../assets/erweima.png" alt>
+              </div>
+            </div>
+            <div class="product-info"></div>
           </div>
-          <v-icon></v-icon>
-        </div>
-        <div class="product-info">
-          <p>已成为会员显示底部菜单</p>
         </div>
       </div>
     </div>
@@ -73,47 +77,68 @@ export default {
   .main {
     position: relative;
     width: 100%;
-    padding: 0 20px;
-    margin-top: -76px;
-
+    height: calc(100% - 420px);
+    .main-box {
+      position: relative;
+      padding: 0 20px;
+    }
     .bd {
-      padding: 10px;
-      height: 725px;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 27px;
       border-radius: 8px;
       background-color: #fff;
+      top: -76px;
+      .card {
+        padding: 0px 10px;
+        height: 100%;
+        overflow: auto;
+        .bd-title {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 76px;
+          font-size: 24px;
+          font-weight: 500;
+          color: rgb(51, 51, 51);
+          border-bottom: 1px solid rgb(241, 240, 240);
 
-      .bd-title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px 10px;
-        font-size: 24px;
-        font-weight: 500;
-        color: rgb(51, 51, 51);
-        border-bottom: 1px solid rgb(241, 240, 240);
+          .title-img {
+            margin-left: 10px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            img {
+              margin-right: 10px;
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+            }
 
-        .title-img {
-          img {
-            margin-right: 10px;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            vertical-align: middle;
+            p {
+              line-height: 76px;
+            }
           }
-
-          p {
-            display: inline-block;
-            line-height: 38px;
-            vertical-align: middle;
+          .erweima {
+            // width: 40px;
+            // height: 40px;
+            font-size: 0px;
+            margin-right: 10px;
+            padding: 6px;
+            border-radius: 6px;
+            background-color: rgb(102, 102, 102);
+            text-align: center;
+            img {
+              width: 28px;
+              height: 28px;
+            }
           }
         }
-      }
 
-      .product-info {
-        margin-top: 300px;
-        text-align: center;
-        font-size: 30px;
-        color: $bg-color;
+        .product-info {
+          font-size: 30px;
+        }
       }
     }
   }
