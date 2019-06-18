@@ -7,12 +7,18 @@
 
     <v-btn flat color="primary">
       <span>课程</span>
-      <i class="iconfont icon-wodebaobiao2"></i>
+      <i
+        class="iconfont icon-wodebaobiao2"
+        style="font-size:24px;line-height:24px;margin-bottom:4px;"
+      ></i>
     </v-btn>
 
     <v-btn flat color="primary">
       <span>商机</span>
-      <i class="iconfont icon-quanziguanli"></i>
+      <i
+        class="iconfont icon-quanziguanli"
+        style="font-size:24px;line-height:24px;margin-bottom:4px;"
+      ></i>
     </v-btn>
 
     <v-btn flat color="primary">
@@ -37,9 +43,4 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-.iconfont {
-  font-size: 52px;
-  margin-bottom: 8px;
-  line-height: 52px;
-}
 </style>

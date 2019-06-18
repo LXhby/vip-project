@@ -69,6 +69,7 @@ export default {
       display: flex;
       align-items: center;
       p {
+        margin-top: 10px;
         margin-right: 14px;
         width: 8px;
         height: 30px;

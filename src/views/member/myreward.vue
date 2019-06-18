@@ -62,6 +62,7 @@ export default {
     align-items: center;
     padding: 30px 0 0 0;
     p {
+      margin-left: 10px;
       margin-right: 14px;
       width: 8px;
       height: 30px;
@@ -75,7 +76,7 @@ export default {
   }
   .list-detail {
     width: 100%;
-    color: rgba(102, 102, 102, 0.6);
+    color: $color;
     .money {
       .iconfont {
         margin-right: 6px;
