@@ -3,7 +3,7 @@
     <v-card color="primary" class="white--text border-radius">
       <v-list two-line subheader class="list-bg">
         <v-list-tile avatar>
-          <v-list-tile-avatar size="60px">
+          <v-list-tile-avatar size="45px">
             <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
           </v-list-tile-avatar>
 
@@ -62,7 +62,7 @@ export default {};
     border-radius: 28px 0 0 28px !important;
     .fa-star {
       &:before {
-        font-size: 25px;
+        font-size: 24px;
       }
     }
     .icon-next {
@@ -93,12 +93,12 @@ export default {};
             font-weight: 500;
             i {
               font-style: normal;
-              font-size: 20px;
+              font-size: 24px;
             }
           }
         }
         .v-list__tile__sub-title {
-          font-size: 24px;
+          font-size: 28px;
         }
       }
     }
