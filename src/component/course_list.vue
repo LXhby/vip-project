@@ -41,7 +41,7 @@ export default {};
 <style lang="scss" >
 @import "@/style/public.scss";
 .course-list {
-  margin-top: 38px;
+  margin-bottom: 38px;
   font-size: 25px;
   .v-card {
     height: 160px;

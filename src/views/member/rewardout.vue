@@ -6,7 +6,6 @@
         <p></p>
         <span>提现申请</span>
       </div>
-      
     </div>
   </div>
 </template>
@@ -28,6 +27,7 @@ export default {
     align-items: center;
     padding: 30px 0 0 0;
     p {
+      margin-left: 10px;
       margin-right: 14px;
       width: 8px;
       height: 30px;

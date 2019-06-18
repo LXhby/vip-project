@@ -69,11 +69,12 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 30px 0 0 0;
+        padding: 30px 0 25px 0;
         .news-title {
           display: flex;
           align-items: center;
           p {
+            margin-left: 10px;
             margin-right: 14px;
             width: 8px;
             height: 30px;
@@ -99,7 +100,7 @@ export default {
         p {
           margin-top: 10px;
         }
-        margin-top: 34px;
+        margin-bottom: 34px;
         padding: 20px 40px;
         border: 1px solid rgb(221, 221, 221);
         font-size: 25px;
