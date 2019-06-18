@@ -38,8 +38,8 @@ export default {
 </style>
 <style lang="scss" scoped>
 .iconfont {
-  font-size: 38px;
-  margin-bottom: 6.25px;
-  line-height: 38px;
+  font-size: 52px;
+  margin-bottom: 8px;
+  line-height: 52px;
 }
 </style>

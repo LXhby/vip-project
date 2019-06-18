@@ -38,7 +38,7 @@
         </ul>
       </div>
       <div class="content-btn">
-        <v-btn class="btn" color="primary" round depressed @click="finishBusiness">完成企业信息</v-btn>
+        <v-btn class="btn" color="primary" round depressed large @click="finishBusiness">完成企业信息</v-btn>
       </div>
     </div>
   </div>

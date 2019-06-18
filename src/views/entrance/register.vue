@@ -52,7 +52,7 @@ export default {
     padding: 30px;
     width: 100%;
     height: 640px;
-    background: url(https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2867283936,2934832180&fm=26&gp=0.jpg);
+    background-color: $bg-color;
     .hd-detail {
       display: inline-block;
       padding: 14px;
@@ -80,6 +80,9 @@ export default {
       border-radius: 6px;
       .ipt-one {
         position: relative;
+        .v-label {
+          font-size: 31.25px !important;
+        }
         .code-btn {
           position: absolute;
           right: 0px;
