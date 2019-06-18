@@ -76,7 +76,7 @@ export default {
   }
   .list-detail {
     width: 100%;
-    color: rgba(102, 102, 102, 0.6);
+    color: $color;
     .money {
       .iconfont {
         margin-right: 6px;
