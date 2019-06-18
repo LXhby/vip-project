@@ -13,6 +13,8 @@
     "less-loader": "^5.0.0",
     "lib-flexible": "^0.3.2",
     "nprogress": "^0.2.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-px2rem": "^0.3.0",
     "postcss-px2rem-exclude": "0.0.6",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
