@@ -78,7 +78,7 @@ export default {
     padding: 0 30px;
     .form {
       overflow: hidden;
-      padding: 60px;
+      padding: 10px 60px;
       background-color: #fff;
       border-radius: 6px;
       font-size: 30px;
