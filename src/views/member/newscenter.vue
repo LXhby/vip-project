@@ -83,19 +83,20 @@ export default {
           }
           span {
             color: $text-gray-color;
-            font-size: 30px;
+            font-size: 32px;
           }
         }
       }
       .news-nav {
         h4 {
+          font-size: 26px;
           margin-left: -12.5px;
           color: $bg-color;
           font-weight: normal;
         }
         span {
           color: #ccc;
-          font-size: 21.875px;
+          font-size: 24px;
         }
         p {
           margin-top: 10px;
@@ -103,7 +104,7 @@ export default {
         margin-bottom: 34px;
         padding: 20px 40px;
         border: 1px solid rgb(221, 221, 221);
-        font-size: 25px;
+        font-size: 26px;
         color: rgb(102, 102, 102);
         background: rgb(244, 244, 244);
         border-radius: 8px;
@@ -118,7 +119,7 @@ export default {
   .news-select {
     .v-btn {
       color: #c2c2c2;
-      font-size: 30px;
+      font-size: 32px;
       font-weight: normal;
       .v-icon {
         margin-right: 10px;
@@ -131,9 +132,9 @@ export default {
     background: rgb(255, 224, 134) !important;
     .v-list__tile {
       height: 32px;
-      padding: 0 16px;
+      padding: 0px;
       color: #666;
-      font-size: 22px;
+      font-size: 24px;
       .v-list__tile__title {
         text-align: center;
       }

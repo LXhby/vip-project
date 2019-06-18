@@ -78,14 +78,14 @@ export default {
       }
       span {
         color: $text-gray-color;
-        font-size: 30px;
+        font-size: 32px;
       }
     }
     .rules-content {
       padding: 30px 34px 0px 34px;
       p {
         padding-bottom: 30px;
-        font-size: 20px;
+        font-size: 24px;
         color: rgb(102, 102, 102);
       }
     }
