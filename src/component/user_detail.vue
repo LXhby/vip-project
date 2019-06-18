@@ -19,7 +19,7 @@
 
           <v-list-tile-action>
             <v-chip class="star-cart white--text">
-              <v-avatar color="indigo" size="34px">
+              <v-avatar color="indigo" size="20px">
                 <v-icon dark>fas fa-star</v-icon>
               </v-avatar>我的名片
               <i class="iconfont icon-next"></i>
@@ -74,7 +74,7 @@ export default {};
     padding: 0px 34px 34px 34px;
     margin-top: 50px;
     text-align: center;
-    font-size: 28px;
+    font-size: 32px;
     p {
       margin-top: 8px;
     }
@@ -89,7 +89,7 @@ export default {};
         margin-left: 20px;
         .v-list__tile__title {
           p {
-            font-size: 31px;
+            font-size: 32px;
             font-weight: 500;
             i {
               font-style: normal;
@@ -98,7 +98,7 @@ export default {};
           }
         }
         .v-list__tile__sub-title {
-          font-size: 25px;
+          font-size: 24px;
         }
       }
     }
