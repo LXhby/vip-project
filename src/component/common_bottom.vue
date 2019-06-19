@@ -1,13 +1,13 @@
 <template>
-  <v-bottom-nav :fixed="true" :active.sync="activeBtn" :value="showNav" class="bottom-tab">
+  <v-bottom-nav :fixed="true" :active.sync="activeBtn" :value="true" class="bottom-tab">
     <router-link :to="{path: '/buyer'}">
-      <v-btn flat color="primary">
+      <v-btn flat color="primary" value="home">
         <span>首页</span>
         <v-icon>fas fa-home</v-icon>
       </v-btn>
     </router-link>
     <router-link :to="{path: '/servercenter'}">
-      <v-btn flat color="primary">
+      <v-btn flat color="primary" value="class">
         <span>课程</span>
         <i
           class="iconfont icon-wodebaobiao2"
@@ -16,7 +16,7 @@
       </v-btn>
     </router-link>
     <router-link :to="{path: '/business'}">
-      <v-btn flat color="primary">
+      <v-btn flat color="primary" value="business">
         <span>商机</span>
         <i
           class="iconfont icon-quanziguanli"
@@ -25,7 +25,7 @@
       </v-btn>
     </router-link>
     <router-link :to="{path: '/vipcenter'}">
-      <v-btn flat color="primary">
+      <v-btn flat color="primary" value="my">
         <span>我的</span>
         <v-icon>fas fa-user</v-icon>
       </v-btn>
@@ -36,9 +36,25 @@
 export default {
   data() {
     return {
-      activeBtn: 1,
+      activeBtn: "home",
       showNav: true
     };
+  },
+  created() {
+    var name = this.$route.name;
+    if (name == "Buyer") {
+      this.activeBtn = "home";
+    }
+    if (name == "ServerCenter") {
+      this.activeBtn = "class";
+    }
+    if (name == "Business") {
+      this.activeBtn = "business";
+    }
+    if (name == "Vipcenter") {
+      this.activeBtn = "my";
+    }
+    console.log("this.$router", this.$route);
   }
 };
 </script>
