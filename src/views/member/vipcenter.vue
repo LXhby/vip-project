@@ -8,14 +8,16 @@
       </div>
       <div class="medium">
         <v-list v-for="(item, index) in arr" :key="index">
-          <v-list-tile-content>
-            <v-list-tile-avatar class="avatar">
-              <div class="icon-top">
-                <i :class="['iconfont',item.icon]"></i>
-              </div>
-            </v-list-tile-avatar>
-            <v-list-tile-sub-title>{{item.title}}</v-list-tile-sub-title>
-          </v-list-tile-content>
+          <router-link :to="router">
+            <v-list-tile-content @click="pageChange(item.id)">
+              <v-list-tile-avatar class="avatar">
+                <div class="icon-top">
+                  <i :class="['iconfont',item.icon]"></i>
+                </div>
+              </v-list-tile-avatar>
+              <v-list-tile-sub-title>{{item.title}}</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list>
       </div>
       <v-container fluid class="nav-list">
@@ -63,32 +65,36 @@ export default {
       width: 300,
       arr: [
         {
+          id: 1,
           icon: "icon-credentials_icon",
           title: "我的资料"
         },
         {
+          id: 2,
           icon: "icon-shijianjilu",
           title: "课程预告"
         },
         {
+          id: 3,
           icon: "icon-biao",
           title: "上课记录"
         },
         {
+          id: 4,
           icon: "icon-ziyuan1",
           title: "会议签到"
         }
       ],
       items: [
-        { icon: "icon-banzu-", title: "我的学友" },
+        { id: 5, icon: "icon-banzu-", title: "我的学友" },
         { divider: true },
-        { icon: "icon-qian", title: "我的奖金" },
+        { id: 6, icon: "icon-qian", title: "我的奖金" },
         { divider: true },
-        { icon: "icon-yinhangqia", title: "提现申请" },
+        { id: 7, icon: "icon-yinhangqia", title: "提现申请" },
         { divider: true },
-        { icon: "icon-xiaoxi", title: "我的消息", badge: true },
+        { id: 8, icon: "icon-xiaoxi", title: "我的消息", badge: true },
         { divider: true },
-        { icon: "icon-aixin", title: "服务条款" },
+        { id: 9, icon: "icon-aixin", title: "服务条款" },
         { divider: true },
         { icon: "icon-kefu-tianchong", title: "客服电话" },
         { divider: true }
