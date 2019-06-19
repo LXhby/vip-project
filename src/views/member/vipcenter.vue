@@ -23,7 +23,7 @@
           <router-link :to="router">
             <template v-for="(item, i) in items">
               <v-divider v-if="item.divider" :key="i"></v-divider>
-              <v-list-tile v-else :key="item.title" @click="pageChange(i)">
+              <v-list-tile v-else :key="item.title" @click="pageChange(item.id)">
                 <v-list-tile-action>
                   <i :class="['iconfont',item.icon]"></i>
                 </v-list-tile-action>
@@ -96,21 +96,33 @@ export default {
     };
   },
   methods: {
-    pageChange(i) {
-      switch (i) {
-        case 0:
-          this.router = { path: "/myclassmates" };
+    pageChange(id) {
+      switch (id) {
+        case 1:
+          this.router = { path: "/mycard" };
           break;
         case 2:
-          this.router = { path: "/myreward" };
+          this.router = { path: "/servercenter" };
+          break;
+        case 3:
+          this.router = { path: "/classrecord" };
           break;
         case 4:
-          this.router = { path: "/rewardout" };
+          this.router = { path: "/signin" };
+          break;
+        case 5:
+          this.router = { path: "/myclassmates" };
           break;
         case 6:
-          this.router = { path: "/newscenter" };
+          this.router = { path: "/mycard" };
+          break;
+        case 7:
+          this.router = { path: "/rewardout" };
           break;
         case 8:
+          this.router = { path: "/newscenter" };
+          break;
+        case 9:
           this.router = { path: "/serverrules" };
           break;
         default:
