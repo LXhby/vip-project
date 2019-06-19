@@ -38,12 +38,13 @@ export default {
 .servercenter {
   padding: 20px;
   .course-herald {
-    padding: 30px 0 0 0;
     .herald-title {
+      padding: 30px 0;
+      margin-left: 7px;
       display: flex;
       align-items: center;
       p {
-        margin-right: 14px;
+        margin-right: 10px;
         width: 8px;
         height: 30px;
         border-radius: 4px;
@@ -51,7 +52,7 @@ export default {
       }
       span {
         color: $text-gray-color;
-        font-size: 30px;
+        font-size: 32px;
       }
     }
   }

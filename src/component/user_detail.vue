@@ -3,7 +3,7 @@
     <v-card color="primary" class="white--text border-radius">
       <v-list two-line subheader class="list-bg">
         <v-list-tile avatar>
-          <v-list-tile-avatar size="45px">
+          <v-list-tile-avatar>
             <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
           </v-list-tile-avatar>
 
@@ -19,7 +19,7 @@
 
           <v-list-tile-action>
             <v-chip class="star-cart white--text">
-              <v-avatar color="indigo" size="20px">
+              <v-avatar color="indigo">
                 <v-icon dark>fas fa-star</v-icon>
               </v-avatar>我的名片
               <i class="iconfont icon-next"></i>
@@ -60,6 +60,14 @@ export default {};
     background: rgba(255, 255, 255, 0.2) !important;
     font-size: 28px;
     border-radius: 28px 0 0 28px !important;
+    .v-chip__content {
+      height: 50px;
+    }
+    .v-avatar {
+      width: 50px !important;
+      height: 50px !important;
+      min-width: 50px;
+    }
     .fa-star {
       &:before {
         font-size: 24px;
@@ -80,25 +88,37 @@ export default {};
     }
   }
   .list-bg {
-    padding: 28px 0px 0px 0px;
+    padding: 0px;
     background: $bg-color !important;
     color: #fff !important;
     .v-list__tile {
-      padding: 0 34px;
+      padding-left: 38px;
+      padding-top: 38px;
+      .v-list__tile__avatar {
+        width: 94px;
+        min-width: 94px;
+        margin-right: 25px;
+        .v-avatar {
+          width: 94px !important;
+          height: 94px !important;
+        }
+      }
+
       .v-list__tile__content {
-        margin-left: 20px;
         .v-list__tile__title {
           p {
             font-size: 32px;
             font-weight: 500;
             i {
               font-style: normal;
-              font-size: 24px;
+              font-size: 22px;
+              font-weight: 600;
             }
           }
         }
         .v-list__tile__sub-title {
-          font-size: 28px;
+          font-size: 24px;
+          font-weight: 600;
         }
       }
     }

@@ -2,7 +2,7 @@
   <div class="successpage">
     <div class="success-info">
       <div class="head-img">
-        <img>
+        <img src="https://cdn.vuetifyjs.com/images/lists/2.jpg">
         <p>微信昵称</p>
       </div>
       <div class="success-content">
@@ -12,11 +12,9 @@
         </div>
         <div class="main">
           <div class="content">
-            <ul>
-              <li>学习，只为创造美好生活！</li>
-              <li>打造学习型个人、学习型家庭、学习型企业的创富平台</li>
-              <li>我们的信仰：良知、真理、精进、爱</li>
-            </ul>
+            <p>学习，只为创造美好生活！</p>
+            <p>打造学习型个人、学习型家庭、学习型企业的创富平台</p>
+            <p>我们的信仰：良知、真理、精进、爱</p>
           </div>
           <div class="foot">
             <p>
@@ -53,17 +51,17 @@ export default {
   text-align: center;
 
   .success-info {
-    padding: 0 40px 60px 40px;
-    margin-top: 100px;
+    padding: 0 37px 37px 37px;
+    margin-top: 117px;
     background-color: white;
     border-radius: 5px;
 
     .head-img {
       position: relative;
-      top: -30px;
+      top: -40px;
       img {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         background-color: grey;
       }
@@ -73,37 +71,46 @@ export default {
     }
     .success-content {
       text-align: left;
-      color: grey;
+      color: #666;
 
       .title {
         display: flex;
         align-content: center;
         padding: 20px 0;
-        border: 1px solid rgb(243, 242, 242);
+        border-bottom: 1px solid rgb(243, 242, 242);
         p {
           margin-right: 10px;
-          width: 10px;
-          height: 35px;
-          border-radius: 5px;
+          width: 8px;
+          height: 30px;
+          border-radius: 4px;
           background-color: $bg-color;
         }
         span {
-          font-size: 40px;
+          font-size: 32px;
+          font-weight: normal;
         }
       }
       .main {
-        padding: 0 20px;
+        padding: 20px;
+        padding-bottom: 0px;
         .content {
-          margin-top: 40px;
-          font-size: 30px;
+          font-size: 24px;
+          p {
+            line-height: 40px;
+          }
         }
         .foot {
-          margin-top: 40px;
-          font-size: 40px;
-
+          margin-top: 30px;
+          font-size: 32px;
+          p {
+            display: flex;
+            align-items: center;
+          }
           span {
             color: $bg-color;
-            font-size: 60px;
+            font-size: 54px;
+            font-weight: 400;
+            margin: 0 4px;
           }
         }
       }
@@ -111,9 +118,10 @@ export default {
   }
   .tip {
     p {
-      margin-top: 30px;
+      margin-top: 27px;
       color: #fff;
-      font-size: 30px;
+      font-size: 24px;
+      font-weight: 500;
     }
   }
 }

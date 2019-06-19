@@ -52,61 +52,65 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/public.scss";
-.content-head {
-  padding: 50px 0 0 30px;
-  height: 540px;
-  background-color: $bg-color;
-  color: #fff;
-  .title {
-    display: flex;
-    align-content: center;
-    p {
-      margin-right: 10px;
-      width: 8px;
-      height: 30px;
-      border-radius: 4px;
-      background-color: #fff;
-    }
-    span {
-      font-size: 30px;
-    }
-  }
-}
-.content-foot {
-  .content-form {
-    margin-top: -400px;
-    padding: 0 30px;
-    .form {
-      overflow: hidden;
-      padding: 10px 60px;
-      background-color: #fff;
-      border-radius: 6px;
-      font-size: 30px;
-      .phone {
-        position: relative;
-        .code-btn {
-          position: absolute;
-          right: 0px;
-          top: 0px;
-          margin-right: 0px;
-          @include gradient-bg;
-        }
+.authentication {
+  height: 100%;
+  background-color: rgb(244, 244, 244);
+  .content-head {
+    padding: 45px 0 0 20px;
+    height: 420px;
+    background-color: $bg-color;
+    color: #fff;
+    .title {
+      margin-left: 7px;
+      display: flex;
+      align-content: center;
+      p {
+        margin-right: 10px;
+        width: 8px;
+        height: 30px;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+      span {
+        font-size: 32px;
       }
     }
   }
-  .content-tip {
-    margin: 0 0 0 40px;
-    color: grey;
-    font-size: 20px;
-  }
-  .content-btn {
-    margin-top: 50px;
-    padding: 0 30px;
-    text-align: center;
-    .btn {
-      width: 100%;
-      margin-left: 0;
-      margin-right: 0;
+  .content-foot {
+    .content-form {
+      margin-top: -307px;
+      padding: 0 20px;
+      .form {
+        overflow: hidden;
+        padding: 32px 65px 40px 65px;
+        background-color: #fff;
+        border-radius: 6px;
+        font-size: 30px;
+        .phone {
+          position: relative;
+          .code-btn {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            margin-right: 0px;
+            @include gradient-bg;
+          }
+        }
+      }
+    }
+    .content-tip {
+      margin: 28px 0 50px 45px;
+      color: $color;
+      font-size: 24px;
+    }
+    .content-btn {
+      padding: 0 32px;
+      margin-bottom: 58px;
+      text-align: center;
+      .btn {
+        width: 100%;
+        margin: 0px;
+      }
     }
   }
 }

@@ -5,7 +5,7 @@
         <v-flex xs9>
           <v-card-title primary-title>
             <v-layout class="course-title" column wrap justify-space-between>
-              <div class="title">第一期某某课程某某课程某某课程</div>
+              <div class="hd-title">第一期某某课程某某课程某某课程</div>
               <div class="time">
                 <p class="fl">
                   <i class="iconfont icon-shizhong1"></i>
@@ -42,7 +42,7 @@ export default {};
 @import "@/style/public.scss";
 .course-list {
   margin-bottom: 38px;
-  font-size: 25px;
+  font-size: 28px;
   .v-card {
     height: 160px;
     padding: 34px;
@@ -58,12 +58,12 @@ export default {};
     width: 100%;
     height: 100%;
 
-    .title {
+    .hd-title {
       width: 100%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 500;
     }
     .time {
@@ -72,7 +72,7 @@ export default {};
         margin-right: 8px;
       }
       span {
-        font-size: 22px;
+        font-size: 24px;
       }
     }
   }
