@@ -15,7 +15,7 @@
                 <p>王*文购买了学习型中国会员</p>
               </div>
               <div class="erweima">
-                <img src="../../assets/erweima.png" alt>
+                <i class="iconfont icon-erweima"></i>
               </div>
             </div>
             <div class="product-info"></div>
@@ -125,13 +125,17 @@ export default {
             // height: 40px;
             font-size: 0px;
             margin-right: 10px;
-            padding: 6px;
+            padding: 8px 6px 6px 6px;
             border-radius: 6px;
             background-color: rgb(102, 102, 102);
             text-align: center;
-            img {
+            i {
+              font-size: 28px;
+              line-height: 28px;
               width: 28px;
               height: 28px;
+              text-align: center;
+              color: #fff;
             }
           }
         }

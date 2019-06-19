@@ -1,9 +1,14 @@
 <template>
   <div class="enter-regist">
     <div class="hd">
+      <img
+        src="http://dfiles.speiyou.com/img/2018/03/02/201545_5a994071e1d26.jpg"
+        alt
+        class="hd-bg"
+      >
       <div class="hd-detail">
         <div class="img fl">
-          <img src alt>
+          <img src="../../assets/avatar.png" alt>
         </div>
         <p class="detail-text fl">王*文购买了学习型中国会员</p>
       </div>
@@ -49,13 +54,19 @@ export default {
   background: rgb(241, 241, 241);
 
   .hd {
-    padding: 30px;
     width: 100%;
     height: 640px;
     background-color: $bg-color;
+    .hd-bg {
+      width: 100%;
+      height: 100%;
+    }
     .hd-detail {
+      position: absolute;
+      top: 30px;
+      left: 30px;
       display: inline-block;
-      padding: 14px;
+      padding: 12px;
       background-color: $bg-yellow;
       font-size: 24px;
       color: #fff;
@@ -66,13 +77,18 @@ export default {
         margin-right: 16px;
         border-radius: 50%;
         background-color: #fff;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }
   .main {
+    position: relative;
+    z-index: 2;
     margin-top: -168px;
     padding: 0 20px;
-
     .bd {
       overflow: hidden;
       padding: 60px;
@@ -102,8 +118,8 @@ export default {
   .footer {
     margin-top: 60px;
     text-align: center;
-    color: $text-gray-color;
-    font-size: 28px;
+    color: #999;
+    font-size: 32px;
   }
 }
 </style>
