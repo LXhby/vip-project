@@ -1,11 +1,10 @@
 <template>
   <div class="padding-20 my-card-page">
     <member-detail></member-detail>
-
     <div class="main">
       <div class="hg">
         <div class="top">
-          <div class="title">
+          <div class="herald-title">
             <p></p>
             <span>企业简介</span>
           </div>
@@ -23,7 +22,7 @@
           </div>
         </div>
         <div class="medium">
-          <div class="title">
+          <div class="herald-title">
             <p></p>
             <span>企业内容</span>
           </div>
@@ -36,7 +35,7 @@
           </div>
         </div>
         <div class="bottom">
-          <div class="title">
+          <div class="herald-title">
             <p></p>
             <span>图片展示</span>
           </div>
@@ -76,13 +75,13 @@ export default {
     padding: 35px;
     border: 2px solid $bg-color;
     border-radius: 10px;
-    .title {
+    .herald-title {
       display: flex;
       align-items: center;
       padding-bottom: 20px;
       border-bottom: 2px solid whitesmoke;
       p {
-        margin-left: 6px;
+        margin-left: 8px;
         margin-right: 10px;
         width: 8px;
         height: 30px;
@@ -106,6 +105,7 @@ export default {
     }
     .bottom {
       .imgs {
+        margin-top: 15px;
         display: flex;
         align-items: center;
         justify-content: space-between;
