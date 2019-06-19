@@ -66,7 +66,7 @@ export default {
         background-color: grey;
       }
       p {
-        font-size: 30px;
+        font-size: 24px;
       }
     }
     .success-content {
@@ -96,7 +96,7 @@ export default {
         .content {
           font-size: 24px;
           p {
-            line-height: 40px;
+            line-height: 42px;
           }
         }
         .foot {
