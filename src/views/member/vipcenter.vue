@@ -120,7 +120,7 @@ export default {
           this.router = { path: "/myclassmates" };
           break;
         case 6:
-          this.router = { path: "/mycard" };
+          this.router = { path: "/myreward" };
           break;
         case 7:
           this.router = { path: "/rewardout" };
