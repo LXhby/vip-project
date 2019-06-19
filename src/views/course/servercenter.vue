@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <div class="servercenter">
-      <member-detail></member-detail>
-      <div class="course-herald">
-        <div class="herald-title">
-          <p></p>
-          <span>课程预告</span>
-        </div>
-        <div class="herald-info">
-          <course-list></course-list>
-          <course-list></course-list>
-          <course-list></course-list>
-        </div>
+  <div class="servercenter">
+    <member-detail></member-detail>
+    <div class="course-herald">
+      <div class="herald-title">
+        <p></p>
+        <span>课程预告</span>
       </div>
-      <CommonBottom></CommonBottom>
+      <div class="herald-info">
+        <course-list></course-list>
+        <course-list></course-list>
+        <course-list></course-list>
+      </div>
     </div>
+    <CommonBottom></CommonBottom>
   </div>
 </template>
 
@@ -53,6 +51,28 @@ export default {
       span {
         color: $text-gray-color;
         font-size: 32px;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@import "@/style/public.scss";
+.herald-info {
+  .course-list {
+    &:nth-child(1) {
+      .v-sheet {
+        @include bg-yellow-bottom;
+      }
+    }
+    &:nth-child(2) {
+      .v-sheet {
+        @include bg-purple-bottom;
+      }
+    }
+    &:nth-child(3) {
+      .v-sheet {
+        @include bg-green-bottom;
       }
     }
   }

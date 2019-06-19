@@ -1,6 +1,6 @@
 <template>
   <div class="course-list">
-    <v-card color="purple" class="white--text border-radius">
+    <v-card class="white--text border-radius">
       <v-layout row class="main">
         <v-flex xs9>
           <v-card-title primary-title>
@@ -45,7 +45,7 @@ export default {};
   font-size: 28px;
   .v-card {
     height: 160px;
-    padding: 34px;
+    padding: 30px;
     .main {
       height: 100%;
       .v-card__title {
@@ -73,26 +73,30 @@ export default {};
       }
       span {
         font-size: 24px;
+        font-weight: 500;
       }
     }
   }
   .count-num {
+    display: flex;
+    align-items: center;
     width: 80px;
     height: 80px;
-    padding: 8px;
-    text-align: center;
+    padding: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
     background: rgba(0, 0, 0, 0.2);
     p {
       line-height: 1;
-      font-size: 20px;
+      font-size: 22px;
       i {
         font-style: normal;
-        font-size: 28px;
+        font-size: 32px;
       }
     }
 
     span {
-      font-size: 20px;
+      font-size: 22px;
     }
   }
 }

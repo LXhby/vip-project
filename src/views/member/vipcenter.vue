@@ -7,25 +7,25 @@
         <span>会员服务</span>
       </div>
       <div class="medium">
-        <v-list v-for="(img, index) in arr" :key="index">
+        <v-list v-for="(item, index) in arr" :key="index">
           <v-list-tile-content>
             <v-list-tile-avatar class="avatar">
               <div class="icon-top">
-                <v-icon>contact_mail</v-icon>
+                <i :class="['iconfont',item.icon]"></i>
               </div>
             </v-list-tile-avatar>
-            <v-list-tile-sub-title v-html="`我的资料`"></v-list-tile-sub-title>
+            <v-list-tile-sub-title>{{item.title}}</v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list>
       </div>
-      <v-container fluid>
+      <v-container fluid class="nav-list">
         <v-list>
           <router-link :to="router">
             <template v-for="(item, i) in items">
               <v-divider v-if="item.divider" :key="i"></v-divider>
               <v-list-tile v-else :key="item.title" @click="pageChange(i)">
                 <v-list-tile-action>
-                  <v-icon>{{ item.icon }}</v-icon>
+                  <i :class="['iconfont',item.icon]"></i>
                 </v-list-tile-action>
                 <v-list-tile-title class="title-list">{{ item.title }}</v-list-tile-title>
                 <v-list-tile-action v-if="item.badge">
@@ -61,19 +61,36 @@ export default {
     return {
       router: {}, // 跳转route
       width: 300,
-      arr: [1, 2, 3, 4],
+      arr: [
+        {
+          icon: "icon-credentials_icon",
+          title: "我的资料"
+        },
+        {
+          icon: "icon-shijianjilu",
+          title: "课程预告"
+        },
+        {
+          icon: "icon-biao",
+          title: "上课记录"
+        },
+        {
+          icon: "icon-ziyuan1",
+          title: "会议签到"
+        }
+      ],
       items: [
-        { icon: "inbox", title: "我的学友" },
+        { icon: "icon-banzu-", title: "我的学友" },
         { divider: true },
-        { icon: "star", title: "我的奖金" },
+        { icon: "icon-qian", title: "我的奖金" },
         { divider: true },
-        { icon: "send", title: "提现申请" },
+        { icon: "icon-yinhangqia", title: "提现申请" },
         { divider: true },
-        { icon: "drafts", title: "我的消息", badge: true },
+        { icon: "icon-xiaoxi", title: "我的消息", badge: true },
         { divider: true },
-        { icon: "mail", title: "服务条款" },
+        { icon: "icon-aixin", title: "服务条款" },
         { divider: true },
-        { icon: "delete", title: "客服电话" },
+        { icon: "icon-kefu-tianchong", title: "客服电话" },
         { divider: true }
       ]
     };
@@ -82,22 +99,22 @@ export default {
     pageChange(i) {
       switch (i) {
         case 0:
-          this.router = {path: '/myclassmates'}
+          this.router = { path: "/myclassmates" };
           break;
         case 2:
-          this.router = {path: '/myreward'}
+          this.router = { path: "/myreward" };
           break;
         case 4:
-          this.router = {path: '/rewardout'}
+          this.router = { path: "/rewardout" };
           break;
         case 6:
-          this.router = {path: '/newscenter'}
+          this.router = { path: "/newscenter" };
           break;
         case 8:
-          this.router = {path: '/serverrules'}
+          this.router = { path: "/serverrules" };
           break;
         default:
-          this.router = {}
+          this.router = {};
           break;
       }
     }
@@ -115,15 +132,16 @@ export default {
     display: flex;
     align-items: center;
     p {
-      margin-right: 14px;
+      margin-right: 10px;
       width: 8px;
       height: 30px;
       border-radius: 4px;
       background-color: $bg-color;
     }
     span {
+      font-weight: normal;
+      font-size: 32px;
       color: $text-gray-color;
-      font-size: 30px;
     }
   }
   .medium {
@@ -134,10 +152,19 @@ export default {
     .avatar {
       padding: 15px;
       .icon-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-color: $bg-yellow;
+        background-color: rgb(254, 93, 41);
+        .iconfont {
+          font-size: 48px;
+          text-align: center;
+          color: #fff;
+          line-height: 100%;
+        }
       }
     }
   }
@@ -150,6 +177,26 @@ export default {
     }
     .icon-right {
       width: 100%;
+    }
+  }
+  .nav-list {
+    .icon-banzu- {
+      color: rgb(94, 204, 246);
+    }
+    .icon-qian {
+      color: rgb(255, 206, 44);
+    }
+    .icon-yinhangqia {
+      color: rgb(255, 152, 88);
+    }
+    .icon-xiaoxi {
+      color: rgb(44, 208, 128);
+    }
+    .icon-aixin {
+      color: rgb(126, 210, 98);
+    }
+    .icon-kefu-tianchong {
+      color: rgb(255, 141, 183);
     }
   }
 }

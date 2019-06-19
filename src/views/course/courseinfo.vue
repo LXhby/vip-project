@@ -1,7 +1,13 @@
 <template>
-  <div>
+  <div class="course-info-page">
     <div class="servercenter">
-      <div class="bg"></div>
+      <div class="bg">
+        <img
+          src="http://dfiles.speiyou.com/img/2018/03/02/201547_5a994073d3eb3.jpg"
+          alt
+          class="hd-bg"
+        >
+      </div>
       <div class="content">
         <CourseName class="coursename"></CourseName>
         <div class="course-info">
@@ -78,20 +84,33 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/public.scss";
-
+.course-info-page {
+  background-color: rgb(244, 244, 244);
+}
 .servercenter {
   margin-bottom: 100px;
   .bg {
+    position: relative;
     height: 420px;
     background-color: $bg-color;
+    .hd-bg {
+      width: 100%;
+      height: 100%;
+    }
   }
   .content {
+    position: relative;
+    margin-top: -76px;
     padding: 0 20px;
+
+    overflow: hidden;
     .coursename {
-      margin-top: -70px;
+      border-radius: 6px;
+      background-color: #fff;
     }
     .course-info {
       margin-top: 20px;
+      margin-bottom: 50px;
       padding: 10px;
       font-size: 20px;
       border-radius: 5px;
@@ -101,18 +120,22 @@ export default {
         align-items: center;
         padding: 10px;
         color: rgb(172, 172, 172);
-        border-bottom: 1px solid rgb(241, 240, 240);
+        border-bottom: 1px solid rgb(243, 242, 242);
         p {
-          margin-right: 14px;
-          width: 6px;
-          height: 25px;
-          border-radius: 3px;
+          margin-right: 10px;
+          width: 8px;
+          height: 30px;
+          border-radius: 4px;
           background-color: $bg-color;
         }
         span {
           color: $text-gray-color;
-          font-size: 25px;
+          font-size: 32px;
         }
+      }
+      .info-introduce {
+        padding: 10px;
+        font-size: 28px;
       }
     }
     .course-foot {

@@ -28,17 +28,17 @@ $text-gray-color:#999;
 }
 
 @mixin gradient-bg {
-    background: linear-gradient(to right, rgb(255, 218, 115), rgb(255, 179, 63))
+    background: linear-gradient(to right, rgb(255, 218, 115), rgb(255, 179, 63)) !important;
 }
 
 @mixin bg-yellow-bottom {
-    background: linear-gradient(to bottom, rgb(255, 218, 115), rgb(255, 179, 63))
+    background: linear-gradient(to bottom, rgb(255, 205, 72), rgb(255, 130, 2))
 }
 
 @mixin bg-purple-bottom {
-    background: linear-gradient(to right, rgb(255, 152, 225), rgb(179, 2, 179))
+    background: linear-gradient(to bottom, rgb(255, 152, 225), rgb(179, 2, 179))
 }
 
 @mixin bg-green-bottom {
-    background: linear-gradient(to right, rgb(54, 217, 0), rgb(1, 105, 25))
+    background: linear-gradient(to bottom, rgb(54, 217, 0), rgb(1, 105, 25))
 }
