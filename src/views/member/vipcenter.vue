@@ -7,15 +7,17 @@
         <span>会员服务</span>
       </div>
       <div class="medium">
-        <v-list v-for="(img, index) in arr" :key="index">
-          <v-list-tile-content>
-            <v-list-tile-avatar class="avatar">
-              <div class="icon-top">
-                <v-icon>contact_mail</v-icon>
-              </div>
-            </v-list-tile-avatar>
-            <v-list-tile-sub-title v-html="`我的资料`"></v-list-tile-sub-title>
-          </v-list-tile-content>
+        <v-list v-for="(ele, index) in elements" :key="index">
+          <router-link :to="router">
+            <v-list-tile-content @click="pageChange(ele.id)">
+              <v-list-tile-avatar class="avatar">
+                <div class="icon-top">
+                  <v-icon>{{ ele.icon }}</v-icon>
+                </div>
+              </v-list-tile-avatar>
+              <v-list-tile-sub-title v-html="ele.title"></v-list-tile-sub-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list>
       </div>
       <v-container fluid>
@@ -23,7 +25,7 @@
           <router-link :to="router">
             <template v-for="(item, i) in items">
               <v-divider v-if="item.divider" :key="i"></v-divider>
-              <v-list-tile v-else :key="item.title" @click="pageChange(i)">
+              <v-list-tile v-else :key="item.title" @click="pageChange(item.id)">
                 <v-list-tile-action>
                   <v-icon>{{ item.icon }}</v-icon>
                 </v-list-tile-action>
@@ -61,17 +63,22 @@ export default {
     return {
       router: {}, // 跳转route
       width: 300,
-      arr: [1, 2, 3, 4],
+      elements: [
+        { id: 1, icon: "contact_mail", title: "我的资料" },
+        { id: 2, icon: "contact_mail", title: "课程预告" },
+        { id: 3, icon: "contact_mail", title: "上课记录" },
+        { id: 4, icon: "contact_mail", title: "会议签到" }
+      ],
       items: [
-        { icon: "inbox", title: "我的学友" },
+        { id: 5, icon: "inbox", title: "我的学友" },
         { divider: true },
-        { icon: "star", title: "我的奖金" },
+        { id: 6, icon: "star", title: "我的奖金" },
         { divider: true },
-        { icon: "send", title: "提现申请" },
+        { id: 7, icon: "send", title: "提现申请" },
         { divider: true },
-        { icon: "drafts", title: "我的消息", badge: true },
+        { id: 8, icon: "drafts", title: "我的消息", badge: true },
         { divider: true },
-        { icon: "mail", title: "服务条款" },
+        { id: 9, icon: "mail", title: "服务条款" },
         { divider: true },
         { icon: "delete", title: "客服电话" },
         { divider: true }
@@ -79,25 +86,37 @@ export default {
     };
   },
   methods: {
-    pageChange(i) {
-      switch (i) {
-        case 0:
-          this.router = {path: '/myclassmates'}
+    pageChange(id) {
+      switch (id) {
+        case 1:
+          this.router = { path: "/mycard" };
           break;
         case 2:
-          this.router = {path: '/myreward'}
+          this.router = { path: "/servercenter" };
+          break;
+        case 3:
+          this.router = { path: "/classrecord" };
           break;
         case 4:
-          this.router = {path: '/rewardout'}
+          this.router = { path: "/signin" };
+          break;
+        case 5:
+          this.router = { path: "/myclassmates" };
           break;
         case 6:
-          this.router = {path: '/newscenter'}
+          this.router = { path: "/mycard" };
+          break;
+        case 7:
+          this.router = { path: "/rewardout" };
           break;
         case 8:
-          this.router = {path: '/serverrules'}
+          this.router = { path: "/newscenter" };
+          break;
+        case 9:
+          this.router = { path: "/serverrules" };
           break;
         default:
-          this.router = {}
+          this.router = {};
           break;
       }
     }
