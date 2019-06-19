@@ -2,10 +2,7 @@
   <div class="servercenter">
     <member-detail></member-detail>
     <div class="course-herald">
-      <div class="herald-title">
-        <p></p>
-        <span>课程预告</span>
-      </div>
+      <page-title title="课程预告"></page-title>
       <div class="herald-info">
         <course-list></course-list>
         <course-list></course-list>
@@ -20,13 +17,14 @@
 import MemberDetail from "@/component/user_detail";
 import CourseList from "@/component/course_list";
 import CommonBottom from "@/component/common_bottom";
-
+import PageTitle from "@/component/page_title";
 export default {
   name: "ServerCenter",
   components: {
     MemberDetail,
     CourseList,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   }
 };
 </script>
@@ -35,26 +33,6 @@ export default {
 @import "@/style/public.scss";
 .servercenter {
   padding: 20px;
-  .course-herald {
-    .herald-title {
-      padding: 35px 0;
-      display: flex;
-      align-items: center;
-      p {
-        margin-left: 8px;
-        margin-right: 10px;
-        width: 8px;
-        height: 30px;
-        border-radius: 4px;
-        background-color: $bg-color;
-      }
-      span {
-        color: $text-gray-color;
-        font-size: 32px;
-        line-height: 32px;
-      }
-    }
-  }
 }
 </style>
 <style lang="scss">

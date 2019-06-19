@@ -2,15 +2,28 @@
   <div class="padding-20 my-reward-page">
     <member-detail></member-detail>
     <div class="main">
-      <div class="reward-title">
-        <p></p>
-        <span>我的奖金</span>
-      </div>
+      <page-title title="我的奖金"></page-title>
       <v-list two-line>
         <template v-for="(item) in list">
           <v-list-tile>
             <v-list-tile-content>
-              <v-layout class="list-detail" row justify-space-between align-center>
+              <div class="money">
+                <div class="fl num">
+                  <i class="iconfont icon-qian"></i>
+                  <span>10000.00元</span>
+                </div>
+                <div class="fr">
+                  <span>
+                    推荐第
+                    <i>10</i>个会员奖金
+                  </span>
+                </div>
+              </div>
+              <div class="time">
+                <p class="fl">入会人：王晓文(所报课程名字)</p>
+                <p class="fr">2019.4.24 18:23</p>
+              </div>
+              <!-- <v-layout class="list-detail" row justify-space-between align-center>
                 <v-flex xs6>
                   <div class="money">
                     <i class="iconfont icon-qian"></i>
@@ -27,7 +40,7 @@
                     <p>2019.4.24 18:23</p>
                   </div>
                 </v-flex>
-              </v-layout>
+              </v-layout>-->
             </v-list-tile-content>
           </v-list-tile>
           <v-divider></v-divider>
@@ -41,10 +54,12 @@
 <script>
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import PageTitle from "@/component/page_title";
 export default {
   components: {
     MemberDetail,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   },
   data() {
     return {
@@ -57,54 +72,30 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/public.scss";
 .my-reward-page {
-  .reward-title {
-    display: flex;
-    align-items: center;
-    padding: 30px 0 0 0;
-    p {
-      margin-left: 10px;
-      margin-right: 14px;
-      width: 8px;
-      height: 30px;
-      border-radius: 4px;
-      background-color: $bg-color;
+  .v-list {
+    padding: 0px;
+    margin-top: -28px;
+  }
+  .money {
+    width: 100%;
+    color: $text-gray-color;
+    font-size: 28px;
+    .num {
+      color: $bg-color;
     }
-    span {
-      color: $text-gray-color;
-      font-size: 30px;
+    .iconfont {
+      margin-right: 6px;
+      color: rgb(255, 206, 44);
+    }
+    i {
+      font-style: normal;
+      color: $bg-color;
     }
   }
-  .list-detail {
+  .time {
     width: 100%;
-    color: $color;
-    .money {
-      .iconfont {
-        margin-right: 6px;
-        color: rgb(255, 206, 44);
-      }
-      span {
-        color: $bg-color;
-        font-size: 26px;
-      }
-      p {
-        margin-top: 6px;
-        margin-left: 31.25px;
-        font-size: 18.75px;
-      }
-    }
-    .time {
-      height: 100%;
-      text-align: right;
-      font-size: 21.875px;
-      i {
-        font-style: normal;
-        color: $bg-color;
-      }
-      p {
-        margin-top: 6px;
-        font-size: 18.75px;
-      }
-    }
+    color: $text-gray-color;
+    font-size: 24px;
   }
 }
 </style>

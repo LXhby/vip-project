@@ -2,10 +2,8 @@
   <div class="padding-20">
     <member-detail></member-detail>
     <div class="main">
-      <div class="title">
-        <p></p>
-        <span>提现申请</span>
-      </div>
+      <page-title title="提现申请"></page-title>
+
       <div class="content">
         <v-text-field class="input" v-model="money" label="请输入提现金额，最高不能高于20000元" required></v-text-field>
         <div class="choose">
@@ -97,10 +95,12 @@
 <script>
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import PageTitle from "@/component/page_title";
 export default {
   components: {
     MemberDetail,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   },
   data() {
     return {
@@ -113,23 +113,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/public.scss";
 .main {
-  .title {
-    display: flex;
-    align-items: center;
-    padding: 30px 0 0 0;
-    p {
-      margin-left: 10px;
-      margin-right: 14px;
-      width: 8px;
-      height: 30px;
-      border-radius: 4px;
-      background-color: $bg-color;
-    }
-    span {
-      color: $text-gray-color;
-      font-size: 30px;
-    }
-  }
   .content {
     padding: 0 20px;
     .choose {

@@ -2,10 +2,7 @@
   <div class="padding-20">
     <member-detail></member-detail>
     <div class="main">
-      <div class="herald-title">
-        <p></p>
-        <span>确认会议签到</span>
-      </div>
+      <page-title title="确认会议签到"></page-title>
       <div class="content">
         <div class="my-info">
           <p class="info-title">个人信息</p>
@@ -93,10 +90,12 @@
 <script>
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import PageTitle from "@/component/page_title";
 export default {
   components: {
     MemberDetail,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   },
   methods: {
     confirm() {}
@@ -108,24 +107,6 @@ export default {
 @import "@/style/public.scss";
 .main {
   margin-bottom: 90px;
-  .herald-title {
-    display: flex;
-    align-items: center;
-    padding: 35px 0;
-    p {
-      margin-left: 8px;
-      margin-right: 14px;
-      width: 8px;
-      height: 30px;
-      border-radius: 4px;
-      background-color: $bg-color;
-    }
-    span {
-      color: $text-gray-color;
-      font-size: 32px;
-      font-weight: normal;
-    }
-  }
   .content {
     padding: 12px 35px 0 35px;
     border: 2px solid $bg-color;

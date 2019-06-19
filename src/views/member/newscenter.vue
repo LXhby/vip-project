@@ -65,18 +65,19 @@ export default {
 @import "@/style/public.scss";
 .news-center-page {
   .main {
+    margin-bottom: 40px;
     .news-list {
       .news-head {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 30px 0 25px 0;
+        padding: 35px 0;
         .news-title {
           display: flex;
           align-items: center;
           p {
-            margin-left: 10px;
-            margin-right: 14px;
+            margin-left: 8px;
+            margin-right: 10px;
             width: 8px;
             height: 30px;
             border-radius: 4px;
@@ -85,6 +86,7 @@ export default {
           span {
             color: $text-gray-color;
             font-size: 32px;
+            line-height: 30px;
           }
         }
       }
@@ -118,11 +120,22 @@ export default {
 @import "@/style/public.scss";
 .news-center-page {
   .news-select {
+    height: 30px;
+    line-height: 30px;
     .v-btn {
-      color: #c2c2c2;
+      margin: 0px;
+      padding: 0 8px;
+      color: #999;
       font-size: 32px;
+      height: 30px;
       font-weight: normal;
+      .v-btn__content {
+        height: 30px;
+        line-height: 30px;
+        justify-content: flex-end;
+      }
       .v-icon {
+        font-size: 32px;
         margin-right: 10px;
       }
     }

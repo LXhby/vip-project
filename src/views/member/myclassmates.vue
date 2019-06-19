@@ -2,10 +2,7 @@
   <div class="padding-20 my-classmate-page">
     <member-detail></member-detail>
     <div class="main">
-      <div class="classmates-title">
-        <p></p>
-        <span>我的学友</span>
-      </div>
+      <page-title title="我的学友"></page-title>
       <v-list three-line>
         <template v-for="(item, index) in items">
           <v-list-tile avatar>
@@ -37,10 +34,12 @@
 <script>
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import PageTitle from "@/component/page_title";
 export default {
   components: {
     MemberDetail,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   },
   data() {
     return {
@@ -54,22 +53,9 @@ export default {
 @import "@/style/public.scss";
 .my-classmate-page {
   .main {
-    .classmates-title {
-      display: flex;
-      align-items: center;
-      padding: 30px 0 0 0;
-      p {
-        margin-left: 10px;
-        margin-right: 14px;
-        width: 8px;
-        height: 30px;
-        border-radius: 4px;
-        background-color: $bg-color;
-      }
-      span {
-        color: $text-gray-color;
-        font-size: 30px;
-      }
+    .v-list {
+      padding: 0px;
+      margin-top: -28px;
     }
     .v-avatar {
       position: relative;

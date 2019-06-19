@@ -3,10 +3,8 @@
     <div class="class-record">
       <member-detail></member-detail>
       <div class="course-herald">
-        <div class="herald-title">
-          <p></p>
-          <span>上课记录</span>
-        </div>
+        <page-title title="上课记录"></page-title>
+
         <div class="herald-info">
           <course-list></course-list>
           <course-list></course-list>
@@ -22,13 +20,14 @@
 import MemberDetail from "@/component/user_detail";
 import CourseList from "@/component/course_list";
 import CommonBottom from "@/component/common_bottom";
-
+import PageTitle from "@/component/page_title";
 export default {
   name: "ServerCenter",
   components: {
     MemberDetail,
     CourseList,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   }
 };
 </script>
@@ -37,23 +36,5 @@ export default {
 @import "@/style/public.scss";
 .class-record {
   padding: 20px;
-  .course-herald {
-    padding: 30px 0 0 0;
-    .herald-title {
-      display: flex;
-      align-items: center;
-      p {
-        margin-right: 14px;
-        width: 8px;
-        height: 30px;
-        border-radius: 4px;
-        background-color: $bg-color;
-      }
-      span {
-        color: $text-gray-color;
-        font-size: 30px;
-      }
-    }
-  }
 }
 </style>
