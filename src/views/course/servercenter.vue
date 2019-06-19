@@ -37,11 +37,11 @@ export default {
   padding: 20px;
   .course-herald {
     .herald-title {
-      padding: 30px 0;
-      margin-left: 7px;
+      padding: 35px 0;
       display: flex;
       align-items: center;
       p {
+        margin-left: 8px;
         margin-right: 10px;
         width: 8px;
         height: 30px;
@@ -51,6 +51,7 @@ export default {
       span {
         color: $text-gray-color;
         font-size: 32px;
+        line-height: 32px;
       }
     }
   }

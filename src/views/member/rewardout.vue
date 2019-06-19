@@ -6,7 +6,6 @@
         <p></p>
         <span>提现申请</span>
       </div>
-<<<<<<< HEAD
       <div class="content">
         <v-text-field class="input" v-model="money" label="请输入提现金额，最高不能高于20000元" required></v-text-field>
         <div class="choose">
@@ -90,8 +89,6 @@
         <p>* 提现需要扣除微信提现手续费和个人所得税;</p>
         <p>* 如您在提现过程中遇到问题可致电010-888888（后台设置）;</p>
       </div>
-=======
->>>>>>> 2cf7c5aed1d628edccb973d8beaf8342e4f1771c
     </div>
     <common-bottom></common-bottom>
   </div>
