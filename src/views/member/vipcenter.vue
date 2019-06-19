@@ -20,25 +20,27 @@
       </div>
       <v-container fluid>
         <v-list>
-          <template v-for="(item, i) in items">
-            <v-divider v-if="item.divider" :key="i"></v-divider>
-            <v-list-tile v-else :key="item.title" @click>
-              <v-list-tile-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-title class="title-list">{{ item.title }}</v-list-tile-title>
-              <v-list-tile-action v-if="item.badge">
-                <v-badge color="red">
-                  <template v-slot:badge>
-                    <span>5</span>
-                  </template>
-                </v-badge>
-              </v-list-tile-action>
-              <v-list-tile-action class="icon-right">
-                <v-icon>chevron_right</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-          </template>
+          <router-link :to="router">
+            <template v-for="(item, i) in items">
+              <v-divider v-if="item.divider" :key="i"></v-divider>
+              <v-list-tile v-else :key="item.title" @click="pageChange(i)">
+                <v-list-tile-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-title class="title-list">{{ item.title }}</v-list-tile-title>
+                <v-list-tile-action v-if="item.badge">
+                  <v-badge color="red">
+                    <template v-slot:badge>
+                      <span>5</span>
+                    </template>
+                  </v-badge>
+                </v-list-tile-action>
+                <v-list-tile-action class="icon-right">
+                  <v-icon>chevron_right</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+            </template>
+          </router-link>
         </v-list>
       </v-container>
     </div>
@@ -57,6 +59,7 @@ export default {
   },
   data() {
     return {
+      router: {}, // 跳转route
       width: 300,
       arr: [1, 2, 3, 4],
       items: [
@@ -74,6 +77,30 @@ export default {
         { divider: true }
       ]
     };
+  },
+  methods: {
+    pageChange(i) {
+      switch (i) {
+        case 0:
+          this.router = {path: '/myclassmates'}
+          break;
+        case 2:
+          this.router = {path: '/myreward'}
+          break;
+        case 4:
+          this.router = {path: '/rewardout'}
+          break;
+        case 6:
+          this.router = {path: '/newscenter'}
+          break;
+        case 8:
+          this.router = {path: '/serverrules'}
+          break;
+        default:
+          this.router = {}
+          break;
+      }
+    }
   }
 };
 </script>
@@ -106,7 +133,7 @@ export default {
     padding: 0 30px;
     .avatar {
       padding: 15px;
-      .icon-top{
+      .icon-top {
         width: 100%;
         height: 100%;
         border-radius: 50%;
@@ -121,9 +148,8 @@ export default {
       margin-right: 20px;
       color: $text-gray-color;
     }
-    .icon-right{
+    .icon-right {
       width: 100%;
-      
     }
   }
 }
