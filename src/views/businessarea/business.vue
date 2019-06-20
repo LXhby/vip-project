@@ -5,7 +5,7 @@
       <v-btn small round class="btn2">我的信息</v-btn>
       <v-btn small class="btn1 fr">信息发布</v-btn>
     </div>
-    <div class="padding-20">
+    <div class="padding-20 businiss-box">
       <user-detail></user-detail>
       <div class="main">
         <page-title title="商机服务"></page-title>
@@ -89,6 +89,11 @@ export default {
 @import "@/style/public.scss";
 .businiss-info-page {
   .header {
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+    top: 0px;
+    left: 0px;
     padding: 0 20px;
     background-color: $bg-color;
     .v-btn {
@@ -107,97 +112,100 @@ export default {
       margin-left: 32px;
     }
   }
-}
-.main {
-  .article-item {
-    &:nth-child(1) {
-      margin-top: 0px;
-    }
-    &:nth-last-child() {
-      border-bottom: 0px solid #fff;
-    }
-    margin-top: 35px;
-    padding-bottom: 35px;
-    border-bottom: 1px solid whitesmoke;
-    .item-head {
-      padding-left: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .img-avatar {
-        img {
-          width: 60px;
-          height: 60px;
-          border-radius: 6px;
-          vertical-align: middle;
-        }
-        .user {
-          display: inline-block;
-          vertical-align: middle;
-          margin-left: 10px;
-          p {
-            font-size: 28px;
-            color: $bg-color;
-          }
-          span {
-            font-size: 24px;
-            color: $color;
-          }
-        }
+  .businiss-box {
+    margin-top: 70px;
+  }
+  .main {
+    .article-item {
+      &:nth-child(1) {
+        margin-top: 0px;
       }
-      .delet-btn {
-        height: 40px;
-        min-width: 80px !important;
-        font-size: 20px;
-        padding: 0px;
-        color: $bg-color;
-        background-color: #fff;
-        box-shadow: none;
-        font-weight: normal;
-        border: 2px solid $bg-color;
+      &:nth-last-child() {
+        border-bottom: 0px solid #fff;
       }
-    }
-    .img-list {
-      margin-top: 15px;
-      padding: 0 0 0 80px;
-      .flex {
-        padding-right: 10px;
-      }
-      img {
-        width: 100%;
-      }
-    }
-    .show-time {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: $text-gray-color;
-      margin-left: 80px;
-      padding-right: 10px;
-    }
-    .comment {
-      margin: 0 10px 0 80px;
-      background-color: rgb(241, 241, 241);
-      .good {
+      margin-top: 35px;
+      padding-bottom: 35px;
+      border-bottom: 1px solid whitesmoke;
+      .item-head {
+        padding-left: 8px;
         display: flex;
         align-items: center;
-        padding: 5px;
-        border-bottom: 1px solid rgb(234, 234, 234);
-        p {
-          span {
-            margin: 0 5px;
-            color: $bg-color;
+        justify-content: space-between;
+        .img-avatar {
+          img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            vertical-align: middle;
+          }
+          .user {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+            p {
+              font-size: 28px;
+              color: $bg-color;
+            }
+            span {
+              font-size: 24px;
+              color: $color;
+            }
           }
         }
+        .delet-btn {
+          height: 40px;
+          min-width: 80px !important;
+          font-size: 20px;
+          padding: 0px;
+          color: $bg-color;
+          background-color: #fff;
+          box-shadow: none;
+          font-weight: normal;
+          border: 2px solid $bg-color;
+        }
       }
-      .my-comment {
-        padding: 5px 10px 20px;
-        p {
-          .name {
-            color: $bg-color;
+      .img-list {
+        margin-top: 15px;
+        padding: 0 0 0 80px;
+        .flex {
+          padding-right: 10px;
+        }
+        img {
+          width: 100%;
+        }
+      }
+      .show-time {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $text-gray-color;
+        margin-left: 80px;
+        padding-right: 10px;
+      }
+      .comment {
+        margin: 0 10px 0 80px;
+        background-color: rgb(241, 241, 241);
+        .good {
+          display: flex;
+          align-items: center;
+          padding: 5px;
+          border-bottom: 1px solid rgb(234, 234, 234);
+          p {
+            span {
+              margin: 0 5px;
+              color: $bg-color;
+            }
           }
-          .maohao {
-            margin-right: 10px;
+        }
+        .my-comment {
+          padding: 5px 10px 20px;
+          p {
+            .name {
+              color: $bg-color;
+            }
+            .maohao {
+              margin-right: 10px;
+            }
           }
         }
       }
