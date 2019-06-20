@@ -154,7 +154,7 @@ export default {
         background-color: #fff;
         box-shadow: none;
         font-weight: normal;
-        border: 1px solid $bg-color;
+        border: 2px solid $bg-color;
       }
     }
     .img-list {
