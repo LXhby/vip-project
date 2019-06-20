@@ -17,7 +17,7 @@
     </router-link>
     <router-link :to="{path: '/business'}">
       <v-btn flat color="primary" value="business">
-        <span>商机</span>
+        <span>商圈</span>
         <i
           class="iconfont icon-quanziguanli"
           style="font-size:24px;line-height:24px;margin-bottom:4px;"

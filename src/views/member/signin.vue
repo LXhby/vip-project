@@ -124,6 +124,8 @@ export default {
         display: flex;
         align-items: center;
         .left {
+          color: #606266;
+          font-weight: 500;
           width: 100px;
           text-align-last: justify;
         }
@@ -131,7 +133,7 @@ export default {
           font-size: 24px;
           .maohao {
             margin-right: 15px;
-            color: #000;
+            color: #606266;
           }
         }
         .user-info {
@@ -143,6 +145,10 @@ export default {
       .course-info-list {
         div {
           p {
+            .maohao {
+              margin-right: 15px;
+              color: #606266;
+            }
             span {
               color: $bg-color;
             }
@@ -157,7 +163,6 @@ export default {
       width: 100%;
       margin-left: 0px;
       margin-right: 0px;
-      font-size: 35px;
     }
   }
 }

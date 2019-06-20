@@ -1,64 +1,67 @@
 <template>
-  <div>
+  <div class="businiss-info-page">
+    <div class="header">
+      <v-btn small round class="btn1">所有信息</v-btn>
+      <v-btn small round class="btn2">我的信息</v-btn>
+      <v-btn small class="btn1 fr">信息发布</v-btn>
+    </div>
     <div class="padding-20">
       <user-detail></user-detail>
       <div class="main">
-        <div class="title">
-          <p></p>
-          <span>商机服务</span>
-        </div>
+        <page-title title="商机服务"></page-title>
         <div class="content">
           <template v-for="(item ,index) in arr">
-            <v-list one-line subheader :key="index">
-              <v-list-tile class="avater">
-                <v-list-tile-avatar>
+            <div class="article-item">
+              <div class="item-head">
+                <div class="img-avatar">
                   <img src="https://cdn.vuetifyjs.com/images/lists/1.jpg">
-                </v-list-tile-avatar>
-
-                <v-list-tile-content>
-                  <v-list-tile-title class="top-title" v-html="`王晓文`"></v-list-tile-title>
-                  <v-list-tile-sub-title v-html="`北京拓客云科技有限公司`"></v-list-tile-sub-title>
-                </v-list-tile-content>
-
-                <div class="delete-btn">
-                  <v-btn flat color="primary" @click="small" class="delete">删除</v-btn>
-                </div>
-              </v-list-tile>
-              <div class="content-info">
-                <v-list>
-                  <img>
-                </v-list>
-                <p class="time">
-                  <span>1分钟前</span>
-                  <v-icon>more_horiz</v-icon>
-                </p>
-                <div class="comment">
-                  <div class="good">
-                    <v-icon>favorite_border</v-icon>
-                    <p>
-                      <span>王晓文</span>
-                      <span>王勇</span>
-                      <span>大海</span>
-                    </p>
+                  <div class="user">
+                    <p>王晓文</p>
+                    <span>北京拓客云科技有限公司</span>
                   </div>
-                  <v-list class="my-comment">
-                    <p>
-                      <span class="name maohao">王勇:</span>
-                      <span>不错，支持你哦！</span>
-                    </p>
-                    <p>
-                      <span class="name">王晓文</span>
-                      <span>回复</span>
-                      <span class="name maohao">王勇:</span>
-                      <span>专业!</span>
-                    </p>
-                  </v-list>
+                </div>
+                <v-btn small round class="delet-btn">删除</v-btn>
+              </div>
+              <div class="img-list">
+                <v-layout row wrap>
+                  <v-flex v-for="i in 3" :key="`3${i}`" xs4>
+                    <img src="../../assets/timg.jpeg" aspect-ratio="1.7">
+                  </v-flex>
+                </v-layout>
+              </div>
+
+              <p class="show-time">
+                <span>1分钟前</span>
+                <i class="iconfont icon-gengduo1"></i>
+              </p>
+              <div class="comment">
+                <div class="good">
+                  <v-icon>favorite_border</v-icon>
+                  <p>
+                    <span>王晓文</span>
+                    <span>王勇</span>
+                    <span>大海</span>
+                  </p>
+                </div>
+                <div class="my-comment">
+                  <p>
+                    <span class="name maohao">王勇:</span>
+                    <span>不错，支持你哦！</span>
+                  </p>
+                  <p>
+                    <span class="name">王晓文</span>
+                    <span>回复</span>
+                    <span class="name maohao">王勇:</span>
+                    <span>专业!</span>
+                  </p>
                 </div>
               </div>
-            </v-list>
+            </div>
           </template>
         </div>
       </div>
+      <div class="bottom-tip">-- 我是有底线的 --</div>
+      <div style="height:56px;"></div>
     </div>
     <common-bottom></common-bottom>
   </div>
@@ -67,10 +70,12 @@
 <script>
 import UserDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import PageTitle from "@/component/page_title";
 export default {
   components: {
     UserDetail,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   },
   data() {
     return {
@@ -82,82 +87,117 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/public.scss";
-
-.main {
-  .title {
-    display: flex;
-    align-items: center;
-    padding: 30px 0;
-    p {
-      margin-right: 10px;
-      width: 8px;
-      height: 30px;
-      border-radius: 4px;
-      background-color: $bg-color;
+.businiss-info-page {
+  .header {
+    padding: 0 20px;
+    background-color: $bg-color;
+    .v-btn {
+      margin: 15px 0;
+      min-width: 120px;
+      height: 40px;
+      padding: 0px;
+      font-size: 24px;
+      font-weight: 400;
+      background: rgb(255, 205, 158) !important;
     }
-    span {
-      font-weight: normal;
-      font-size: 32px;
-      color: $text-gray-color;
+    .btn1 {
+      color: $bg-color;
+    }
+    .btn2 {
+      margin-left: 32px;
     }
   }
-  .content {
-    .v-list {
-      padding: 0;
-      .avater {
-        .theme--light {
-          padding: 0;
-          .top-title {
+}
+.main {
+  .article-item {
+    &:nth-child(1) {
+      margin-top: 0px;
+    }
+    &:nth-last-child() {
+      border-bottom: 0px solid #fff;
+    }
+    margin-top: 35px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid whitesmoke;
+    .item-head {
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .img-avatar {
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 6px;
+          vertical-align: middle;
+        }
+        .user {
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 10px;
+          p {
+            font-size: 28px;
             color: $bg-color;
           }
-          .delete-btn {
-            .delete {
-              width: 100px;
-            }
+          span {
+            font-size: 24px;
+            color: $color;
           }
         }
+      }
+      .delet-btn {
+        height: 40px;
+        min-width: 80px !important;
+        font-size: 20px;
+        padding: 0px;
+        color: $bg-color;
+        background-color: #fff;
+        box-shadow: none;
+        font-weight: normal;
+        border: 1px solid $bg-color;
       }
     }
-    .content-info {
-      padding: 10px 0 10px 100px;
-      .v-list {
-        img {
-          width: 200px;
-          height: 300px;
-          background-color: gray;
-        }
+    .img-list {
+      margin-top: 15px;
+      padding: 0 0 0 80px;
+      .flex {
+        padding-right: 10px;
       }
-      .time {
+      img {
+        width: 100%;
+      }
+    }
+    .show-time {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: $text-gray-color;
+      margin-left: 80px;
+      padding-right: 10px;
+    }
+    .comment {
+      margin: 0 10px 0 80px;
+      background-color: rgb(241, 241, 241);
+      .good {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        span {
-          color: #999;
-        }
-      }
-      .comment {
-        background-color: rgb(230, 230, 230);
-        .good {
-          display: flex;
-          align-items: center;
-          padding: 5px;
-          border-bottom: 1px solid rgb(206, 206, 206);
-          p {
-            span {
-              margin: 0 5px;
-              color: $bg-color;
-            }
+        padding: 5px;
+        border-bottom: 1px solid rgb(234, 234, 234);
+        p {
+          span {
+            margin: 0 5px;
+            color: $bg-color;
           }
         }
-        .my-comment {
-          padding: 5px 10px 20px;
-          p {
-            .name {
-              color: $bg-color;
-            }
-            .maohao {
-              margin-right: 10px;
-            }
+      }
+      .my-comment {
+        padding: 5px 10px 20px;
+        p {
+          .name {
+            color: $bg-color;
+          }
+          .maohao {
+            margin-right: 10px;
           }
         }
       }

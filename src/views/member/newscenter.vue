@@ -92,7 +92,7 @@ export default {
       }
       .news-nav {
         h4 {
-          font-size: 26px;
+          font-size: 28px;
           margin-left: -12.5px;
           color: $bg-color;
           font-weight: normal;
@@ -107,7 +107,7 @@ export default {
         margin-bottom: 34px;
         padding: 20px 40px;
         border: 1px solid rgb(221, 221, 221);
-        font-size: 26px;
+        font-size: 28px;
         color: rgb(102, 102, 102);
         background: rgb(244, 244, 244);
         border-radius: 8px;

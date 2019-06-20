@@ -1,50 +1,47 @@
 <template>
-  <div class="padding-20">
+  <div class="padding-20 vip-center-page">
     <member-detail></member-detail>
     <div class="main">
-      <div class="title">
-        <p></p>
-        <span>会员服务</span>
-      </div>
-      <div class="medium">
-        <v-list v-for="(item, index) in arr" :key="index">
-          <router-link :to="router">
-            <v-list-tile-content @click="pageChange(item.id)">
-              <v-list-tile-avatar class="avatar">
-                <div class="icon-top">
-                  <i :class="['iconfont',item.icon]"></i>
-                </div>
-              </v-list-tile-avatar>
-              <v-list-tile-sub-title>{{item.title}}</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </router-link>
-        </v-list>
-      </div>
-      <v-container fluid class="nav-list">
+      <page-title title="会员服务"></page-title>
+      <v-layout row class="nav-list">
+        <v-flex v-for="(item, index) in arr" :key="index" xs4>
+          <div class="each-item" @click="goPage(item.url)">
+            <div class="item-avatar">
+              <i :class="['iconfont',item.icon]"></i>
+            </div>
+            <p>{{item.title}}</p>
+          </div>
+        </v-flex>
+      </v-layout>
+
+      <v-container fluid class="ul-list">
         <v-list>
-          <router-link :to="router">
-            <template v-for="(item, i) in items">
-              <v-divider v-if="item.divider" :key="i"></v-divider>
-              <v-list-tile v-else :key="item.title" @click="pageChange(item.id)">
-                <v-list-tile-action>
-                  <i :class="['iconfont',item.icon]"></i>
-                </v-list-tile-action>
-                <v-list-tile-title class="title-list">{{ item.title }}</v-list-tile-title>
-                <v-list-tile-action v-if="item.badge">
-                  <v-badge color="red">
-                    <template v-slot:badge>
-                      <span>5</span>
-                    </template>
-                  </v-badge>
-                </v-list-tile-action>
-                <v-list-tile-action class="icon-right">
-                  <v-icon>chevron_right</v-icon>
-                </v-list-tile-action>
-              </v-list-tile>
-            </template>
-          </router-link>
+          <template v-for="(item, i) in items">
+            <v-list-tile :key="item.title" avatar @click="goPage(item.url)">
+              <v-list-tile-avatar>
+                <i :class="['iconfont',item.icon]"></i>
+              </v-list-tile-avatar>
+
+              <v-list-tile-content>
+                <v-badge color="red" v-if="item.badge" class="badge-num">
+                  <template v-slot:badge>
+                    <span>5</span>
+                  </template>
+                  <div>{{item.title}}</div>
+                </v-badge>
+                <v-list-tile-title v-else v-html="item.title"></v-list-tile-title>
+                <!-- <div class="badge-num">5</div> -->
+              </v-list-tile-content>
+
+              <v-list-tile-action>
+                <i class="iconfont icon-next1"></i>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-divider></v-divider>
+          </template>
         </v-list>
       </v-container>
+      <div style="height:56px;"></div>
     </div>
     <common-bottom></common-bottom>
   </div>
@@ -53,11 +50,12 @@
 <script>
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
-
+import PageTitle from "@/component/page_title";
 export default {
   components: {
     MemberDetail,
-    CommonBottom
+    CommonBottom,
+    PageTitle
   },
   data() {
     return {
@@ -65,76 +63,49 @@ export default {
       width: 300,
       arr: [
         {
-          id: 1,
+          url: "/mycard",
           icon: "icon-credentials_icon",
           title: "我的资料"
         },
         {
-          id: 2,
+          url: "/servercenter",
           icon: "icon-shijianjilu",
           title: "课程预告"
         },
         {
-          id: 3,
+          url: "/classrecord",
           icon: "icon-biao",
           title: "上课记录"
         },
         {
-          id: 4,
+          url: "/signin",
           icon: "icon-ziyuan1",
           title: "会议签到"
         }
       ],
       items: [
-        { id: 5, icon: "icon-banzu-", title: "我的学友" },
-        { divider: true },
-        { id: 6, icon: "icon-qian", title: "我的奖金" },
-        { divider: true },
-        { id: 7, icon: "icon-yinhangqia", title: "提现申请" },
-        { divider: true },
-        { id: 8, icon: "icon-xiaoxi", title: "我的消息", badge: true },
-        { divider: true },
-        { id: 9, icon: "icon-aixin", title: "服务条款" },
-        { divider: true },
-        { icon: "icon-kefu-tianchong", title: "客服电话" },
-        { divider: true }
+        { url: "/myclassmates", icon: "icon-banzu-", title: "我的学友" },
+
+        { url: "/myreward", icon: "icon-qian", title: "我的奖金" },
+
+        { url: "/rewardout", icon: "icon-yinhangqia", title: "提现申请" },
+
+        {
+          url: "/newscenter",
+          icon: "icon-xiaoxi",
+          title: "我的消息",
+          badge: true
+        },
+
+        { url: "/serverrules", icon: "icon-aixin", title: "服务条款" },
+
+        { icon: "icon-kefu-tianchong", title: "客服电话" }
       ]
     };
   },
   methods: {
-    pageChange(id) {
-      switch (id) {
-        case 1:
-          this.router = { path: "/mycard" };
-          break;
-        case 2:
-          this.router = { path: "/servercenter" };
-          break;
-        case 3:
-          this.router = { path: "/classrecord" };
-          break;
-        case 4:
-          this.router = { path: "/signin" };
-          break;
-        case 5:
-          this.router = { path: "/myclassmates" };
-          break;
-        case 6:
-          this.router = { path: "/myreward" };
-          break;
-        case 7:
-          this.router = { path: "/rewardout" };
-          break;
-        case 8:
-          this.router = { path: "/newscenter" };
-          break;
-        case 9:
-          this.router = { path: "/serverrules" };
-          break;
-        default:
-          this.router = {};
-          break;
-      }
+    goPage(url) {
+      this.$router.push(url);
     }
   }
 };
@@ -144,60 +115,52 @@ export default {
 @import "@/style/public.scss";
 
 .main {
-  padding: 40px 0;
-  margin-bottom: 80px;
-  .title {
-    display: flex;
-    align-items: center;
-    p {
-      margin-right: 10px;
-      width: 8px;
-      height: 30px;
-      border-radius: 4px;
+  .nav-list {
+    margin-bottom: 25px;
+
+    .each-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p {
+        margin-top: 15px;
+        font-size: 28px;
+        color: $color;
+      }
+    }
+    .item-avatar {
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
+      border-radius: 50%;
       background-color: $bg-color;
-    }
-    span {
-      font-weight: normal;
-      font-size: 32px;
-      color: $text-gray-color;
-    }
-  }
-  .medium {
-    display: flex;
-    justify-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
-    .avatar {
-      padding: 15px;
-      .icon-top {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background-color: rgb(254, 93, 41);
-        .iconfont {
-          font-size: 48px;
-          text-align: center;
-          color: #fff;
-          line-height: 100%;
-        }
+      .iconfont {
+        font-size: 48px;
+        text-align: center;
+        color: #fff;
       }
     }
   }
-  .fluid {
+  .ul-list {
     padding: 0;
-    .title-list {
-      width: 320px;
-      margin-right: 20px;
-      color: $text-gray-color;
+    margin-bottom: 50px;
+
+    .v-list {
+      padding: 0px;
+      .v-list__tile--avatar {
+        height: 100px;
+      }
+      .v-list__tile__title {
+        color: $color;
+      }
     }
-    .icon-right {
-      width: 100%;
+    .iconfont {
+      font-size: 40px;
     }
   }
-  .nav-list {
+  .ul-list {
     .icon-banzu- {
       color: rgb(94, 204, 246);
     }
@@ -215,6 +178,31 @@ export default {
     }
     .icon-kefu-tianchong {
       color: rgb(255, 141, 183);
+    }
+    .icon-next1 {
+      font-size: 32px;
+      color: rgb(218, 218, 218);
+    }
+  }
+}
+</style>
+<style lang="scss">
+@import "@/style/public.scss";
+.vip-center-page {
+  .ul-list {
+    .v-list__tile--avatar {
+      height: 100px;
+      padding: 0px;
+    }
+    .v-divider {
+      border-color: whitesmoke !important;
+    }
+    .badge-num {
+      color: $color;
+      .v-badge__badge {
+        top: 0px;
+        right: -50px;
+      }
     }
   }
 }

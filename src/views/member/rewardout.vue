@@ -1,5 +1,5 @@
 <template>
-  <div class="padding-20">
+  <div class="padding-20 rewardOut-page">
     <member-detail></member-detail>
     <div class="main">
       <page-title title="提现申请"></page-title>
@@ -7,11 +7,9 @@
       <div class="content">
         <v-text-field class="input" v-model="money" label="请输入提现金额，最高不能高于20000元" required></v-text-field>
         <div class="choose">
-          <v-radio-group class="radio" v-model="radioGroup">
-            <v-radio :label="`微信钱包`"></v-radio>
-          </v-radio-group>
-          <v-radio-group class="radio" v-model="radioGroup">
-            <v-radio :label="`银行卡`"></v-radio>
+          <v-radio-group class="radio" v-model="radioGroup" row>
+            <v-radio :label="`微信钱包`" color="primary" value="box"></v-radio>
+            <v-radio :label="`银行卡`" color="primary" value="car"></v-radio>
           </v-radio-group>
         </div>
         <div class="btn">
@@ -104,7 +102,8 @@ export default {
   },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      radioGroup: ""
     };
   }
 };
@@ -114,7 +113,8 @@ export default {
 @import "@/style/public.scss";
 .main {
   .content {
-    padding: 0 20px;
+    padding: 0 25px;
+
     .choose {
       display: flex;
       align-items: center;
@@ -135,6 +135,8 @@ export default {
     }
   }
   .tips {
+    font-size: 24px;
+    color: $text-gray-color;
     padding: 30px 20px;
   }
 }
@@ -203,6 +205,29 @@ export default {
       margin-left: 0px;
       margin-right: 0px;
       font-size: 20px;
+    }
+  }
+}
+</style>
+<style lang="scss">
+.rewardOut-page {
+  .input {
+    .v-input__slot {
+      &:before {
+        border-color: #ddd !important;
+      }
+    }
+    .v-text-field__slot {
+      .v-label {
+        font-size: 28px;
+      }
+    }
+  }
+  .choose {
+    .v-input--radio-group__input {
+      .v-label {
+        font-size: 28px !important;
+      }
     }
   }
 }
