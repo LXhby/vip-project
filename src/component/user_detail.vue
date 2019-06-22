@@ -1,6 +1,6 @@
 <template>
   <div class="user-detail">
-    <v-card color="primary" class="white--text border-radius">
+    <v-card class="white--text border-radius">
       <v-list two-line subheader class="list-bg">
         <v-list-tile avatar>
           <v-list-tile-avatar>
@@ -55,6 +55,9 @@ export default {};
 .user-detail {
   position: relative;
   font-size: 28px;
+  background-image: url("../assets/1.png");
+  background-size: 100%;
+  background-position: 0 0;
   .star-cart {
     margin-right: -34px;
     background: rgba(255, 255, 255, 0.2) !important;

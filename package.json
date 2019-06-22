@@ -8,7 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^2.6.5",
+    "es6-promise": "^4.2.8",
+    "fastclick": "^1.0.6",
+    "js-cookie": "^2.2.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "lib-flexible": "^0.3.2",
@@ -16,11 +21,15 @@
     "postcss-loader": "^3.0.0",
     "postcss-px2rem": "^0.3.0",
     "postcss-px2rem-exclude": "0.0.6",
+    "qs": "^6.7.0",
+    "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
+    "vue-timeago": "^5.1.2",
     "vue-wechat-title": "^2.0.5",
     "vuetify": "^1.5.5",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

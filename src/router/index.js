@@ -34,7 +34,7 @@ export default new Router({
             component: Register,
             meta: {
                 title: '注册会员',
-                auth: false
+                auth: true
             }
         },
         {
