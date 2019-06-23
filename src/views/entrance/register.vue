@@ -37,6 +37,7 @@
           <v-text-field v-model="form.code" placeholder="请输入验证码" required :rules="codeRules"></v-text-field>
           <v-btn color="primary" round depressed @click="regist" large class="regist-btn">注册会员</v-btn>
         </v-form>
+        <v-snackbar v-model="snackbar" timeout="2000" color="success" top>注册成功</v-snackbar>
       </div>
     </div>
     <div class="footer">版权所有由后台设置</div>
@@ -45,7 +46,7 @@
 
 <script>
 import Cookies from "js-cookie";
-import { getCode } from "@/api/index";
+import { getCode, activateVip } from "@/api/index";
 export default {
   name: "Register",
   data() {
@@ -65,11 +66,18 @@ export default {
       codeRules: [
         v => !!v || "请填写验证码",
         v => v.length == 6 || "请填写6位数验证码"
-      ]
+      ],
+      snackbar: false
     };
   },
   methods: {
-    regist() {},
+    regist() {
+      if (this.valid) {
+        activateVip(this.form).then(res => {
+          this.snackbar = true;
+        });
+      }
+    },
     startTimer() {
       this.btnDisabled = true;
       let seconds = 60;
@@ -87,6 +95,7 @@ export default {
       if (!this.form.mobile || this.form.mobile.length != 11) {
         return false;
       } else {
+        this.startTimer();
         getCode({
           mobile: this.form.mobile
         })
@@ -102,11 +111,6 @@ export default {
             console.log(error);
             // this.$vux.toast.text(error.response.data.message);
           });
-      }
-    },
-    validate() {
-      if (this.$refs.form.validate()) {
-        this.snackbar = true;
       }
     }
   },
