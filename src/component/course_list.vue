@@ -5,11 +5,11 @@
         <v-flex xs9>
           <v-card-title primary-title>
             <v-layout class="course-title" column wrap justify-space-between>
-              <div class="hd-title">第一期某某课程某某课程某某课程</div>
+              <div class="hd-title">{{courseName}}</div>
               <div class="time">
                 <p class="fl">
                   <i class="iconfont icon-shizhong1"></i>
-                  <span>2019年9月12日-15日</span>
+                  <span>{{courseTime}}</span>
                 </p>
                 <p class="fr">
                   <i class="iconfont icon-address"></i>
@@ -35,7 +35,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["courseName", "courseAddress", "courseTime"]
+};
 </script>
 
 <style lang="scss" >

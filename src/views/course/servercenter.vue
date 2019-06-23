@@ -3,10 +3,12 @@
     <member-detail></member-detail>
     <div class="course-herald">
       <page-title title="课程预告"></page-title>
-      <div class="herald-info">
-        <course-list></course-list>
-        <course-list></course-list>
-        <course-list></course-list>
+      <div class="herald-info" v-for="(course, index) in courseInfo" :key="index">
+        <course-list
+          :courseName="course.courseName"
+          :courseAddress="course.courseAddress"
+          :courseTime="course.courseTime"
+        />
       </div>
     </div>
     <CommonBottom></CommonBottom>
@@ -18,7 +20,8 @@ import MemberDetail from "@/component/user_detail";
 import CourseList from "@/component/course_list";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
-import { findCourse } from "@/api/course"
+import { findCourse } from "@/api/course";
+import { changeDate } from "@/utils/dateChange";
 export default {
   name: "ServerCenter",
   components: {
@@ -27,13 +30,29 @@ export default {
     CommonBottom,
     PageTitle
   },
+  data() {
+    return {
+      courseInfo: []
+    };
+  },
   created() {
-    findCourse({"per-page": 5})
-    .then(response => {
-      console.log(response)
-    })
-    .catch(console.log)
-  }
+    findCourse({ "per-page": 5 })
+      .then(response => {
+        const { data } = response;
+        const { items } = data;
+        items.forEach(ele => {
+          let obj = {
+            courseName: ele.name,
+            courseAddress: ele.address,
+            courseTime: ele.start_date+ '-' +ele.end_date
+          };
+          this.courseInfo.push(obj);
+        });
+        console.log(this.courseInfo);
+      })
+      .catch(console.log);
+  },
+  methods: {}
 };
 </script>
 
