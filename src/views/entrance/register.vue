@@ -37,7 +37,7 @@
           <v-text-field v-model="form.code" placeholder="请输入验证码" required :rules="codeRules"></v-text-field>
           <v-btn color="primary" round depressed @click="regist" large class="regist-btn">注册会员</v-btn>
         </v-form>
-        <v-snackbar v-model="snackbar" timeout="2000" color="success" top>注册成功</v-snackbar>
+        <v-snackbar v-model="snackbar" :timeout="2000" color="success" top>注册成功</v-snackbar>
       </div>
     </div>
     <div class="footer">版权所有由后台设置</div>
@@ -46,9 +46,13 @@
 
 <script>
 import Cookies from "js-cookie";
-import { getCode, activateVip } from "@/api/index";
+import { getCode, activateVip, checkmemberorders } from "@/api/index";
+import { mapGetters } from "vuex";
 export default {
   name: "Register",
+  computed: {
+    ...mapGetters(["id", "openid", "config_id", "subscribe_at"])
+  },
   data() {
     return {
       form: {
@@ -73,9 +77,21 @@ export default {
   methods: {
     regist() {
       if (this.valid) {
-        activateVip(this.form).then(res => {
+        const info = {
+          mobile: this.form.mobile.trim()
+        };
+        activateVip(this.id, info).then(res => {
           this.snackbar = true;
-          this.$router.push({ name: "Introduce" });
+          //判断有没有订单  跳转路由
+          checkmemberorders(this.id).then(res => {
+            if (res.data.items.length) {
+              //有订单跳会员详情
+              this.$router.push({ name: "Buyer" });
+            } else {
+              this.$router.push({ name: "Introduce" });
+            }
+          });
+          // this.$router.push({ name: "Introduce" });
         });
       }
     },

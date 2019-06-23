@@ -1,11 +1,7 @@
 <template>
   <div class="introduce">
     <div class="bg">
-      <img
-        src="http://dfiles.speiyou.com/img/2018/03/02/201547_5a9940732c1ef.jpg"
-        alt
-        class="hd-bg"
-      >
+      <img :src="baseUrl+prodInfo.image" alt class="hd-bg">
       <div class="bg-info">
         <p class="info-up">
           已有
@@ -24,8 +20,8 @@
                   <!-- <router-link :to="{name: 'raise-view', params: {id: item.id}}"> -->
                   <div class="bd-title">
                     <div class="title-img">
-                      <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
-                      <p>王*文购买了学习型中国会员</p>
+                      <img :src="item.member.avatar">
+                      <p>{{item.member.realname}}购买了{{item.membership.name}}</p>
                     </div>
                     <div class="erweima">
                       <i class="iconfont icon-erweima"></i>
@@ -36,29 +32,66 @@
               </marquee>
             </div>
 
-            <div class="product-info">222</div>
+            <div class="product-info">
+              <!-- <p>产品名称：{{prodInfo.name}}</p> -->
+              <p>{{prodInfo.summary}}</p>
+              <!-- <p>产品原价：{{prodInfo.original_price}}</p>
+              <p>产品价格：{{prodInfo.price}}</p>
+              <p>续费价格：{{prodInfo.renew_price}}</p>
+              <p>称号：{{prodInfo.title}}</p>
+              <div class="pro-detail">
+                <p class="fl">产品详情：</p>
+                <div v-html="prodInfo.content" class="fl"></div>
+              </div>-->
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="bottom">
-      <v-checkbox v-model="checkbox" label="会员服务条款协议" required color="primary" class="checkbox"></v-checkbox>
+      <v-checkbox
+        v-model="checkbox"
+        label="会员服务条款协议"
+        required
+        color="primary"
+        class="checkbox"
+        @click.native="dialog = true"
+      ></v-checkbox>
 
-      <v-btn color="primary" small depressed class="btn">激活会员</v-btn>
+      <v-btn color="primary" small depressed class="btn" @click="activateVip">激活会员</v-btn>
     </div>
+    <v-dialog v-model="dialog" max-width="290" persistent>
+      <v-card>
+        <v-card-title class="headline">会员服务条款协议</v-card-title>
+
+        <v-card-text v-html="prodInfo.terms"></v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click="handleyes(false)">取消</v-btn>
+          <v-btn color="green darken-1" flat="flat" @click="handleyes(true)">同意</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-snackbar v-model="snackbar" :timeout="2000" color="error" top>请勾选服务条款协议</v-snackbar>
   </div>
 </template>
 
 <script>
 import Marquee from "@/component/marquee/marquee";
 import MarqueeItem from "@/component/marquee/marquee-item";
-import { getmember_order } from "@/api/index";
+import { getmember_order, getProdInfo } from "@/api/index";
 export default {
   data() {
     return {
       bottomNav: "recent",
       checkbox: false,
-      list: [1, 2, 3, 4]
+      dialog: false,
+      list: [],
+      prodInfo: {
+        image: ""
+      },
+      snackbar: false
     };
   },
   components: {
@@ -67,8 +100,27 @@ export default {
   },
   created() {
     getmember_order().then(res => {
-      this.list = res.data;
+      console.log("res", res);
+      this.list = res.data.items;
     });
+    //获取背景图和产品信息
+    getProdInfo().then(res => {
+      this.prodInfo = res.data.items[0];
+    });
+  },
+  methods: {
+    handleyes(info) {
+      this.dialog = false;
+      this.checkbox = info;
+    },
+    activateVip() {
+      if (!this.checkbox) {
+        this.snackbar = true;
+        return false;
+      } else {
+        this.$router.push({ name: "Pay", params: { id: this.prodInfo.id } });
+      }
+    }
   }
 };
 </script>
@@ -103,7 +155,7 @@ export default {
         }
       }
       .info-down {
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 800;
       }
     }
@@ -128,7 +180,6 @@ export default {
       .card {
         padding: 0px 10px;
         height: 100%;
-        overflow: auto;
       }
       .card-title {
         height: 76px;
@@ -175,8 +226,14 @@ export default {
       }
 
       .product-info {
+        height: calc(100% - 76px);
+        overflow: auto;
         padding: 10px;
         font-size: 32px;
+
+        .pro-detail {
+          display: inline-block;
+        }
       }
     }
   }

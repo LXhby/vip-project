@@ -2,24 +2,21 @@
   <div class="course-list">
     <v-card class="white--text border-radius">
       <v-layout row class="main">
-        <v-flex xs9>
-          <v-card-title primary-title>
+        <v-flex xs10>
+          <div style="height:100%;">
             <v-layout class="course-title" column wrap justify-space-between>
               <div class="hd-title">{{courseName}}</div>
               <div class="time">
-                <p class="fl">
-                  <i class="iconfont icon-shizhong1"></i>
-                  <span>{{courseTime}}</span>
-                </p>
-                <p class="fr">
-                  <i class="iconfont icon-address"></i>
-                  <span>北京 九华山庄</span>
-                </p>
+                <i class="iconfont icon-shizhong1"></i>
+                <span>{{courseTime}}</span>
+
+                <i class="iconfont icon-address"></i>
+                <span>{{courseAddress}}</span>
               </div>
             </v-layout>
-          </v-card-title>
+          </div>
         </v-flex>
-        <v-flex xs3>
+        <v-flex xs2>
           <v-layout row align-center justify-end style="height:100%;">
             <div class="border-radius count-num">
               <p>
@@ -69,9 +66,19 @@ export default {
       font-weight: 500;
     }
     .time {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      p {
+        display: inline-block;
+      }
       i {
         font-size: 30px;
         margin-right: 8px;
+      }
+      .icon-address {
+        margin-left: 20px;
       }
       span {
         font-size: 24px;

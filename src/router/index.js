@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // 入口
 import Register from '../views/entrance/register.vue'
 import Introduce from '../views/entrance/introduce'
+import PayPage from '../views/entrance/paypage'
 import Buyer from '../views/entrance/buyer'
 // 入会
 import Success from '../views/enrollment/success'
@@ -44,6 +45,15 @@ export default new Router({
             meta: {
                 title: '学创会会员介绍',
                 auth: false
+            }
+        },
+        {
+            path: '/paypage/:id',
+            name: 'Pay',
+            component: PayPage,
+            meta: {
+                title: '支付',
+
             }
         },
         {

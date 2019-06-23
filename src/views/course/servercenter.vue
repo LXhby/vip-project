@@ -44,7 +44,7 @@ export default {
           let obj = {
             courseName: ele.name,
             courseAddress: ele.address,
-            courseTime: ele.start_date+ '-' +ele.end_date
+            courseTime: changeDate(ele.start_date, ele.end_date)
           };
           this.courseInfo.push(obj);
         });

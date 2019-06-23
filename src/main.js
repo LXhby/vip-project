@@ -31,7 +31,7 @@ history.clear()
 const DEBUG = (process.env.NODE_ENV == 'development');
 
 
-
+Vue.prototype.baseUrl = 'http://api.xchmm.yiidev.cn'
 Vue.config.productionTip = false
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
