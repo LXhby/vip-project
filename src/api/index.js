@@ -25,3 +25,11 @@ export function getCode(data) {
         data: data
     })
 }
+/**注册会员 */
+export function activateVip(data) {
+    return request({
+        url: 'members',
+        method: 'post',
+        data: data
+    })
+}
