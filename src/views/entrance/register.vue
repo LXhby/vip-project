@@ -15,13 +15,26 @@
     </div>
     <div class="main">
       <div class="bd">
-        <v-form>
+        <v-form v-model="valid">
           <div class="ipt-one">
-            <v-text-field v-model="mobile" label="请输入手机号" required></v-text-field>
-            <v-btn color="primary" round depressed class="code-btn">获取验证码</v-btn>
+            <v-text-field
+              v-model="form.mobile"
+              placeholder="请输入手机号"
+              required
+              :rules="mobileRules"
+              clearable
+            ></v-text-field>
+            <v-btn
+              color="primary"
+              round
+              depressed
+              class="code-btn"
+              :disabled="btnDisabled"
+              @click.native="sendVerifycode()"
+            >{{btnText}}</v-btn>
           </div>
 
-          <v-text-field v-model="code" label="请输入验证码" required></v-text-field>
+          <v-text-field v-model="form.code" placeholder="请输入验证码" required :rules="codeRules"></v-text-field>
           <v-btn color="primary" round depressed @click="regist" large class="regist-btn">注册会员</v-btn>
         </v-form>
       </div>
@@ -31,16 +44,75 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
+import { getCode } from "@/api/index";
 export default {
   name: "Register",
   data() {
     return {
-      mobile: "",
-      code: ""
+      form: {
+        mobile: "",
+        code: ""
+      },
+      valid: false,
+      btnText: "获取验证码",
+      timer: null,
+      btnDisabled: false,
+      mobileRules: [
+        v => !!v || "请填写手机号",
+        v => v.length == 11 || "请输入正确的手机号"
+      ],
+      codeRules: [
+        v => !!v || "请填写验证码",
+        v => v.length == 6 || "请填写6位数验证码"
+      ]
     };
   },
   methods: {
-    regist() {}
+    regist() {},
+    startTimer() {
+      this.btnDisabled = true;
+      let seconds = 60;
+      this.timer = setInterval(() => {
+        seconds--;
+        this.btnText = seconds + "秒";
+        if (seconds <= 0) {
+          clearInterval(this.timer);
+          this.btnText = "重发验证码";
+          this.btnDisabled = false;
+        }
+      }, 1000);
+    },
+    sendVerifycode() {
+      if (!this.form.mobile || this.form.mobile.length != 11) {
+        return false;
+      } else {
+        getCode({
+          mobile: this.form.mobile
+        })
+          .then(response => {
+            console.log(response);
+            if (response.data.success) {
+              this.startTimer();
+            } else {
+              // this.$vux.toast.text(response.data.message);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            // this.$vux.toast.text(error.response.data.message);
+          });
+      }
+    },
+    validate() {
+      if (this.$refs.form.validate()) {
+        this.snackbar = true;
+      }
+    }
+  },
+  created() {
+    console.log("Cookies", Cookies.get("token"));
+    console.log("Cookies", this.$store.getters.token);
   }
 };
 </script>

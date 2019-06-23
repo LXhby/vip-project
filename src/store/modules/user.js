@@ -1,9 +1,27 @@
 const state = {
-    name: '',
-    avatar: ''
+    userInfo: {
+        id: 1,
+        access_token: '69fde8eb10c3cf4d7442d09c5b7359ea',
+        openid: 'ou12Jt24UjMA7pA5bVZ4uB-Jjapw',
+        nickname: '王勇🇨🇳',
+        realname: '撒飞洒发',
+        company: 'asdfasdf',
+        post: '萨芬',
+        headimgurl: 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKNpepsCnC60XfmFpotyNhkh9YFdjeBxvHsngCw3J7NeyrJgmFaWQSdK914oBsNibiccRdgoU2Unc6Q/132',
+        mobile: '13233332222',
+        balance: '5203.00'
+    },
+    token: '69fde8eb10c3cf4d7442d09c5b7359ea'
 }
 
-const mutations = {}
+const mutations = {
+    setUserInfo: (state, info) => {
+        state.userInfo = info
+    },
+    setToken: (state, token) => {
+        state.token = token
+    },
+}
 
 const actions = {
 

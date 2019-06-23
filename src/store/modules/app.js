@@ -1,10 +1,26 @@
+import {
+    stat
+} from "fs";
+
 const state = {
-    title: ''
+    title: '',
+    isLoading: false,
+    url: '',
+    direction: 'forward'
 }
 
 const mutations = {
     setTitle: (state, payload) => {
         state.title = payload
+    },
+    updateLoadingStatus: (state, payload) => {
+        state.isLoading = payload.isLoading
+    },
+    setUrl: (state, url) => {
+        state.url = url;
+    },
+    updateDirection: (state, payload) => {
+        state.direction = payload.direction
     }
 }
 

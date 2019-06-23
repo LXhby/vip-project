@@ -81,7 +81,8 @@ export default {
     return {
       arr: [1, 2, 3, 4]
     };
-  }
+  },
+  created() {}
 };
 </script>
 
