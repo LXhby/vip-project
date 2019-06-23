@@ -18,6 +18,7 @@ import MemberDetail from "@/component/user_detail";
 import CourseList from "@/component/course_list";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import { findCourse } from "@/api/course"
 export default {
   name: "ServerCenter",
   components: {
@@ -25,6 +26,13 @@ export default {
     CourseList,
     CommonBottom,
     PageTitle
+  },
+  created() {
+    findCourse({"per-page": 5})
+    .then(response => {
+      console.log(response)
+    })
+    .catch(console.log)
   }
 };
 </script>
