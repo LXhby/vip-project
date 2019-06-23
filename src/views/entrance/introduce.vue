@@ -18,16 +18,25 @@
       <div class="main-box">
         <div class="bd">
           <div class="card">
-            <div class="bd-title">
-              <div class="title-img">
-                <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
-                <p>王*文购买了学习型中国会员</p>
-              </div>
-              <div class="erweima">
-                <i class="iconfont icon-erweima"></i>
-              </div>
+            <div class="card-title">
+              <marquee>
+                <marquee-item v-for="(item,index) in list" :key="index">
+                  <!-- <router-link :to="{name: 'raise-view', params: {id: item.id}}"> -->
+                  <div class="bd-title">
+                    <div class="title-img">
+                      <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
+                      <p>王*文购买了学习型中国会员</p>
+                    </div>
+                    <div class="erweima">
+                      <i class="iconfont icon-erweima"></i>
+                    </div>
+                  </div>
+                  <!-- </router-link> -->
+                </marquee-item>
+              </marquee>
             </div>
-            <div class="product-info"></div>
+
+            <div class="product-info">222</div>
           </div>
         </div>
       </div>
@@ -41,12 +50,25 @@
 </template>
 
 <script>
+import Marquee from "@/component/marquee/marquee";
+import MarqueeItem from "@/component/marquee/marquee-item";
+import { getmember_order } from "@/api/index";
 export default {
   data() {
     return {
       bottomNav: "recent",
-      checkbox: false
+      checkbox: false,
+      list: [1, 2, 3, 4]
     };
+  },
+  components: {
+    Marquee,
+    MarqueeItem
+  },
+  created() {
+    getmember_order().then(res => {
+      this.list = res.data;
+    });
   }
 };
 </script>
@@ -103,6 +125,14 @@ export default {
       border-radius: 8px;
       background-color: #fff;
       top: -76px;
+      .card {
+        padding: 0px 10px;
+        height: 100%;
+        overflow: auto;
+      }
+      .card-title {
+        height: 76px;
+      }
       .bd-title {
         display: flex;
         align-items: center;
@@ -124,30 +154,29 @@ export default {
             border-radius: 50%;
           }
         }
-      }
-      .erweima {
-        // width: 40px;
-        // height: 40px;
-        font-size: 0px;
-        margin-right: 10px;
-        padding: 8px 6px 6px 6px;
-        border-radius: 6px;
-        background-color: rgb(102, 102, 102);
-        text-align: center;
-        i {
-          font-size: 28px;
-          line-height: 28px;
-          width: 28px;
-          height: 28px;
+        .erweima {
+          // width: 40px;
+          // height: 40px;
+          font-size: 0px;
+          margin-right: 10px;
+          padding: 8px 6px 6px 6px;
+          border-radius: 6px;
+          background-color: rgb(102, 102, 102);
           text-align: center;
-          color: #fff;
+          i {
+            font-size: 28px;
+            line-height: 28px;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            color: #fff;
+          }
         }
       }
+
       .product-info {
-        margin-top: 300px;
-        text-align: center;
-        font-size: 30px;
-        color: $bg-color;
+        padding: 10px;
+        font-size: 32px;
       }
     }
   }

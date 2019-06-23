@@ -52,11 +52,22 @@
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import { getServeterms } from "@/api/member";
 export default {
   components: {
     MemberDetail,
     CommonBottom,
     PageTitle
+  },
+  data() {
+    return {
+      rules: ""
+    };
+  },
+  created() {
+    getServeterms().then(res => {
+      this.rules = res.data;
+    });
   }
 };
 </script>

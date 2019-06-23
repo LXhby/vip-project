@@ -75,6 +75,7 @@ export default {
       if (this.valid) {
         activateVip(this.form).then(res => {
           this.snackbar = true;
+          this.$router.push({ name: "Introduce" });
         });
       }
     },
@@ -114,10 +115,7 @@ export default {
       }
     }
   },
-  created() {
-    console.log("Cookies", Cookies.get("token"));
-    console.log("Cookies", this.$store.getters.token);
-  }
+  created() {}
 };
 </script>
 

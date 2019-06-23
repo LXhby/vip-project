@@ -9,14 +9,21 @@
       <div style="height:calc(100% - 56px);" class="main-box">
         <div class="bd">
           <div class="card">
-            <div class="bd-title">
-              <div class="title-img">
-                <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
-                <p>王*文购买了学习型中国会员</p>
-              </div>
-              <div class="erweima">
-                <i class="iconfont icon-erweima"></i>
-              </div>
+            <div class="card-title">
+              <marquee>
+                <marquee-item v-for="(item,index) in list" :key="index">
+                  <div class="bd-title">
+                    <div class="title-img">
+                      <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
+                      <p>王*文购买了学习型中国会员</p>
+                    </div>
+                    <div class="erweima">
+                      <i class="iconfont icon-erweima"></i>
+                    </div>
+                  </div>
+                  <!-- </router-link> -->
+                </marquee-item>
+              </marquee>
             </div>
             <div class="product-info"></div>
           </div>
@@ -28,15 +35,20 @@
 </template>
 <script>
 import CommonBottom from "@/component/common_bottom";
-
+import Marquee from "@/component/marquee/marquee";
+import MarqueeItem from "@/component/marquee/marquee-item";
+import { getmember_order } from "@/api/index";
 export default {
   components: {
-    CommonBottom
+    CommonBottom,
+    Marquee,
+    MarqueeItem
   },
 
   data() {
     return {
       bottomNav: "recent",
+      list: [1, 2, 3, 4],
       items: [
         {
           src:
@@ -59,6 +71,11 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    getmember_order().then(res => {
+      this.list = res.data;
+    });
   }
 };
 </script>
