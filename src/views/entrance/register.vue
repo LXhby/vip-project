@@ -6,11 +6,20 @@
         alt
         class="hd-bg"
       >
+
       <div class="hd-detail">
-        <div class="img fl">
-          <img src="../../assets/avatar.png" alt>
+        <div class="hd-scroll">
+          <marquee>
+            <marquee-item v-for="(item,index) in list" :key="index">
+              <div class="clearfix text-main">
+                <div class="img fl">
+                  <img :src="item.member.avatar" alt>
+                </div>
+                <p class="detail-text fl">{{item.member.realname}}购买了{{item.membership.name}}</p>
+              </div>
+            </marquee-item>
+          </marquee>
         </div>
-        <p class="detail-text fl">王*文购买了学习型中国会员</p>
       </div>
     </div>
     <div class="main">
@@ -45,16 +54,28 @@
 </template>
 
 <script>
+import Marquee from "@/component/marquee/marquee";
+import MarqueeItem from "@/component/marquee/marquee-item";
 import Cookies from "js-cookie";
-import { getCode, activateVip, checkmemberorders } from "@/api/index";
+import {
+  getCode,
+  activateVip,
+  checkmemberorders,
+  getmember_order
+} from "@/api/index";
 import { mapGetters } from "vuex";
 export default {
   name: "Register",
+  components: {
+    Marquee,
+    MarqueeItem
+  },
   computed: {
     ...mapGetters(["id", "openid", "config_id", "subscribe_at"])
   },
   data() {
     return {
+      list: [],
       form: {
         mobile: "",
         code: ""
@@ -131,7 +152,12 @@ export default {
       }
     }
   },
-  created() {}
+  created() {
+    getmember_order().then(res => {
+      console.log("res", res);
+      this.list = res.data.items;
+    });
+  }
 };
 </script>
 
@@ -155,12 +181,27 @@ export default {
       position: absolute;
       top: 30px;
       left: 30px;
+      width: 380px;
+      height: 60px;
       display: inline-block;
-      padding: 12px;
       background-color: $bg-yellow;
       font-size: 24px;
       color: #fff;
       border-radius: 30px;
+      .hd-scroll {
+        height: 100%;
+        padding: 12px;
+        .text-main {
+          width: 100%;
+
+          p {
+            width: calc(100% - 52px);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
       .img {
         width: 36px;
         height: 36px;

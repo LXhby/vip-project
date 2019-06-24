@@ -20,8 +20,8 @@
                   <!-- <router-link :to="{name: 'raise-view', params: {id: item.id}}"> -->
                   <div class="bd-title">
                     <div class="title-img">
-                      <img :src="item.member.avatar">
-                      <p>{{item.member.realname}}购买了{{item.membership.name}}</p>
+                      <!-- <img :src="item.member.avatar" v-if="item.member.avatar"> -->
+                      <!-- <p>{{item.member.realname}}购买了{{item.membership.name}}</p> -->
                     </div>
                     <div class="erweima">
                       <i class="iconfont icon-erweima"></i>
@@ -80,7 +80,8 @@
 <script>
 import Marquee from "@/component/marquee/marquee";
 import MarqueeItem from "@/component/marquee/marquee-item";
-import { getmember_order, getProdInfo } from "@/api/index";
+import { getmember_order, getProdInfo, addOrder } from "@/api/index";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -93,6 +94,9 @@ export default {
       },
       snackbar: false
     };
+  },
+  computed: {
+    ...mapGetters(["userInfo"])
   },
   components: {
     Marquee,
@@ -118,7 +122,26 @@ export default {
         this.snackbar = true;
         return false;
       } else {
-        this.$router.push({ name: "Pay", params: { id: this.prodInfo.id } });
+        const info = {
+          user_id: this.userInfo.id,
+          membership_id: this.prodInfo.id,
+          member_id: 0
+        };
+        addOrder(info).then(res => {
+          if (res.status == 201) {
+            let order = res.data;
+            if (order.status == "未支付") {
+              window.localStorage.setItem(
+                "payment",
+                JSON.stringify({
+                  id: order.id,
+                  type: "MEMBER_ORDER"
+                })
+              );
+              this.$router.push({ name: "Pay" });
+            }
+          }
+        });
       }
     }
   }

@@ -5,15 +5,14 @@
       <em class="preview__value" v-html="headerValue || '&nbsp;'"></em>
     </div>
     <div class="preview__bd">
-      <div class="weui-form-preview__item" v-for="item in bodyItems">
-        <label class="weui-form-preview__label">{{(item.label)}}</label>
-        <span class="weui-form-preview__value">{{(item.value)}}</span>
+      <div class="preview__item" v-for="item in bodyItems">
+        <label class="preview__label">{{(item.label)}}</label>
+        <span class="preview__value">{{(item.value)}}</span>
       </div>
     </div>
-    <div class="weui-form-preview__ft">
+    <div class="preview__ft">
       <a
-        class="weui-form-preview__btn"
-        :class="{'weui-form-preview__btn_default': button.style==='default', 'weui-form-preview__btn_primary': button.style === 'primary'}"
+        class="btn"
         href="javascript:"
         v-for="button in footerButtons"
         @click="onButtonClick(button.onButtonClick, button.link)"
@@ -55,6 +54,7 @@ export default {
 <style lang="scss" scoped>
 .pay-preview {
   color: #999999;
+  background-color: #fff;
   .preview__hd {
     position: relative;
     padding: 20px 30px;
@@ -73,8 +73,9 @@ export default {
     .label {
       float: left;
       margin-right: 32px;
-      font-size: 36px;
+      font-size: 32px;
       color: #999999;
+      font-weight: 500;
       text-align: justify;
       text-align-last: justify;
     }
@@ -89,6 +90,60 @@ export default {
     }
   }
   .preview__bd {
+    padding: 20px 30px;
+    .preview__item {
+      line-height: 56px;
+      text-align: right;
+      .preview__label {
+        float: left;
+        font-size: 28px;
+        margin-right: 28px;
+        min-width: 115px;
+        color: #999999;
+        font-weight: 500;
+        text-align: justify;
+        text-align-last: justify;
+      }
+      .preview__value {
+        font-size: 28px;
+        font-weight: 500;
+        display: block;
+        overflow: hidden;
+        word-break: normal;
+        word-wrap: break-word;
+      }
+    }
+  }
+  .preview__ft {
+    position: relative;
+    line-height: 100px;
+    &:after {
+      content: " ";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 2px;
+      border-top: 2px solid #d5d5d6;
+      color: #d5d5d6;
+    }
+    .btn {
+      position: relative;
+      display: block;
+      flex: 1;
+      text-align: center;
+      font-size: 32px;
+      &:after {
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 2px;
+        border-top: 2px solid #d5d5d6;
+        color: #d5d5d6;
+      }
+    }
   }
 }
 </style>

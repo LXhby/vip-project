@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pay-page">
     <form-preview
       header-label="付款金额"
       :header-value="amount"
@@ -20,7 +20,21 @@ export default {
     return {
       order: {},
       amount: "¥0.00",
-      list: [],
+      list: [
+        {
+          label: "商品",
+          value: "电动打蛋机"
+        },
+        {
+          label: "标题标题",
+          value: "名字名字名字"
+        },
+        {
+          label: "标题标题",
+          value:
+            "很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字"
+        }
+      ],
       params: {},
       buttons: [
         {
@@ -53,4 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pay-page {
+  height: 100%;
+}
 </style>

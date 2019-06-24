@@ -64,6 +64,14 @@ export function getProdInfo() {
     })
 }
 
+/**点击激活会员添加订单 */
+export function addOrder(data) {
+    return request({
+        url: 'member-orders',
+        method: 'post',
+        data: data
+    })
+}
 /**获取会员产品信息 */
 export function ProdById(id) {
     return request({

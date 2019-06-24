@@ -48,7 +48,7 @@ export default new Router({
             }
         },
         {
-            path: '/paypage/:id',
+            path: '/paypage',
             name: 'Pay',
             component: PayPage,
             meta: {
