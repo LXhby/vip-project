@@ -21,21 +21,7 @@ export default {
     return {
       order: {},
       amount: "¥0.00",
-      list: [
-        {
-          label: "商品",
-          value: "电动打蛋机"
-        },
-        {
-          label: "标题标题",
-          value: "名字名字名字"
-        },
-        {
-          label: "标题标题",
-          value:
-            "很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字"
-        }
-      ],
+      list: [],
       params: {},
       buttons: [
         {
@@ -50,7 +36,6 @@ export default {
     };
   },
   mounted() {
-    console.log("this.$", this.$wechat);
     this.$wechat.ready(() => {
       console.log(1);
       this.params = JSON.parse(window.localStorage.getItem("payment"));

@@ -11,3 +11,12 @@ export function getMembership(id) {
         method: 'get'
     })
 }
+
+/**获取自己的手机号 */
+export function getMobile(id) {
+    return request({
+        url: 'users/' + id,
+        method: 'get'
+    })
+}
+/**更新会员信息 */

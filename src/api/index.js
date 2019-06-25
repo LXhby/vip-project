@@ -58,7 +58,11 @@ export function checkmemberorders(id) {
 /**会员介绍--订单轮播 */
 export function getmember_order() {
     return request({
-        url: 'member-orders?expand=member,membership,user',
+        url: 'member-orders',
+        params: {
+            expand: 'member,membership,user',
+            'MemberOrderSearch[status]': '已支付'
+        },
         method: 'get'
     })
 }
