@@ -66,13 +66,9 @@ export default new Router({
             }
         },
         {
-            path: '/success',
+            path: '/success/:id',
             name: 'Success',
-            component: Success,
-            meta: {
-                title: '欢迎加入学创会',
-                auth: false
-            }
+            component: Success
         },
         {
             path: '/authentication',

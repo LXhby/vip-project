@@ -1,7 +1,3 @@
-import {
-    stat
-} from "fs";
-
 const state = {
     title: '',
     isLoading: false,

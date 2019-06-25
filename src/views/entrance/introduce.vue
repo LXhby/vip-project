@@ -130,6 +130,7 @@ export default {
         addOrder(info).then(res => {
           if (res.status == 201) {
             let order = res.data;
+            console.log("order", order);
             if (order.status == "未支付") {
               window.localStorage.setItem(
                 "payment",
@@ -139,6 +140,8 @@ export default {
                 })
               );
               this.$router.push({ name: "Pay" });
+            } else {
+              //todoing
             }
           }
         });

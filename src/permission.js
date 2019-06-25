@@ -3,9 +3,11 @@ import store from "./store";
 import NProgress from "nprogress"; // progress bar
 import Cookies from "js-cookie";
 import "nprogress/nprogress.css";
+import Vue from 'vue'
 import {
     oauth,
-    oauthUser
+    oauthUser,
+    weixin
 } from "@/api/index.js";
 
 NProgress.configure({
@@ -97,10 +99,48 @@ router.beforeEach(async (to, from, next) => {
     }
 });
 
-router.afterEach(() => {
+router.afterEach(function (to) {
     store.commit('app/updateLoadingStatus', {
         isLoading: false
     })
     // finish progress bar
     NProgress.done();
+    Vue.nextTick(() => {
+        var url = ''
+        // 判断是否是ios微信浏览器
+        if (window.__wxjs_is_wkwebview === true) {
+            console.log('__wxjs_is_wkwebview');
+            if (store.state.app.url) {
+                url = store.state.app.url.split('#')[0]
+            } else {
+                url = window.location.href.split('#')[0]
+            }
+        } else {
+            console.log('is not wkwebview');
+            url = window.location.href.split('#')[0]
+        }
+        console.log('wechat jssdk', url);
+
+        weixin(url).then(response => {
+            // js-sdk配置
+            console.log('res', response)
+            Vue.prototype.$wechat.config(response.data);
+        })
+        console.log(Vue.prototype)
+        // Vue.prototype.$wechat.config({
+        //     appid: 'wxff02baa5a59ff067',
+        //     appsecret: '763f4552a9fef8823cef09add5f2427d',
+        //     token: 'z5ZtRFYZ8sxprndn',
+        //     encodingAesKey: 'pP5C0slTkqJwMh23EFcz3GeKPuovLxDi1ar0PE3uHhL',
+        //     username: 'gh_3d133ce2f762',
+        //     pay_mch_id: '1353927702',
+        //     pay_key: 'AXGongRuiLingWangYongYangQingBin',
+        //     apiclient_cert: 'wechat_1_apiclient_cert.pem',
+        //     apiclient_key: 'wechat_1_apiclient_key.pem',
+        //     created_at: '1442999403'
+        // })
+        // console.log("Vue", Vue.wechat)
+
+
+    }, 1000)
 });

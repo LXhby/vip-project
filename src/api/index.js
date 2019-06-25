@@ -10,6 +10,16 @@ export function oauth(data) {
         }
     });
 }
+/**微信 */
+export function weixin(url) {
+    return request({
+        url: 'wechat/js-sdk-config',
+        method: 'get',
+        params: {
+            url: url
+        }
+    })
+}
 /**获取用户信息 */
 export function oauthUser() {
     return request({
@@ -33,13 +43,14 @@ export function activateVip(id, data) {
         data: data
     })
 }
-/**验证有没有订单 */
+/**验证有没有订单并且是会员 */
 export function checkmemberorders(id) {
     return request({
         url: 'member-orders',
         method: 'get',
         params: {
-            'MemberOrderSearch[user_id]': id
+            'MemberOrderSearch[user_id]': id,
+            'MemberOrderSearch[status]': '已支付'
         }
     })
 }
@@ -47,7 +58,7 @@ export function checkmemberorders(id) {
 /**会员介绍--订单轮播 */
 export function getmember_order() {
     return request({
-        url: 'member-orders?expand=member,membership',
+        url: 'member-orders?expand=member,membership,user',
         method: 'get'
     })
 }
@@ -75,11 +86,18 @@ export function addOrder(data) {
 /**获取会员产品信息 */
 export function ProdById(id) {
     return request({
-        url: 'memberships/' + id,
+        url: 'member-orders/' + id,
         method: 'get',
+        params: {
+            expand: 'membership'
+        }
     })
 }
-/** 会员产品介绍购买---*/
-export function prodintroduce() {
-
+/** 会员产品介绍购买,拉起微信支付---*/
+export function paymentstart(data) {
+    return request({
+        url: 'payment/start',
+        method: 'post',
+        data: data
+    })
 }

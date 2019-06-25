@@ -1,6 +1,6 @@
 <template>
   <div class="enter-regist">
-    <div class="hd">
+    <div class="hd" v-if="list.length">
       <img
         src="http://dfiles.speiyou.com/img/2018/03/02/201545_5a994071e1d26.jpg"
         alt
@@ -156,6 +156,7 @@ export default {
     getmember_order().then(res => {
       console.log("res", res);
       this.list = res.data.items;
+      //todoing
     });
   }
 };

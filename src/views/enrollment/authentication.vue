@@ -6,17 +6,23 @@
         <span>会员实名认证</span>
       </div>
     </div>
+
     <div class="content-foot">
       <div class="content-form">
         <div class="form">
-          <v-form>
-            <v-text-field v-model="name" label="请输入真实姓名" required></v-text-field>
-            <v-text-field v-model="IDcode" label="请输入真实身份证号码" required></v-text-field>
+          <v-form v-model="valid">
+            <v-text-field
+              v-model="name"
+              placeholder="请输入真实姓名"
+              required
+              :rules="[v => !!v || '请输入真实姓名']"
+            ></v-text-field>
+            <v-text-field v-model="IDcode" placeholder="请输入真实身份证号码" required></v-text-field>
             <div class="phone">
-              <v-text-field v-model="mobile" label="请输入手机号" required></v-text-field>
+              <v-text-field v-model="mobile" placeholder="请输入手机号" required></v-text-field>
               <v-btn color="primary" round depressed class="code-btn">获取验证码</v-btn>
             </div>
-            <v-text-field v-model="code" label="请输入验证码" required></v-text-field>
+            <v-text-field v-model="code" placeholder="请输入验证码" required></v-text-field>
           </v-form>
         </div>
       </div>
@@ -41,7 +47,8 @@ export default {
       name: "", // 姓名
       IDcode: "", // 身份证号
       mobile: "", // 手机号
-      code: "" // 验证码
+      code: "", // 验证码
+      valid: false
     };
   },
   methods: {
@@ -61,7 +68,7 @@ export default {
     background-color: $bg-color;
     color: #fff;
     .title {
-      margin-left: 7px;
+      margin-left: 8px;
       display: flex;
       align-content: center;
       p {

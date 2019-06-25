@@ -1,5 +1,5 @@
-let wx
-!function (e, n) {
+let wx;
+! function (e, n) {
   wx = n(e)
 }(window, function (e, n) {
   function i(n, i, t) {
@@ -38,14 +38,14 @@ let wx
     t || (t = n.err_msg, delete n.err_msg, t = s(e, t), n.errMsg = t), (i = i || {})._complete && (i._complete(n), delete i._complete), t = n.errMsg || "", C.debug && !i.isInnerInvoke && alert(JSON.stringify(n));
     var o = t.indexOf(":");
     switch (t.substring(o + 1)) {
-    case "ok":
-      i.success && i.success(n);
-      break;
-    case "cancel":
-      i.cancel && i.cancel(n);
-      break;
-    default:
-      i.fail && i.fail(n)
+      case "ok":
+        i.success && i.success(n);
+        break;
+      case "cancel":
+        i.cancel && i.cancel(n);
+        break;
+      default:
+        i.fail && i.fail(n)
     }
     i.complete && i.complete(n)
   }
@@ -363,6 +363,7 @@ let wx
             }
           }, e))
         },
+        getLocation: function (e) {},
         previewImage: function (e) {
           i(h.previewImage, {
             current: e.current,
@@ -401,13 +402,13 @@ let wx
               var t = n.indexOf(":"),
                 o = n.substring(t + 1);
               switch (o) {
-              case "wifi":
-              case "edge":
-              case "wwan":
-                e.networkType = o;
-                break;
-              default:
-                e.errMsg = "getNetworkType:fail"
+                case "wifi":
+                case "edge":
+                case "wwan":
+                  e.networkType = o;
+                  break;
+                default:
+                  e.errMsg = "getNetworkType:fail"
               }
             }
             return e

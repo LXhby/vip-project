@@ -2,41 +2,62 @@
   <div class="successpage">
     <div class="success-info">
       <div class="head-img">
-        <img src="https://cdn.vuetifyjs.com/images/lists/2.jpg">
-        <p>微信昵称</p>
+        <img :src="user.headimgurl" v-if="user.headimgurl">
+        <p v-if="user.nickname">{{user.nickname}}</p>
       </div>
       <div class="success-content">
         <div class="title">
           <p></p>
-          <span>学创会</span>
+          <span>{{membership.name}}</span>
         </div>
         <div class="main">
-          <div class="content">
-            <p>学习，只为创造美好生活！</p>
-            <p>打造学习型个人、学习型家庭、学习型企业的创富平台</p>
-            <p>我们的信仰：良知、真理、精进、爱</p>
-          </div>
+          <div class="content" v-html="membership.summary"></div>
           <div class="foot">
             <p>
-              恭喜你成为学创会第
+              恭喜你成为{{membership.name}}
               <span>1980</span>
               个会员
+              <!-- todoing -->
             </p>
           </div>
         </div>
       </div>
     </div>
     <div class="tip">
-      <p>5秒后跳转至会员实名认证页</p>
+      <p>{{seconds}}秒后跳转至会员实名认证页</p>
     </div>
   </div>
 </template>
 
 <script>
+import { getMembership } from "@/api/certification";
 export default {
   name: "Success",
   data() {
-    return {};
+    return {
+      id: null,
+      user: {},
+      membership: {},
+      seconds: 5,
+      timer: null
+    };
+  },
+  created() {
+    this.id = this.$route.params.id;
+    console.log("id", this.id);
+    getMembership(this.id).then(res => {
+      this.user = res.data.user;
+      this.membership = res.data.membership;
+      this.$store.commit("app/setTitle", "欢迎加入" + this.membership.name);
+      this.timer = setInterval(() => {
+        this.seconds--;
+
+        if (this.seconds <= 0) {
+          clearInterval(this.timer);
+          this.$router.push({ name: "Authentication" });
+        }
+      }, 1000);
+    });
   }
 };
 </script>
@@ -66,7 +87,7 @@ export default {
         background-color: grey;
       }
       p {
-        font-size: 24px;
+        font-size: 28px;
       }
     }
     .success-content {
@@ -94,7 +115,7 @@ export default {
         padding: 20px;
         padding-bottom: 0px;
         .content {
-          font-size: 24px;
+          font-size: 28px;
           p {
             line-height: 42px;
           }
@@ -120,7 +141,7 @@ export default {
     p {
       margin-top: 27px;
       color: #fff;
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 500;
     }
   }
