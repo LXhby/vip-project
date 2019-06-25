@@ -26,7 +26,7 @@
     </div>
     <div class="main">
       <div class="bd">
-        <v-form v-model="valid">
+        <v-form v-model="valid" lazy-validation>
           <div class="ipt-one">
             <v-text-field
               v-model="form.mobile"
