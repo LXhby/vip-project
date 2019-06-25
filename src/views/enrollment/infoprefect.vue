@@ -36,7 +36,7 @@
               placeholder="请选择公司规模"
               required
             ></v-select>
-            <!-- <div class="select-city">
+            <div class="select-city">
               <div class="select-box">
                 <div>
                   <span>所在地区</span>
@@ -49,9 +49,7 @@
               <div class="city-picker" v-show="addInp">
                 <v-distpicker type="mobile" @selected="selected"></v-distpicker>
               </div>
-
-              <div class="mask" v-show="mask"></div>
-            </div>-->
+            </div>
             <v-text-field
               v-model="form.introduction"
               placeholder="请输入企业简介"
@@ -66,20 +64,20 @@
             ></v-text-field>
             <div class="addImg" @click="chooseImage">
               <span>请上传展示图片（最多3张）</span>
-              <i class="iconfont icon-xiangji"></i>
+              <i class="iconfont icon-xiangji" style="font-size:20px;line-height:20px;"></i>
             </div>
           </v-form>
-          <div class="getImg" v-for="(attach, key) in history" :key="attach.id">
-            <v-flex class="temp-pic" xs4>
-              <v-img
-                src="https://picsum.photos/510/300?1"
-                aspect-ratio="1.7"
-                contain
-                class="show-img"
-              ></v-img>
+
+          <div class="getImg">
+            <div class="temp-pic clearfix" v-for="(attach, key) in history" :key="attach.id">
+              <v-img class="show-img" src="https://picsum.photos/510/300?1" aspect-ratio="1"></v-img>
               <!-- <img :src="attach.filepath" alt> -->
-              <i class="iconfont icon-shanchu" @click.native="deleteImg(attach, key)"></i>
-            </v-flex>
+              <i
+                class="iconfont icon-shanchu"
+                @click="deleteImg(attach, key)"
+                style="line-height:16px;"
+              ></i>
+            </div>
           </div>
         </div>
       </div>
@@ -99,10 +97,11 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" flat @click="dialog = false">取消</v-btn>
-          <v-btn color="green darken-1" flat @click="dialog = false">同意</v-btn>
+          <v-btn color="green darken-1" flat @click="deleteYes">同意</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div class="mask" v-show="mask"></div>
   </div>
 </template>
 
@@ -110,8 +109,7 @@
 import {
   systemCompany,
   systemindustry,
-  downloadimage,
-  deleteImg
+  downloadimage
 } from "@/api/certification";
 import defaultImage from "@/assets/image.jpg";
 import VDistpicker from "v-distpicker";
@@ -138,9 +136,16 @@ export default {
       history: [
         {
           filepath: ""
+        },
+        {
+          filepath: ""
+        },
+        {
+          filepath: ""
         }
       ],
-      dialog: false
+      dialog: false,
+      deleteImgIndex: null
     };
   },
   components: { VDistpicker },
@@ -217,7 +222,15 @@ export default {
       if (value === null) value = defaultImage;
       console.log("value", value);
     },
-    deleteImg(item, index) {}
+    deleteImg(item, index) {
+      this.deleteImgIndex = index;
+      this.dialog = true;
+    },
+    deleteYes() {
+      console.log(this.deleteImgIndex);
+      this.history.splice(this.deleteImgIndex, 1);
+      this.dialog = false;
+    }
   }
 };
 </script>
@@ -278,6 +291,7 @@ export default {
   .select-city {
     .select-box {
       display: flex;
+      font-size: 32px;
       justify-content: space-between;
       span {
         color: #999;
@@ -286,23 +300,8 @@ export default {
         color: #999;
       }
     }
-    .mask {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-    }
+
     .city-picker {
-      position: fixed;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      height: 400px;
-      background-color: #fff;
-      z-index: 3;
-      overflow-y: auto;
     }
   }
   .addImg {
@@ -311,34 +310,60 @@ export default {
     justify-content: space-between;
   }
   .getImg {
+    margin-top: 20px;
     width: 100%;
     .temp-pic {
       position: relative;
-      .show-img {
-        width: 95%;
+      width: 30%;
+      float: left;
+      &:nth-child(1) {
+        margin-right: 5%;
+      }
+      &:nth-child(2) {
+        margin-right: 5%;
       }
       .icon-shanchu {
         position: absolute;
         color: red;
         top: 0px;
-        right: 5%;
+        right: 0;
+        background: #fff;
       }
     }
+  }
+  .mask {
+    display: block;
+    opacity: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 </style>
 <style lang="scss">
-.distpicker-address-wrapper {
-  position: relative;
-  .address-header {
-    height: 88px;
+.infoprefect {
+  .distpicker-address-wrapper {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 400px;
+    background-color: #fff;
+    z-index: 3;
+
+    .address-header {
+      height: 88px;
+    }
+    .address-container {
+      overflow: auto;
+      height: 312px;
+    }
   }
-  .address-container {
-    overflow: auto;
-    height: calc(100% - 88px);
+  .page-dialog {
+    background: #fff;
   }
-}
-.page-dialog {
-  background: #fff;
 }
 </style>
