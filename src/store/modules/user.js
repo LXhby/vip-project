@@ -13,6 +13,7 @@ const state = {
         mobile: '13233332222',
         balance: '5203.00'
     },
+    memberInfo: null,
     token: '69fde8eb10c3cf4d7442d09c5b7359ea'
 }
 
@@ -23,6 +24,9 @@ const mutations = {
     setToken: (state, token) => {
         state.token = token
     },
+    setmemberInfo: (state, info) => {
+        state.memberInfo = info;
+    }
 }
 
 const actions = {

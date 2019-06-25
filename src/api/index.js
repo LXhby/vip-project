@@ -10,7 +10,7 @@ export function oauth(data) {
         }
     });
 }
-/**微信 */
+/**微信配置 */
 export function weixin(url) {
     return request({
         url: 'wechat/js-sdk-config',
@@ -18,6 +18,14 @@ export function weixin(url) {
         params: {
             url: url
         }
+    })
+}
+
+/**系统配置 */
+export function systemSetting() {
+    return request({
+        url: '',
+        method: 'get'
     })
 }
 /**获取用户信息 */

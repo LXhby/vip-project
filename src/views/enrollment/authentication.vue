@@ -10,7 +10,7 @@
     <div class="content-foot">
       <div class="content-form">
         <div class="form">
-          <v-form v-model="valid">
+          <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field
               v-model="name"
               placeholder="请输入真实姓名"
@@ -19,10 +19,15 @@
             ></v-text-field>
             <v-text-field v-model="IDcode" placeholder="请输入真实身份证号码" required :rules="idsnValidate"></v-text-field>
             <div class="phone">
-              <v-text-field v-model="mobile" placeholder="请输入手机号"></v-text-field>
+              <v-text-field v-model="mobile" placeholder="请输入手机号" :disabled="canGetMobile" required></v-text-field>
               <v-btn color="primary" round depressed class="code-btn">获取验证码</v-btn>
             </div>
-            <v-text-field v-model="code" placeholder="请输入验证码"></v-text-field>
+            <v-text-field
+              v-model="code"
+              placeholder="请输入验证码"
+              required
+              :rules="[v => !!v || '请输入验证码']"
+            ></v-text-field>
           </v-form>
         </div>
       </div>
@@ -36,11 +41,12 @@
         <v-btn class="btn" color="primary" round depressed large @click="finishName">完成实名认证</v-btn>
       </div>
     </div>
+    <v-snackbar v-model="snackbar" :timeout="2000" color="success" top>实名认证成功</v-snackbar>
   </div>
 </template>
 
 <script>
-import { getMobile } from "@/api/certification";
+import { postMemberInfo, checkIsMember } from "@/api/certification";
 import { mapGetters } from "vuex";
 function isIdCardNo(idCard) {
   //15位和18位身份证号码的正则表达式
@@ -108,19 +114,40 @@ export default {
       mobile: "", // 手机号
       code: "", // 验证码
       valid: false,
+      canGetMobile: false,
       idsnValidate: [
         v => !!v || "请输入身份证号",
         v => isIdCardNo(v) || "身份证格式不正确"
-      ]
+      ],
+      snackbar: false
     };
   },
   created() {
     // 获取手机号
-    this.mobile = this.userInfo.mobile;
+    if (this.userInfo.mobile) {
+      this.canGetMobile = true;
+      this.mobile = this.userInfo.mobile;
+    } else {
+      this.canGetMobile = false;
+      this.mobile = "";
+    }
   },
   methods: {
     finishName() {
-      if (this.valid) {
+      if (this.$refs.form.validate()) {
+        const info = {
+          user_id: this.userInfo.id,
+          realname: this.name,
+          mobile: this.mobile,
+          idsn: this.IDcode
+        };
+        postMemberInfo(info).then(res => {
+          this.snackbar = true;
+          this.$router.push({
+            name: "Infoprefect",
+            params: { id: res.data.id }
+          });
+        });
       } else {
         return false;
       }

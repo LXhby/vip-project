@@ -80,7 +80,7 @@ export default new Router({
             }
         },
         {
-            path: '/infoprefect',
+            path: '/infoprefect/:id',
             name: 'Infoprefect',
             component: Infoprefect,
             meta: {

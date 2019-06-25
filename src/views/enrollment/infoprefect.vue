@@ -9,26 +9,78 @@
     <div class="content-foot">
       <div class="content-form">
         <div class="form">
-          <v-form>
-            <v-text-field v-model="name" label="请输入公司名称" required></v-text-field>
-            <v-text-field v-model="IDcode" label="请输入现任职务" required></v-text-field>
+          <v-form v-model="valid" ref="form" lazy-validation>
+            <v-text-field
+              v-model="form.company"
+              placeholder="请输入公司名称"
+              required
+              :rules="[v => !!v || '请输入公司名称']"
+            ></v-text-field>
+            <v-text-field
+              v-model="form.post"
+              placeholder="请输入现任职务"
+              required
+              :rules="[v => !!v || '请输入现任职务']"
+            ></v-text-field>
             <v-select
-              v-model="select"
-              :items="items"
-              :rules="[v => !!v || 'Item is required']"
-              label="请选择行业分类"
+              v-model="form.industry"
+              :items="industry"
+              :rules="[v => !!v || '请选择行业分类']"
+              placeholder="请选择行业分类"
               required
             ></v-select>
             <v-select
-              v-model="select"
-              :items="items"
-              :rules="[v => !!v || 'Item is required']"
-              label="请选择公司规模"
+              v-model="form.company_levels"
+              :items="company"
+              :rules="[v => !!v || '请选择公司规模']"
+              placeholder="请选择公司规模"
               required
             ></v-select>
-            <v-text-field v-model="IDcode" label="请输入企业简介" required></v-text-field>
-            <v-text-field v-model="IDcode" label="请输入服务内容" required></v-text-field>
+            <!-- <div class="select-city">
+              <div class="select-box">
+                <div>
+                  <span>所在地区</span>
+                </div>
+                <div>
+                  <div class="city" @click="toAddress">{{city}}</div>
+                  <i class="arrow-r"></i>
+                </div>
+              </div>
+              <div class="city-picker" v-show="addInp">
+                <v-distpicker type="mobile" @selected="selected"></v-distpicker>
+              </div>
+
+              <div class="mask" v-show="mask"></div>
+            </div>-->
+            <v-text-field
+              v-model="form.introduction"
+              placeholder="请输入企业简介"
+              required
+              :rules="[v => !!v || '请输入企业简介']"
+            ></v-text-field>
+            <v-text-field
+              v-model="form.service"
+              placeholder="请输入服务内容"
+              required
+              :rules="[v => !!v || '请输入服务内容']"
+            ></v-text-field>
+            <div class="addImg" @click="chooseImage">
+              <span>请上传展示图片（最多3张）</span>
+              <i class="iconfont icon-xiangji"></i>
+            </div>
           </v-form>
+          <div class="getImg" v-for="(attach, key) in history" :key="attach.id">
+            <v-flex class="temp-pic" xs4>
+              <v-img
+                src="https://picsum.photos/510/300?1"
+                aspect-ratio="1.7"
+                contain
+                class="show-img"
+              ></v-img>
+              <!-- <img :src="attach.filepath" alt> -->
+              <i class="iconfont icon-shanchu" @click.native="deleteImg(attach, key)"></i>
+            </v-flex>
+          </div>
         </div>
       </div>
       <div class="content-tip">
@@ -41,22 +93,131 @@
         <v-btn class="btn" color="primary" round depressed large @click="finishBusiness">完成企业信息</v-btn>
       </div>
     </div>
+    <v-dialog v-model="dialog" persistent max-width="290">
+      <v-card>
+        <v-card-text>确定要删除吗？</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click="dialog = false">取消</v-btn>
+          <v-btn color="green darken-1" flat @click="dialog = false">同意</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import {
+  systemCompany,
+  systemindustry,
+  downloadimage,
+  deleteImg
+} from "@/api/certification";
+import defaultImage from "@/assets/image.jpg";
+import VDistpicker from "v-distpicker";
 export default {
   name: "Infoprefect",
   data() {
     return {
       name: "", // 姓名
-      IDcode: "", // 身份证号
-      mobile: "", // 手机号
-      code: "" // 验证码
+      valid: false,
+      form: {
+        company: "",
+        post: "",
+        industry: "",
+        company_levels: "",
+        introduction: "",
+        service: ""
+      },
+      industry: [],
+      company: [],
+      addInp: false,
+      mask: false,
+      city: "请选择",
+      images: [],
+      history: [
+        {
+          filepath: ""
+        }
+      ],
+      dialog: false
     };
   },
+  components: { VDistpicker },
+  created() {
+    systemCompany().then(res => {
+      this.company = res.data;
+    });
+    systemindustry().then(res => {
+      this.industry = res.data;
+    });
+  },
   methods: {
-    finishBusiness() {}
+    finishBusiness() {
+      if (this.$refs.form.validate()) {
+      } else {
+        return false;
+      }
+    },
+    toAddress() {
+      this.mask = true;
+      this.addInp = true;
+    },
+    selected(data) {
+      this.mask = false;
+      this.addInp = false;
+      this.city =
+        data.province.value + " " + data.city.value + " " + data.area.value;
+      this.mask = false;
+      this.addInp = false;
+    },
+    chooseImage() {
+      this.$wechat.chooseImage({
+        count: 3,
+        sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: async res => {
+          console.log(res.localIds);
+          try {
+            for (let index = 0; index < res.localIds.length; index++) {
+              const serverId = res.localIds[index];
+              await this.uploadImage(serverId);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
+    },
+    uploadImage(serverId) {
+      return new Promise((resolve, reject) => {
+        this.$wechat.uploadImage({
+          localId: serverId,
+          isShowProgressTips: 1,
+          success: res => {
+            var serverId = res.serverId; // 返回图片的服务器端ID
+            downloadimage(serverId)
+              .then(response => {
+                this.images.push({
+                  serverId: serverId,
+                  src: response.data
+                });
+                this.updateValue(this.images);
+                resolve();
+              })
+              .catch(error => {
+                console.log(error);
+                reject(error);
+              });
+          }
+        });
+      });
+    },
+    updateValue: function(value) {
+      if (value === null) value = defaultImage;
+      console.log("value", value);
+    },
+    deleteImg(item, index) {}
   }
 };
 </script>
@@ -72,7 +233,7 @@ export default {
     background-color: $bg-color;
     color: #fff;
     .title {
-      margin-left: 7px;
+      margin-left: 8px;
       display: flex;
       align-content: center;
       p {
@@ -114,5 +275,70 @@ export default {
       }
     }
   }
+  .select-city {
+    .select-box {
+      display: flex;
+      justify-content: space-between;
+      span {
+        color: #999;
+      }
+      .city {
+        color: #999;
+      }
+    }
+    .mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .city-picker {
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      height: 400px;
+      background-color: #fff;
+      z-index: 3;
+      overflow-y: auto;
+    }
+  }
+  .addImg {
+    display: flex;
+    color: #999;
+    justify-content: space-between;
+  }
+  .getImg {
+    width: 100%;
+    .temp-pic {
+      position: relative;
+      .show-img {
+        width: 95%;
+      }
+      .icon-shanchu {
+        position: absolute;
+        color: red;
+        top: 0px;
+        right: 5%;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.distpicker-address-wrapper {
+  position: relative;
+  .address-header {
+    height: 88px;
+  }
+  .address-container {
+    overflow: auto;
+    height: calc(100% - 88px);
+  }
+}
+.page-dialog {
+  background: #fff;
 }
 </style>
