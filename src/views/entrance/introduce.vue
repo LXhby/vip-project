@@ -5,7 +5,7 @@
       <div class="bg-info">
         <p class="info-up">
           已有
-          <span>3890</span>会员
+          <span>{{list.length}}</span>会员
         </p>
         <p class="info-down">你还在犹豫什么?</p>
       </div>
@@ -20,8 +20,8 @@
                   <!-- <router-link :to="{name: 'raise-view', params: {id: item.id}}"> -->
                   <div class="bd-title">
                     <div class="title-img">
-                      <!-- <img :src="item.member.avatar" v-if="item.member.avatar"> -->
-                      <!-- <p>{{item.member.realname}}购买了{{item.membership.name}}</p> -->
+                      <img :src="item.user.headimgurl" v-if="item.user.headimgurl">
+                      <p>{{item.member?item.member.realname:item.user.nickname}}购买了{{item.membership.name}}</p>
                     </div>
                     <div class="erweima">
                       <i class="iconfont icon-erweima"></i>
@@ -32,9 +32,9 @@
               </marquee>
             </div>
 
-            <div class="product-info">
+            <div class="product-info" v-html="prodInfo.content">
               <!-- <p>产品名称：{{prodInfo.name}}</p> -->
-              <p>{{prodInfo.summary}}</p>
+
               <!-- <p>产品原价：{{prodInfo.original_price}}</p>
               <p>产品价格：{{prodInfo.price}}</p>
               <p>续费价格：{{prodInfo.renew_price}}</p>
@@ -255,11 +255,7 @@ export default {
         height: calc(100% - 76px);
         overflow: auto;
         padding: 10px;
-        font-size: 32px;
-
-        .pro-detail {
-          display: inline-block;
-        }
+        font-size: 28px;
       }
     }
   }
@@ -300,6 +296,13 @@ export default {
       margin: auto 0;
       right: 30px;
       border-radius: 8px;
+    }
+  }
+  .product-info {
+    img {
+      width: 40% !important;
+      height: auto !important;
+      margin-right: 5%;
     }
   }
 }

@@ -13,9 +13,11 @@
             <marquee-item v-for="(item,index) in list" :key="index">
               <div class="clearfix text-main">
                 <div class="img fl">
-                  <img :src="item.member.avatar" alt>
+                  <img :src="item.user.headimgurl" alt>
                 </div>
-                <p class="detail-text fl">{{item.member.realname}}购买了{{item.membership.name}}</p>
+                <p
+                  class="detail-text fl"
+                >{{item.member?item.member.realname:item.user.nickname}}购买了{{item.membership.name}}</p>
               </div>
             </marquee-item>
           </marquee>
@@ -24,7 +26,7 @@
     </div>
     <div class="main">
       <div class="bd">
-        <v-form v-model="valid">
+        <v-form v-model="valid" lazy-validation>
           <div class="ipt-one">
             <v-text-field
               v-model="form.mobile"
@@ -104,6 +106,8 @@ export default {
         activateVip(this.id, info).then(res => {
           this.snackbar = true;
           //判断有没有订单  跳转路由
+          this.$store.commit("user/setUserInfo", res.data);
+          console.log("this.$store", this.$store);
           checkmemberorders(this.id).then(res => {
             if (res.data.items.length) {
               //有订单跳会员详情
@@ -156,7 +160,6 @@ export default {
     getmember_order().then(res => {
       console.log("res", res);
       this.list = res.data.items;
-      //todoing
     });
   }
 };
@@ -204,6 +207,7 @@ export default {
         }
       }
       .img {
+        overflow: hidden;
         width: 36px;
         height: 36px;
         margin-right: 16px;

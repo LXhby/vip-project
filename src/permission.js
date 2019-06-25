@@ -27,7 +27,7 @@ router.beforeEach(async (to, from, next) => {
         // 第一次访问
         console.log("授权登录");
         // 跳转到微信授权页面，微信授权地址通过服务端获得
-        var info = "http://" + location.hostname + ":8080" + to.fullPath;
+        var info = "http://" + location.hostname + to.fullPath;
         console.log("info", info);
         oauth(info).then(res => {
             if (res.status === 200) {
@@ -126,7 +126,7 @@ router.afterEach(function (to) {
             console.log('res', response)
             Vue.prototype.$wechat.config(response.data);
         })
-        console.log(Vue.prototype)
+
         // Vue.prototype.$wechat.config({
         //     appid: 'wxff02baa5a59ff067',
         //     appsecret: '763f4552a9fef8823cef09add5f2427d',

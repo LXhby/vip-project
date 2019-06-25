@@ -10,7 +10,7 @@ export function oauth(data) {
         }
     });
 }
-/**微信 */
+/**微信配置 */
 export function weixin(url) {
     return request({
         url: 'wechat/js-sdk-config',
@@ -18,6 +18,14 @@ export function weixin(url) {
         params: {
             url: url
         }
+    })
+}
+
+/**系统配置 */
+export function systemSetting() {
+    return request({
+        url: '',
+        method: 'get'
     })
 }
 /**获取用户信息 */
@@ -58,7 +66,11 @@ export function checkmemberorders(id) {
 /**会员介绍--订单轮播 */
 export function getmember_order() {
     return request({
-        url: 'member-orders?expand=member,membership,user',
+        url: 'member-orders',
+        params: {
+            expand: 'member,membership,user',
+            'MemberOrderSearch[status]': '已支付'
+        },
         method: 'get'
     })
 }

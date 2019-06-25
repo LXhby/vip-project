@@ -24,6 +24,7 @@
     "postcss-px2rem-exclude": "0.0.6",
     "qs": "^6.7.0",
     "v-clipboard": "^2.2.2",
+    "v-distpicker": "^1.2.1",
     "vee-validate": "^2.2.11",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
