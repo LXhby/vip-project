@@ -1,8 +1,8 @@
 <template>
   <div class="businiss-info-page">
     <div class="header">
-      <v-btn small round class="btn1">所有信息</v-btn>
-      <v-btn small round class="btn2">我的信息</v-btn>
+      <v-btn small round class="btn1" @click="SearchAllInfo">所有信息</v-btn>
+      <v-btn small round class="btn2" @click="SearchMyInfo">我的信息</v-btn>
       <v-btn small class="btn1 fr">信息发布</v-btn>
     </div>
     <div class="padding-20 businiss-box">
@@ -10,28 +10,31 @@
       <div class="main">
         <page-title title="商机服务"></page-title>
         <div class="content">
-          <template v-for="(item ,index) in arr">
-            <div class="article-item">
+          <template v-for="(post ,index) in postInfo">
+            <div class="article-item" :key="index">
               <div class="item-head">
                 <div class="img-avatar">
-                  <img src="https://cdn.vuetifyjs.com/images/lists/1.jpg">
+                  <img :src="post.userHeadImg">
                   <div class="user">
-                    <p>王晓文</p>
-                    <span>北京拓客云科技有限公司</span>
+                    <p>{{post.userName}}</p>
+                    <span>{{post.userCompany}}</span>
                   </div>
                 </div>
                 <v-btn small round class="delet-btn">删除</v-btn>
               </div>
               <div class="img-list">
                 <v-layout row wrap>
-                  <v-flex v-for="i in 3" :key="`3${i}`" xs4>
-                    <img src="../../assets/timg.jpeg" aspect-ratio="1.7">
+                  <p>{{post.postContent}}</p>
+                  <v-flex v-for="(postImg, i) in post.postImgs" :key="`3${i}`" xs4>
+                    <img :src="baseUrl + postImg" aspect-ratio="1.7">
                   </v-flex>
                 </v-layout>
               </div>
 
               <p class="show-time">
-                <span>1分钟前</span>
+                <span>
+                  
+                </span>
                 <i class="iconfont icon-gengduo1"></i>
               </p>
               <div class="comment">
@@ -60,7 +63,12 @@
           </template>
         </div>
       </div>
-      <div class="bottom-tip">-- 我是有底线的 --</div>
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" spinner="spiral">
+        <span slot="no-more">
+          <div class="bottom-tip">-- 我是有底线的 --</div>
+        </span>
+      </infinite-loading>
+
       <div style="height:56px;"></div>
     </div>
     <common-bottom></common-bottom>
@@ -68,21 +76,101 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import UserDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import InfiniteLoading from "vue-infinite-loading";
+import { getPost } from "@/api/business";
 export default {
   components: {
     UserDetail,
     CommonBottom,
-    PageTitle
+    PageTitle,
+    InfiniteLoading
+  },
+  computed: {
+    ...mapGetters(["id"])
   },
   data() {
     return {
-      arr: [1, 2, 3, 4]
+      postInfo: [
+        {
+          userHeadImg: "",
+          userName: "",
+          userCompany: "",
+          postContent: "",
+          postImgs: [],
+          postCreateTime: ""
+        }
+      ]
     };
   },
-  created() {}
+  methods: {
+    fetchPage($state) {
+      getPost()
+        .then(response => {
+          const { data } = response;
+          const { items } = data;
+          let postInfo = [];
+          items.forEach(ele => {
+            let obj = {
+              userHeadImg: ele.member.user.headimgurl,
+              userName: ele.member.realname,
+              userCompany: ele.member.company,
+              postContent: ele.content,
+              postImgs: ele.images,
+              postCreateTime: ele.created_at
+            };
+            postInfo.push(obj);
+          });
+          this.postInfo = postInfo;
+          if ($state) {
+            if (response.data._meta.pageCount > 0) {
+              $state.loaded();
+            }
+            if (
+              response.data._meta.currentPage >= response.data._meta.pageCount
+            ) {
+              $state.complete();
+            }
+          }
+          this.page++;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    infiniteHandler($state) {
+      this.fetchPage($state);
+    },
+    // 查询所有信息
+    SearchAllInfo() {
+      this.fetchPage();
+    },
+    // 查询我的信息
+    SearchMyInfo() {
+      getPost(this.id)
+        .then(response => {
+          const { data } = response;
+          const { items } = data;
+          let postInfo = [];
+          items.forEach(ele => {
+            let obj = {
+              userHeadImg: ele.member.user.headimgurl,
+              userName: ele.member.realname,
+              userCompany: ele.member.company,
+              postContent: ele.content,
+              postImgs: ele.images,
+              postCreateTime: ele.created_at
+            };
+            postInfo.push(obj);
+          });
+          this.postInfo = postInfo;
+        })
+        .catch(console.log);
+    }
+  }
 };
 </script>
 

@@ -14,7 +14,15 @@ import VueWechatTitle from 'vue-wechat-title'
 import {
   wx
 } from "./utils/wx";
-
+import VueTimeago from 'vue-timeago'
+Vue.use(VueTimeago, {
+  name: 'Timeago', // component name, `timeago` by default
+  locale: 'en',
+  locales: {
+    'zh-CN': require('date-fns/locale/zh_cn'),
+    ja: require('date-fns/locale/ja')
+  }
+})
 
 Vue.prototype.$wechat = wx;
 
