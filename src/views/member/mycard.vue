@@ -1,7 +1,7 @@
 <template>
   <div class="padding-20 my-card-page">
     <member-detail></member-detail>
-    <div class="main">
+    <div class="main" v-if="(item, index) in items" :key="index">
       <div class="hg">
         <div class="top">
           <div class="herald-title">
@@ -9,16 +9,7 @@
             <span>企业简介</span>
           </div>
           <div class="content">
-            <p>
-              北京托客云科技有限公司是一支有理想、有智慧、有责任、有经验的
-              “四有青年”团队，拥有多年丰富的互联网从业和运营经验，强大有力
-              的技术团队是我们为中小企业提供服务的智慧动力和坚实后盾。
-            </p>
-            <p>
-              我们坚持以客户为中心，以市场为导向，以有效为真理的服务宗旨，致
-              力于为中小企业提供模式裂变和运营服务，解决中小企业客观困难和运
-              营变现难的二大核心痛点问题。
-            </p>
+            <p>{{item.introduction}}</p>
           </div>
         </div>
         <div class="medium">
@@ -28,9 +19,7 @@
           </div>
           <div class="content">
             <p>
-              我们坚持以客户为中心，以市场为导向，以有效为真理的服务宗旨，致
-              力于为中小企业提供模式裂变和运营服务，解决中小企业客观困难和运
-              营变现难的二大核心痛点问题。
+              {{item.service}}
             </p>
           </div>
         </div>
@@ -39,10 +28,8 @@
             <p></p>
             <span>图片展示</span>
           </div>
-          <div class="imgs">
-            <img>
-            <img>
-            <img>
+          <div class="imgs" v-for="(img, index) in item.images" :key="index">
+            <img :src="img">
           </div>
         </div>
       </div>
@@ -53,12 +40,31 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import { getCard } from "@/api/member";
 export default {
   components: {
     MemberDetail,
     CommonBottom
+  },
+  computed: {
+    ...mapGetters(["id"])
+  },
+  data() {
+    return{
+      items: [],
+    }
+  },
+  created() {
+    getCard(this.id)
+      .then(res => {
+        const { data } = response;
+        const { items } = data;
+        this.items = items
+      })
+      .catch(console.log);
   }
 };
 </script>
