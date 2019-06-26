@@ -13,7 +13,9 @@ const state = {
         mobile: '13233332222',
         balance: '5203.00'
     },
-    memberInfo: null,
+    memberInfo: {
+        realname: "小胡"
+    },
     token: '83bfd0b6f59f8506fff0096d5336d57b'
 }
 

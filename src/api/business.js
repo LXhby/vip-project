@@ -6,7 +6,7 @@ export function getPost(id) {
         method: "get",
         params: {
             "PostSearch[user_id]": id,
-            expand: "member,post-like,member.user"
+            expand: "member,user,comments,likes"
         }
     })
 }
@@ -29,6 +29,22 @@ export function deletChat(id) {
 export function handleLike(data) {
     return request({
         url: 'post-likes',
+        method: 'post',
+        data: data
+    })
+}
+/**取消点赞 */
+export function cancelLike(id, data) {
+    return request({
+        url: 'post-likes/' + id,
+        method: 'delete',
+        data: data
+    })
+}
+/**评论 */
+export function giveComment(data) {
+    return request({
+        url: 'post-comments',
         method: 'post',
         data: data
     })

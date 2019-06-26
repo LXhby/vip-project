@@ -10,14 +10,14 @@
       <div class="main">
         <page-title title="商机服务"></page-title>
         <div class="content">
-          <template v-for="(post ,index) in postInfo">
+          <template v-for="(post,index) in postInfo" v-if="postInfo.length">
             <div class="article-item" :key="index">
               <div class="item-head">
                 <div class="img-avatar">
-                  <img :src="post.userHeadImg">
+                  <img :src="post.user.headimgurl">
                   <div class="user">
-                    <p>{{post.userName}}</p>
-                    <span>{{post.userCompany}}</span>
+                    <p>{{post.member.realname}}</p>
+                    <span>{{post.member.company}}</span>
                   </div>
                 </div>
                 <v-btn
@@ -29,9 +29,9 @@
                 >删除</v-btn>
               </div>
               <div class="img-list">
-                <p>{{post.postContent}}</p>
+                <p>{{post.content}}</p>
                 <v-layout row wrap>
-                  <v-flex v-for="(postImg, i) in post.postImgs" :key="`3${i}`" xs4>
+                  <v-flex v-for="(postImg, i) in post.images" :key="`3${i}`" xs4>
                     <img :src="baseUrl + postImg" aspect-ratio="1.7">
                   </v-flex>
                 </v-layout>
@@ -55,25 +55,25 @@
               </div>
 
               <div class="comment">
-                <div class="good">
+                <div class="good" v-if="post.likes.length">
                   <v-icon>favorite_border</v-icon>
                   <p>
-                    <span>王晓文</span>
-                    <span>王勇</span>
-                    <span>大海</span>
+                    <span v-for="(like,index) in  post.likes" :key="index">{{like.realname}}</span>
                   </p>
                 </div>
-                <div class="my-comment">
-                  <p>
-                    <span class="name maohao">王勇:</span>
-                    <span>不错，支持你哦！</span>
-                  </p>
-                  <p>
-                    <span class="name">王晓文</span>
-                    <span>回复</span>
-                    <span class="name maohao">王勇:</span>
-                    <span>专业!</span>
-                  </p>
+                <div class="my-comment" v-if="post.comments.length">
+                  <div v-for="(com,index) in post.comments" :key="index">
+                    <p v-if="com.user_id == id">
+                      <span class="name maohao">{{com.realname}}:</span>
+                      <span>{{com.content}}</span>
+                    </p>
+                    <p v-else>
+                      <span class="name">{{com.realname}}</span>
+                      <span>回复</span>
+                      <span class="name maohao">{{memberInfo.realname}}:</span>
+                      <span>{{com.content}}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,6 +132,18 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-bottom-sheet v-model="sheet">
+      <v-layout row wrap class="sheet-box" justify-space-between align-center>
+        <v-flex xs10>
+          <div style="padding-left:10px;">
+            <v-text-field placeholder="评论" v-model="commentText"></v-text-field>
+          </div>
+        </v-flex>
+        <v-flex xs2>
+          <buttom small class="sendBtn fr" @click="sendComment">发送</buttom>
+        </v-flex>
+      </v-layout>
+    </v-bottom-sheet>
   </div>
 </template>
 
@@ -141,7 +153,14 @@ import UserDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
 import InfiniteLoading from "vue-infinite-loading";
-import { getPost, publishWechat, deletChat, handleLike } from "@/api/business";
+import {
+  getPost,
+  publishWechat,
+  deletChat,
+  handleLike,
+  cancelLike,
+  giveComment
+} from "@/api/business";
 import upimag from "@/assets/image.jpg";
 import { downloadimage } from "@/api/certification";
 export default {
@@ -153,26 +172,20 @@ export default {
     InfiniteLoading
   },
   computed: {
-    ...mapGetters(["id"])
+    ...mapGetters(["id", "memberInfo"])
   },
   data() {
     return {
-      postInfo: [
-        {
-          userHeadImg: "",
-          userName: "",
-          userCompany: "",
-          postContent: "",
-          postImgs: [],
-          postCreateTime: ""
-        }
-      ],
+      postInfo: [],
       dialog: false,
       dialogchat: false,
+      sheet: false,
       history: [],
       images: [],
       wechattext: "",
-      deleteid: ""
+      deleteid: "",
+      commentText: "",
+      commentInfo: null
     };
   },
   methods: {
@@ -191,14 +204,71 @@ export default {
       item.show = !item.show;
     },
     giveLike(item) {
-      const info = {
-        post_id: item.id,
-        user_id: this.id
-      };
-      handleLike(info).then(res => {});
+      console.log("item", item);
+      if (item.likes.length) {
+        const ele = item.likes.find(ea => ea.user_id == this.id);
+        if (ele) {
+          //取消点赞
+          const info = {
+            post_id: item.id,
+            user_id: this.id
+          };
+          cancelLike(ele.id, info).then(res => {
+            item.likes.forEach((dd, index) => {
+              if (dd.user_id == this.id) {
+                item.likes.splice(index, 1);
+                item.show = false;
+              }
+            });
+          });
+        } else {
+          //添加
+          const info = {
+            post_id: item.id,
+            user_id: this.id
+          };
+          handleLike(info).then(res => {
+            item.likes.push({
+              user_id: this.id,
+              realname: this.memberInfo.realname
+            });
+            item.show = false;
+          });
+        }
+      } else {
+        //添加
+        const info = {
+          post_id: item.id,
+          user_id: this.id
+        };
+        handleLike(info).then(res => {
+          item.likes.push(res.data);
+          item.show = false;
+        });
+      }
     },
     //评论
-    givecome(item) {},
+    givecome(item) {
+      this.commentInfo = item;
+      item.show = false;
+      this.sheet = true;
+    },
+    sendComment() {
+      if (!this.commentText.trim()) {
+        return false;
+      }
+      const info = {
+        post_id: this.commentInfo.id,
+        user_id: this.id,
+        content: this.commentText.trim()
+      };
+      giveComment(info).then(res => {
+        this.commentInfo.comments.push(res.data);
+        this.commentText = "";
+        this.sheet = false;
+      });
+      console.log("this.commentInfo", this.commentInfo);
+    },
     published() {
       console.log("this.wechattext", this.wechattext);
       const arr = [];
@@ -273,22 +343,25 @@ export default {
         .then(response => {
           const { data } = response;
           const { items } = data;
-          let postInfo = [];
+          // let postInfo = [];
+          // items.forEach(ele => {
+          //   let obj = {
+          //     id: ele.id,
+          //     userHeadImg: ele.member.user.headimgurl,
+          //     userid: ele.user_id,
+          //     userName: ele.member.realname,
+          //     userCompany: ele.member.company,
+          //     postContent: ele.content,
+          //     postImgs: ele.images,
+          //     postCreateTime: ele.created_at,
+          //     show: true
+          //   };
+          //   postInfo.push(obj);
+          // });
           items.forEach(ele => {
-            let obj = {
-              id: ele.id,
-              userHeadImg: ele.member.user.headimgurl,
-              userid: ele.user_id,
-              userName: ele.member.realname,
-              userCompany: ele.member.company,
-              postContent: ele.content,
-              postImgs: ele.images,
-              postCreateTime: ele.created_at,
-              show: true
-            };
-            postInfo.push(obj);
+            Object.assign(ele, { show: false });
           });
-          this.postInfo = postInfo;
+          this.postInfo = items;
           console.log(" this.postInfo", this.postInfo);
           if ($state) {
             if (response.data._meta.pageCount > 0) {
@@ -320,21 +393,21 @@ export default {
           const { data } = response;
           const { items } = data;
           let postInfo = [];
-          items.forEach(ele => {
-            let obj = {
-              id: ele.id,
-              userHeadImg: ele.member.user.headimgurl,
-              userid: ele.user_id,
-              userName: ele.member.realname,
-              userCompany: ele.member.company,
-              postContent: ele.content,
-              postImgs: ele.images,
-              postCreateTime: ele.created_at,
-              show: true
-            };
-            postInfo.push(obj);
-          });
-          this.postInfo = postInfo;
+          // items.forEach(ele => {
+          //   let obj = {
+          //     id: ele.id,
+          //     userHeadImg: ele.member.user.headimgurl,
+          //     userid: ele.user_id,
+          //     userName: ele.member.realname,
+          //     userCompany: ele.member.company,
+          //     postContent: ele.content,
+          //     postImgs: ele.images,
+          //     postCreateTime: ele.created_at,
+          //     show: true
+          //   };
+          //   postInfo.push(obj);
+          // });
+          this.postInfo = data.items;
         })
         .catch(console.log);
     }
@@ -531,6 +604,16 @@ export default {
     width: 100%;
     padding: 50%;
     background: #ccc url("../../assets/add.png") center center / 50% no-repeat;
+  }
+}
+.sheet-box {
+  background: #fff !important;
+  .sendBtn {
+    background-color: #ff4000;
+    color: #fff;
+    padding: 10px 20px;
+    line-height: 40px;
+    margin-right: 15px;
   }
 }
 </style>
