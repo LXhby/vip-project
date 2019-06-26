@@ -1,20 +1,25 @@
 <template>
   <div class="user-detail">
-    <v-card class="white--text border-radius">
+    <div class="white--text border-radius">
       <v-list two-line subheader class="list-bg">
         <v-list-tile avatar>
           <v-list-tile-avatar>
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+            <img :src="userInfo.headimgurl" alt="John">
           </v-list-tile-avatar>
 
           <v-list-tile-content>
             <v-list-tile-title>
               <p>
-                王晓文
-                <i>总经理</i>
+                {{userInfo.member.realname?userInfo.member.realname:userInfo.nickname}}
+                <i
+                  v-if="userInfo.member.post"
+                >{{userInfo.member.post}}</i>
               </p>
             </v-list-tile-title>
-            <v-list-tile-sub-title class="white--text">北京拓客云科技有限公司</v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              class="white--text"
+              v-if="userInfo.member.company"
+            >{{userInfo.member.company}}</v-list-tile-sub-title>
           </v-list-tile-content>
 
           <v-list-tile-action>
@@ -42,12 +47,28 @@
         </v-flex>
       </v-layout>
       <div class="bg-weave"></div>
-    </v-card>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { getAllInfo } from "@/api/index";
+import { mapGetters } from "vuex";
+export default {
+  data() {
+    return {
+      userInfo: {}
+    };
+  },
+  computed: {
+    ...mapGetters(["id"])
+  },
+  created() {
+    getAllInfo(this.id).then(res => {
+      this.userInfo = res.data;
+    });
+  }
+};
 </script>
 
 <style lang="scss" >
@@ -55,9 +76,9 @@ export default {};
 .user-detail {
   position: relative;
   font-size: 28px;
-  background-image: url("../assets/1.png");
-  background-size: 100%;
-  background-position: 0 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f66 url("../assets/1.png") 0 0 / 100% 100% no-repeat;
   .star-cart {
     margin-right: -34px;
     background: rgba(255, 255, 255, 0.2) !important;

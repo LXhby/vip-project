@@ -83,3 +83,11 @@ export function deleteImg(id, project_id) {
         }
     })
 }
+/**更新会员信息 */
+export function newMemberInfo(id, data) {
+    return request({
+        url: 'members/' + id,
+        method: 'put',
+        data: data
+    })
+}
