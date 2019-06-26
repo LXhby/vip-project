@@ -113,3 +113,13 @@ export function paymentstart(data) {
         data: data
     })
 }
+/**获取用户所有信息 */
+export function getAllInfo(id) {
+    return request({
+        url: 'users/' + id,
+        method: 'get',
+        params: {
+            expand: 'member'
+        }
+    })
+}

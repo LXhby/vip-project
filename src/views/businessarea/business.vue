@@ -3,60 +3,77 @@
     <div class="header">
       <v-btn small round class="btn1" @click="SearchAllInfo">所有信息</v-btn>
       <v-btn small round class="btn2" @click="SearchMyInfo">我的信息</v-btn>
-      <v-btn small class="btn1 fr">信息发布</v-btn>
+      <v-btn small class="btn1 fr" @click="dialog = true">信息发布</v-btn>
     </div>
     <div class="padding-20 businiss-box">
       <user-detail></user-detail>
       <div class="main">
         <page-title title="商机服务"></page-title>
         <div class="content">
-          <template v-for="(post ,index) in postInfo">
+          <template v-for="(post,index) in postInfo" v-if="postInfo.length">
             <div class="article-item" :key="index">
               <div class="item-head">
                 <div class="img-avatar">
-                  <img :src="post.userHeadImg">
+                  <img :src="post.user.headimgurl">
                   <div class="user">
-                    <p>{{post.userName}}</p>
-                    <span>{{post.userCompany}}</span>
+                    <p>{{post.member.realname}}</p>
+                    <span>{{post.member.company}}</span>
                   </div>
                 </div>
-                <v-btn small round class="delet-btn">删除</v-btn>
+                <v-btn
+                  small
+                  round
+                  class="delet-btn"
+                  v-if="post.userid == id"
+                  @click="handledeleteChat(post.id)"
+                >删除</v-btn>
               </div>
               <div class="img-list">
+                <p>{{post.content}}</p>
                 <v-layout row wrap>
-                  <p>{{post.postContent}}</p>
-                  <v-flex v-for="(postImg, i) in post.postImgs" :key="`3${i}`" xs4>
+                  <v-flex v-for="(postImg, i) in post.images" :key="`3${i}`" xs4>
                     <img :src="baseUrl + postImg" aspect-ratio="1.7">
                   </v-flex>
                 </v-layout>
               </div>
+              <div class="user-handle">
+                <div class="show-time">
+                  <span></span>
 
-              <p class="show-time">
-                <span>
-                  
-                </span>
-                <i class="iconfont icon-gengduo1"></i>
-              </p>
+                  <i class="iconfont icon-gengduo1" @click="handelClick(post)"></i>
+                </div>
+                <div :class="[post.show?'handle-yes':'handle-no','handle-box']">
+                  <span class="fl" @click="giveLike(post)">
+                    <i class="iconfont icon-aixin1 small-icon"></i>
+                    赞
+                  </span>
+                  <span class="fr" @click="givecome(post)">
+                    <i class="iconfont icon-pinglun small-icon"></i>
+                    评论
+                  </span>
+                </div>
+              </div>
+
               <div class="comment">
-                <div class="good">
+                <div class="good" v-if="post.likes.length">
                   <v-icon>favorite_border</v-icon>
                   <p>
-                    <span>王晓文</span>
-                    <span>王勇</span>
-                    <span>大海</span>
+                    <span v-for="(like,index) in  post.likes" :key="index">{{like.realname}}</span>
                   </p>
                 </div>
-                <div class="my-comment">
-                  <p>
-                    <span class="name maohao">王勇:</span>
-                    <span>不错，支持你哦！</span>
-                  </p>
-                  <p>
-                    <span class="name">王晓文</span>
-                    <span>回复</span>
-                    <span class="name maohao">王勇:</span>
-                    <span>专业!</span>
-                  </p>
+                <div class="my-comment" v-if="post.comments.length">
+                  <div v-for="(com,index) in post.comments" :key="index">
+                    <p v-if="com.user_id == id">
+                      <span class="name maohao">{{com.realname}}:</span>
+                      <span>{{com.content}}</span>
+                    </p>
+                    <p v-else>
+                      <span class="name">{{com.realname}}</span>
+                      <span>回复</span>
+                      <span class="name maohao">{{memberInfo.realname}}:</span>
+                      <span>{{com.content}}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,6 +89,61 @@
       <div style="height:56px;"></div>
     </div>
     <common-bottom></common-bottom>
+    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>信息发布</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click="published">发表</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <v-container>
+          <v-flex xs12>
+            <v-textarea name="input-7-1" label="这一刻的想法" :value="wechattext" v-model="wechattext"></v-textarea>
+          </v-flex>
+        </v-container>
+        <v-container grid-list-md>
+          <v-layout row wrap>
+            <v-flex xs4 v-for="(attach, key) in history" class="img-box" :key="key">
+              <v-img class="show-img" :src="baseUrl+attach.src" aspect-ratio="1"></v-img>
+              <i class="iconfont icon-shanchu" @click="deleteImg(key)" style="line-height:16px;"></i>
+            </v-flex>
+            <v-flex xs4 class="add-box" @click="chooseImage">
+              <div class="addimg"></div>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialogchat" max-width="290">
+      <v-card>
+        <v-card-text>确定要删除吗？</v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" flat="flat" @click="dialogchat = false">取消</v-btn>
+
+          <v-btn color="green darken-1" flat="flat" @click.native="agreedelete">确定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-bottom-sheet v-model="sheet">
+      <v-layout row wrap class="sheet-box" justify-space-between align-center>
+        <v-flex xs10>
+          <div style="padding-left:10px;">
+            <v-text-field placeholder="评论" v-model="commentText"></v-text-field>
+          </div>
+        </v-flex>
+        <v-flex xs2>
+          <buttom small class="sendBtn fr" @click="sendComment">发送</buttom>
+        </v-flex>
+      </v-layout>
+    </v-bottom-sheet>
   </div>
 </template>
 
@@ -81,8 +153,18 @@ import UserDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
 import InfiniteLoading from "vue-infinite-loading";
-import { getPost } from "@/api/business";
+import {
+  getPost,
+  publishWechat,
+  deletChat,
+  handleLike,
+  cancelLike,
+  giveComment
+} from "@/api/business";
+import upimag from "@/assets/image.jpg";
+import { downloadimage } from "@/api/certification";
 export default {
+  inject: ["reload"],
   components: {
     UserDetail,
     CommonBottom,
@@ -90,41 +172,183 @@ export default {
     InfiniteLoading
   },
   computed: {
-    ...mapGetters(["id"])
+    ...mapGetters(["id", "memberInfo"])
   },
   data() {
     return {
-      postInfo: [
-        {
-          userHeadImg: "",
-          userName: "",
-          userCompany: "",
-          postContent: "",
-          postImgs: [],
-          postCreateTime: ""
-        }
-      ]
+      postInfo: [],
+      dialog: false,
+      dialogchat: false,
+      sheet: false,
+      history: [],
+      images: [],
+      wechattext: "",
+      deleteid: "",
+      commentText: "",
+      commentInfo: null,
+      infoType: 1
     };
   },
   methods: {
+    //删除
+    handledeleteChat(id) {
+      this.deleteid = id;
+      this.dialogchat = true;
+    },
+    agreedelete() {
+      deletChat(this.deleteid).then(res => {
+        this.reload();
+      });
+    },
+    //点赞
+    handelClick(item) {
+      item.show = !item.show;
+    },
+    giveLike(item) {
+      console.log("item", item);
+      if (item.likes.length) {
+        const ele = item.likes.find(ea => ea.user_id == this.id);
+        if (ele) {
+          //取消点赞
+          const info = {
+            post_id: item.id,
+            user_id: this.id
+          };
+          cancelLike(ele.id, info).then(res => {
+            item.likes.forEach((dd, index) => {
+              if (dd.user_id == this.id) {
+                item.likes.splice(index, 1);
+                item.show = false;
+              }
+            });
+          });
+        } else {
+          //添加
+          const info = {
+            post_id: item.id,
+            user_id: this.id
+          };
+          handleLike(info).then(res => {
+            item.likes.push({
+              user_id: this.id,
+              realname: this.memberInfo.realname
+            });
+            item.show = false;
+          });
+        }
+      } else {
+        //添加
+        const info = {
+          post_id: item.id,
+          user_id: this.id
+        };
+        handleLike(info).then(res => {
+          item.likes.push(res.data);
+          item.show = false;
+        });
+      }
+    },
+    //评论
+    givecome(item) {
+      this.commentInfo = item;
+      item.show = false;
+      this.sheet = true;
+    },
+    sendComment() {
+      if (!this.commentText.trim()) {
+        return false;
+      }
+      const info = {
+        post_id: this.commentInfo.id,
+        user_id: this.id,
+        content: this.commentText.trim()
+      };
+      giveComment(info).then(res => {
+        this.commentInfo.comments.push(res.data);
+        this.commentText = "";
+        this.sheet = false;
+      });
+      console.log("this.commentInfo", this.commentInfo);
+    },
+    published() {
+      console.log("this.wechattext", this.wechattext);
+      const arr = [];
+      this.history.forEach(item => {
+        arr.push(item.src);
+      });
+      const info = {
+        content: this.wechattext,
+        images: arr,
+        user_id: this.id
+      };
+      if (!info.content && !info.images.length) {
+        return false;
+      }
+      publishWechat(info).then(res => {
+        this.dialog = false;
+        this.reload();
+      });
+    },
+    deleteImg(index) {
+      this.history.splice(index, 1);
+    },
+    chooseImage() {
+      this.$wechat.chooseImage({
+        count: 3,
+        sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: async res => {
+          console.log(res.localIds);
+          try {
+            for (let index = 0; index < res.localIds.length; index++) {
+              const serverId = res.localIds[index];
+              await this.uploadImage(serverId);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
+    },
+    uploadImage(serverId) {
+      return new Promise((resolve, reject) => {
+        this.$wechat.uploadImage({
+          localId: serverId,
+          isShowProgressTips: 1,
+          success: res => {
+            var serverId = res.serverId; // 返回图片的服务器端ID
+            downloadimage(serverId)
+              .then(response => {
+                this.images.push({
+                  serverId: serverId,
+                  src: response.data
+                });
+                this.updateValue(this.images);
+                resolve();
+              })
+              .catch(error => {
+                console.log(error);
+                reject(error);
+              });
+          }
+        });
+      });
+    },
+    updateValue: function(value) {
+      if (value === null) value = defaultImage;
+      console.log("imgvalue", value);
+      this.history = value;
+    },
     fetchPage($state) {
       getPost()
         .then(response => {
           const { data } = response;
           const { items } = data;
-          let postInfo = [];
           items.forEach(ele => {
-            let obj = {
-              userHeadImg: ele.member.user.headimgurl,
-              userName: ele.member.realname,
-              userCompany: ele.member.company,
-              postContent: ele.content,
-              postImgs: ele.images,
-              postCreateTime: ele.created_at
-            };
-            postInfo.push(obj);
+            Object.assign(ele, { show: false });
           });
-          this.postInfo = postInfo;
+          this.postInfo = items;
+          console.log(" this.postInfo", this.postInfo);
           if ($state) {
             if (response.data._meta.pageCount > 0) {
               $state.loaded();
@@ -142,33 +366,40 @@ export default {
         });
     },
     infiniteHandler($state) {
-      this.fetchPage($state);
+      if (this.infoType == 1) {
+        this.fetchPage($state);
+      } else {
+        this.fetchMy($state);
+      }
     },
     // 查询所有信息
     SearchAllInfo() {
-      this.fetchPage();
+      this.infoType = 1;
+      this.page = 1;
+      this.fetchPage($state);
+    },
+    fetchMy($state) {
+      getPost(this.id).then(response => {
+        const { data } = response;
+        const { items } = data;
+        let postInfo = [];
+        this.postInfo = data.items;
+      });
+      if ($state) {
+        if (response.data._meta.pageCount > 0) {
+          $state.loaded();
+        }
+        if (response.data._meta.currentPage >= response.data._meta.pageCount) {
+          $state.complete();
+        }
+      }
+      this.page++;
     },
     // 查询我的信息
     SearchMyInfo() {
-      getPost(this.id)
-        .then(response => {
-          const { data } = response;
-          const { items } = data;
-          let postInfo = [];
-          items.forEach(ele => {
-            let obj = {
-              userHeadImg: ele.member.user.headimgurl,
-              userName: ele.member.realname,
-              userCompany: ele.member.company,
-              postContent: ele.content,
-              postImgs: ele.images,
-              postCreateTime: ele.created_at
-            };
-            postInfo.push(obj);
-          });
-          this.postInfo = postInfo;
-        })
-        .catch(console.log);
+      this.infoType = 2;
+      this.page = 1;
+      this.fetchMy($state);
     }
   }
 };
@@ -189,10 +420,12 @@ export default {
       margin: 15px 0;
       min-width: 120px;
       height: 40px;
+      line-height: 40px;
       padding: 0px;
       font-size: 24px;
       font-weight: 400;
       background: rgb(255, 205, 158) !important;
+      box-shadow: none !important;
     }
     .btn1 {
       color: $bg-color;
@@ -256,6 +489,12 @@ export default {
       .img-list {
         margin-top: 15px;
         padding: 0 0 0 80px;
+        p {
+          font-size: 28px;
+          color: #1f2d3d;
+          line-height: 36px;
+          margin-bottom: 10px;
+        }
         .flex {
           padding-right: 10px;
         }
@@ -263,7 +502,44 @@ export default {
           width: 100%;
         }
       }
+      .user-handle {
+        position: relative;
+        .handle-box {
+          transition: width 0.5s;
+          width: 0px;
+          position: absolute;
+          right: 60px;
+          top: 0px;
+          font-size: 0px;
+          height: 48px;
+          line-height: 48px;
+          border-radius: 8px;
+          vertical-align: top;
+          overflow: hidden;
+          padding: 0 20px;
+          background-color: #666;
+          color: #fff;
+
+          .small-icon {
+            vertical-align: top;
+            color: #fff;
+          }
+          span {
+            vertical-align: top;
+            font-size: 24px;
+          }
+        }
+        .handle-yes {
+          width: 230px;
+          padding: 0px 20px;
+        }
+        .handle-no {
+          width: 0px;
+          padding: 0px;
+        }
+      }
       .show-time {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -302,3 +578,33 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+.img-box {
+  position: relative;
+  .icon-shanchu {
+    position: absolute;
+    color: red;
+    top: 6px;
+    right: 6px;
+    background: #fff;
+  }
+}
+.add-box {
+  .addimg {
+    width: 100%;
+    padding: 50%;
+    background: #ccc url("../../assets/add.png") center center / 50% no-repeat;
+  }
+}
+.sheet-box {
+  background: #fff !important;
+  .sendBtn {
+    background-color: #ff4000;
+    color: #fff;
+    padding: 10px 20px;
+    line-height: 40px;
+    margin-right: 15px;
+  }
+}
+</style>
+

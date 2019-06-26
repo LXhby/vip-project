@@ -27,7 +27,7 @@ router.beforeEach(async (to, from, next) => {
         // 第一次访问
         console.log("授权登录");
         // 跳转到微信授权页面，微信授权地址通过服务端获得
-        var info = "http://" + location.hostname + to.fullPath;
+        var info = "http://" + location.hostname + ":8080" + to.fullPath;
         console.log("info", info);
         oauth(info).then(res => {
             if (res.status === 200) {
