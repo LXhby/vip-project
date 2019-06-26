@@ -9,54 +9,108 @@
             <span>消息中心</span>
           </div>
           <div class="news-select">
-            <v-menu transition="slide-y-transition" offset-y>
-              <template v-slot:activator="{ on }">
-                <v-btn flat small v-on="on">
-                  <v-icon class="nav-btn">fas fa-bars</v-icon>筛选
-                </v-btn>
-              </template>
-              <v-list class="list-btn">
-                <v-list-tile v-for="(item, i) in items" :key="i" @click>
-                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
+            <v-btn flat small @click.native="sheet = true">
+              <v-icon class="nav-btn">fas fa-bars</v-icon>筛选
+            </v-btn>
           </div>
         </div>
-        <div class="news-nav" v-for="(arr,index) in array" :key="index">
+        <div class="news-nav" v-for="(arr,index) in list" :key="index">
           <div class="clearfix">
-            <h4 class="fl">【系统消息】</h4>
-            <span class="fr">2019.08.31 10:23</span>
+            <h4 class="fl">【{{arr.type | converType}}】</h4>
+            <span class="fr">{{arr.send_at}}</span>
           </div>
-          <p>系统将2019年8月15日20:00至23:00间进行迭代更新，因此系统将无法访问，给大家带来不便，敬请谅解！</p>
+          <p>{{arr.myNews.first.value +','+arr.myNews.remark.value}}</p>
         </div>
       </div>
     </div>
+    <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" spinner="spiral">
+      <span slot="no-more">
+        <div class="bottom-tip">-- 我是有底线的 --</div>
+      </span>
+    </infinite-loading>
     <div style="height:57px;"></div>
     <common-bottom></common-bottom>
+    <v-bottom-sheet v-model="sheet">
+      <v-list class="bottom-list-news">
+        <v-list-tile-title
+          v-for="(item,index) in items"
+          :key="index"
+          @click="handleType(item.value)"
+        >{{ item.title }}</v-list-tile-title>
+      </v-list>
+    </v-bottom-sheet>
   </div>
 </template>
 
 <script>
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
+import { newsCenter } from "@/api/member.js";
+import InfiniteLoading from "vue-infinite-loading";
 export default {
   components: {
     MemberDetail,
-    CommonBottom
+    CommonBottom,
+    InfiniteLoading
   },
   data() {
     return {
-      array: ["1", "2", "3", "4"],
+      page: 1,
+      list: [],
       items: [
-        { title: "未读消息" },
-        { title: "已读消息" },
-        { title: "系统消息" },
-        { title: "开课通知" },
-        { title: "报名通知" },
-        { title: "收益通知" }
-      ]
+        { title: "报名通知", value: "course.order.create" },
+        { title: "收益通知", value: "balance.repay.notify" }
+      ],
+      sheet: false,
+      type: null
     };
+  },
+  created() {},
+  filters: {
+    converType(value) {
+      if (value == "course.order.create") {
+        return "报名通知";
+      }
+      if (value == "balance.repay.notify") {
+        return "收益通知";
+      }
+    }
+  },
+  methods: {
+    infiniteHandler($state) {
+      this.fetchPage($state);
+    },
+    fetchPage($state) {
+      const info = {
+        type: this.type,
+        page: this.page
+      };
+      newsCenter(info).then(response => {
+        response.data.items.forEach(element => {
+          this.$set(element, "myNews", element.data.data);
+          this.list.push(element);
+        });
+        console.log("this.list", this.list);
+        if ($state) {
+          if (response.data._meta.pageCount > 0) {
+            $state.loaded();
+          }
+          if (
+            response.data._meta.currentPage >= response.data._meta.pageCount
+          ) {
+            $state.complete();
+          }
+        }
+        this.page++;
+      });
+    },
+    handleType(type) {
+      this.page = 1;
+      this.type = type;
+      this.list = [];
+      this.fetchPage();
+      this.sheet = false;
+    }
   }
 };
 </script>
@@ -141,18 +195,13 @@ export default {
     }
   }
 }
-.v-menu__content {
-  .list-btn {
-    background: rgb(255, 224, 134) !important;
-    .v-list__tile {
-      height: 32px;
-      padding: 0px;
-      color: #666;
-      font-size: 24px;
-      .v-list__tile__title {
-        text-align: center;
-      }
-    }
+.bottom-list-news {
+  .v-list__tile__title {
+    text-align: center;
+    font-size: 32px;
+    line-height: 36px;
+    height: 56px;
+    padding: 10px 0;
   }
 }
 </style>

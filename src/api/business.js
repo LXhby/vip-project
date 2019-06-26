@@ -1,12 +1,15 @@
 import request from "@/utils/request";
 /**商圈 */
-export function getPost(id) {
+export function getPost(data) {
     return request({
         url: "posts",
         method: "get",
         params: {
-            "PostSearch[user_id]": id,
-            expand: "member,user,comments,likes"
+            "PostSearch[user_id]": data.chooseid,
+            expand: "member,user,comments,likes",
+            page: data.page,
+            "per-page": 10,
+            sort: '-send_at'
         }
     })
 }

@@ -38,7 +38,7 @@
               </div>
               <div class="user-handle">
                 <div class="show-time">
-                  <span></span>
+                  <span>{{post.created_at | timeAgo}}</span>
 
                   <i class="iconfont icon-gengduo1" @click="handelClick(post)"></i>
                 </div>
@@ -140,7 +140,7 @@
           </div>
         </v-flex>
         <v-flex xs2>
-          <buttom small class="sendBtn fr" @click="sendComment">发送</buttom>
+          <button small class="sendBtn fr" @click="sendComment">发送</button>
         </v-flex>
       </v-layout>
     </v-bottom-sheet>
@@ -163,6 +163,7 @@ import {
 } from "@/api/business";
 import upimag from "@/assets/image.jpg";
 import { downloadimage } from "@/api/certification";
+import Moment from "moment";
 export default {
   inject: ["reload"],
   components: {
@@ -173,6 +174,12 @@ export default {
   },
   computed: {
     ...mapGetters(["id", "memberInfo"])
+  },
+  filters: {
+    timeAgo(value) {
+      console.log("value", value);
+      return Moment(value).toNow();
+    }
   },
   data() {
     return {
@@ -186,7 +193,7 @@ export default {
       deleteid: "",
       commentText: "",
       commentInfo: null,
-      infoType: 1
+      chooseid: null
     };
   },
   methods: {
@@ -340,14 +347,19 @@ export default {
       this.history = value;
     },
     fetchPage($state) {
-      getPost()
+      const info = {
+        chooseid: this.chooseid,
+        page: this.page
+      };
+      getPost(info)
         .then(response => {
           const { data } = response;
           const { items } = data;
           items.forEach(ele => {
             Object.assign(ele, { show: false });
+            this.postInfo.push(ele);
           });
-          this.postInfo = items;
+
           console.log(" this.postInfo", this.postInfo);
           if ($state) {
             if (response.data._meta.pageCount > 0) {
@@ -366,40 +378,21 @@ export default {
         });
     },
     infiniteHandler($state) {
-      if (this.infoType == 1) {
-        this.fetchPage($state);
-      } else {
-        this.fetchMy($state);
-      }
+      this.fetchPage($state);
     },
     // 查询所有信息
     SearchAllInfo() {
-      this.infoType = 1;
       this.page = 1;
-      this.fetchPage($state);
-    },
-    fetchMy($state) {
-      getPost(this.id).then(response => {
-        const { data } = response;
-        const { items } = data;
-        let postInfo = [];
-        this.postInfo = data.items;
-      });
-      if ($state) {
-        if (response.data._meta.pageCount > 0) {
-          $state.loaded();
-        }
-        if (response.data._meta.currentPage >= response.data._meta.pageCount) {
-          $state.complete();
-        }
-      }
-      this.page++;
+      this.chooseid = null;
+      this.postInfo = [];
+      this.fetchPage();
     },
     // 查询我的信息
     SearchMyInfo() {
-      this.infoType = 2;
       this.page = 1;
-      this.fetchMy($state);
+      this.chooseid = this.id;
+      this.postInfo = [];
+      this.fetchPage();
     }
   }
 };

@@ -67,8 +67,11 @@ export default {
       this.fetchPage($state);
     },
     fetchPage($state) {
-      getMyReward(this.id).then(response => {
-        this.list = response.data.items;
+      getMyReward(this.id, this.page).then(response => {
+        response.data.items.forEach(element => {
+          this.list.push(element);
+        });
+
         if ($state) {
           if (response.data._meta.pageCount > 0) {
             $state.loaded();
