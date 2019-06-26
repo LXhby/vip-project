@@ -54,6 +54,15 @@ export default {
     if (name == "Vipcenter") {
       this.activeBtn = "my";
     }
+    if (name == "Myreward") {
+      this.activeBtn = "my";
+    }
+    if (name == "Serverrules") {
+      this.activeBtn = "my";
+    }
+    if (name == "Newscenter") {
+      this.activeBtn = "my";
+    }
     console.log("this.$router", this.$route);
   }
 };

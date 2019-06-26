@@ -62,7 +62,10 @@ Vue.use(Vuetify, {
   }
 })
 import "./permission"
-
+import Moment from 'moment'
+Vue.filter('convertTime', function (data, formatStr) {
+  return Moment(data).format(formatStr)
+})
 
 Vue.use(VueWechatTitle)
 

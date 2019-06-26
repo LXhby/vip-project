@@ -9,24 +9,29 @@
             <div class="money">
               <div class="num">
                 <i class="iconfont icon-qian"></i>
-                <span>10000.00元</span>
+                <span>{{item.amount}}</span>
               </div>
               <div>
-                <span>
+                <span>{{item.status}}</span>
+                <!-- <span>
                   推荐第
                   <i>10</i>个会员奖金
-                </span>
+                </span>-->
               </div>
             </div>
             <div class="time">
-              <span class="peo">入会人：王晓文(所报课程名字)</span>
-              <span class="time-num">2019.4.24 18:23</span>
+              <span class="peo">{{item.remark}}</span>
+              <span class="time-num">{{item.updated_at | convertTime('YYYY-MM-DD HH:mm:ss')}}</span>
             </div>
           </div>
           <v-divider></v-divider>
         </template>
       </div>
-      <div class="bottom-tip">-- 我是有底线的 --</div>
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" spinner="spiral">
+        <span slot="no-more">
+          <div class="bottom-tip">-- 我是有底线的 --</div>
+        </span>
+      </infinite-loading>
       <div style="height:56px;"></div>
     </div>
     <common-bottom></common-bottom>
@@ -37,22 +42,53 @@
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import { mapGetters } from "vuex";
+import { getMyReward } from "@/api/member";
+import InfiniteLoading from "vue-infinite-loading";
 export default {
   components: {
     MemberDetail,
     CommonBottom,
-    PageTitle
+    PageTitle,
+    InfiniteLoading
+  },
+  computed: {
+    ...mapGetters(["id", "memberInfo"])
   },
   data() {
     return {
-      list: [1, 2, 3, 4, 5, 6]
+      list: [],
+      page: 1
     };
+  },
+  created() {},
+  methods: {
+    infiniteHandler($state) {
+      this.fetchPage($state);
+    },
+    fetchPage($state) {
+      getMyReward(this.id).then(response => {
+        this.list = response.data.items;
+        if ($state) {
+          if (response.data._meta.pageCount > 0) {
+            $state.loaded();
+          }
+          if (
+            response.data._meta.currentPage >= response.data._meta.pageCount
+          ) {
+            $state.complete();
+          }
+        }
+        this.page++;
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/style/public.scss";
+
 .my-reward-page {
   .mony-list {
     margin-top: -20px;
