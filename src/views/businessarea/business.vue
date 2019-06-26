@@ -185,7 +185,8 @@ export default {
       wechattext: "",
       deleteid: "",
       commentText: "",
-      commentInfo: null
+      commentInfo: null,
+      infoType: 1
     };
   },
   methods: {
@@ -343,21 +344,6 @@ export default {
         .then(response => {
           const { data } = response;
           const { items } = data;
-          // let postInfo = [];
-          // items.forEach(ele => {
-          //   let obj = {
-          //     id: ele.id,
-          //     userHeadImg: ele.member.user.headimgurl,
-          //     userid: ele.user_id,
-          //     userName: ele.member.realname,
-          //     userCompany: ele.member.company,
-          //     postContent: ele.content,
-          //     postImgs: ele.images,
-          //     postCreateTime: ele.created_at,
-          //     show: true
-          //   };
-          //   postInfo.push(obj);
-          // });
           items.forEach(ele => {
             Object.assign(ele, { show: false });
           });
@@ -380,36 +366,40 @@ export default {
         });
     },
     infiniteHandler($state) {
-      this.fetchPage($state);
+      if (this.infoType == 1) {
+        this.fetchPage($state);
+      } else {
+        this.fetchMy($state);
+      }
     },
     // 查询所有信息
     SearchAllInfo() {
-      this.fetchPage();
+      this.infoType = 1;
+      this.page = 1;
+      this.fetchPage($state);
+    },
+    fetchMy($state) {
+      getPost(this.id).then(response => {
+        const { data } = response;
+        const { items } = data;
+        let postInfo = [];
+        this.postInfo = data.items;
+      });
+      if ($state) {
+        if (response.data._meta.pageCount > 0) {
+          $state.loaded();
+        }
+        if (response.data._meta.currentPage >= response.data._meta.pageCount) {
+          $state.complete();
+        }
+      }
+      this.page++;
     },
     // 查询我的信息
     SearchMyInfo() {
-      getPost(this.id)
-        .then(response => {
-          const { data } = response;
-          const { items } = data;
-          let postInfo = [];
-          // items.forEach(ele => {
-          //   let obj = {
-          //     id: ele.id,
-          //     userHeadImg: ele.member.user.headimgurl,
-          //     userid: ele.user_id,
-          //     userName: ele.member.realname,
-          //     userCompany: ele.member.company,
-          //     postContent: ele.content,
-          //     postImgs: ele.images,
-          //     postCreateTime: ele.created_at,
-          //     show: true
-          //   };
-          //   postInfo.push(obj);
-          // });
-          this.postInfo = data.items;
-        })
-        .catch(console.log);
+      this.infoType = 2;
+      this.page = 1;
+      this.fetchMy($state);
     }
   }
 };
