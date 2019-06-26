@@ -73,7 +73,7 @@ export default {
     MarqueeItem
   },
   computed: {
-    ...mapGetters(["id", "openid", "config_id", "subscribe_at"])
+    ...mapGetters(["userInfo", "openid", "config_id", "subscribe_at"])
   },
   data() {
     return {
@@ -103,12 +103,13 @@ export default {
         const info = {
           mobile: this.form.mobile.trim()
         };
-        activateVip(this.id, info).then(res => {
+        activateVip(this.userInfo.id, info).then(res => {
           this.snackbar = true;
           //判断有没有订单  跳转路由
           this.$store.commit("user/setUserInfo", res.data);
           console.log("this.$store", this.$store);
-          checkmemberorders(this.id).then(res => {
+          console.log("this.userInfo.id", this.userInfo.id);
+          checkmemberorders(this.userInfo.id).then(res => {
             if (res.data.items.length) {
               //有订单跳会员详情
               this.$router.push({ name: "Buyer" });
@@ -116,7 +117,7 @@ export default {
               this.$router.push({ name: "Introduce" });
             }
           });
-          // this.$router.push({ name: "Introduce" });
+          this.$router.push({ name: "Introduce" });
         });
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="infoprefect">
     <div class="content-head">
-      <div class="title">
+      <div class="nav-title">
         <p></p>
         <span>企业信息完善</span>
       </div>
@@ -36,20 +36,25 @@
               placeholder="请选择公司规模"
               required
             ></v-select>
-            <div class="select-city">
+            <div
+              class="select-city"
+              style="margin-bottom:8px;padding-top:12px;margin-top:4px;line-height:32px;"
+            >
               <div class="select-box">
                 <div>
-                  <span>所在地区</span>
+                  <span style="font-size:16px;">所在地区</span>
                 </div>
                 <div>
-                  <div class="city" @click="toAddress">{{city}}</div>
+                  <div class="city" @click="toAddress" style="font-size:16px;">{{city}}</div>
                   <i class="arrow-r"></i>
                 </div>
               </div>
+
               <div class="city-picker" v-show="addInp">
                 <v-distpicker type="mobile" @selected="selected"></v-distpicker>
               </div>
             </div>
+            <span style="font-size: 12px;color:#b71c1c;" v-show="areaErro">{{errText}}</span>
             <v-text-field
               v-model="form.introduction"
               placeholder="请输入企业简介"
@@ -62,15 +67,16 @@
               required
               :rules="[v => !!v || '请输入服务内容']"
             ></v-text-field>
-            <div class="addImg" @click="chooseImage">
-              <span>请上传展示图片（最多3张）</span>
+            <div class="addImg" @click="chooseImage" style="margin-top:4px;padding-top:12px;">
+              <span>{{imgTitle}}</span>
               <i class="iconfont icon-xiangji" style="font-size:20px;line-height:20px;"></i>
             </div>
+            <span style="font-size: 12px;color:#b71c1c;" v-show="imgErro">请上传图片</span>
           </v-form>
 
           <div class="getImg">
             <div class="temp-pic clearfix" v-for="(attach, key) in history" :key="attach.id">
-              <v-img class="show-img" src="https://picsum.photos/510/300?1" aspect-ratio="1"></v-img>
+              <v-img class="show-img" :src="baseUrl+attach.src" aspect-ratio="1"></v-img>
               <!-- <img :src="attach.filepath" alt> -->
               <i
                 class="iconfont icon-shanchu"
@@ -109,7 +115,8 @@
 import {
   systemCompany,
   systemindustry,
-  downloadimage
+  downloadimage,
+  newMemberInfo
 } from "@/api/certification";
 import defaultImage from "@/assets/image.jpg";
 import VDistpicker from "v-distpicker";
@@ -125,31 +132,31 @@ export default {
         industry: "",
         company_levels: "",
         introduction: "",
-        service: ""
+        service: "",
+        province: "",
+        city: "",
+        district: ""
       },
       industry: [],
       company: [],
       addInp: false,
       mask: false,
       city: "请选择",
+      errText: "请输入所在地区",
       images: [],
-      history: [
-        {
-          filepath: ""
-        },
-        {
-          filepath: ""
-        },
-        {
-          filepath: ""
-        }
-      ],
+      history: [],
       dialog: false,
-      deleteImgIndex: null
+      deleteImgIndex: null,
+      imgTitle: "请上传展示图片（最多3张）",
+      imgErro: false,
+      areaErro: false,
+      id: ""
     };
   },
   components: { VDistpicker },
   created() {
+    this.id = this.$route.params.id * 1;
+    console.log("id", this.id);
     systemCompany().then(res => {
       this.company = res.data;
     });
@@ -160,9 +167,56 @@ export default {
   methods: {
     finishBusiness() {
       if (this.$refs.form.validate()) {
+        if (!this.history.length) {
+          this.imgErro = true;
+        }
+        if (this.checkArea()) {
+          const images = [];
+          this.history.forEach(item => {
+            images.push(item.src);
+          });
+          console.log("images", images);
+          const obj = {
+            images: images
+          };
+          const info = Object.assign(this.form, obj);
+          console.log("info", info);
+          newMemberInfo(this.id, info).then(res => {
+            this.$router.push({ name: "Buyer" });
+          });
+        }
       } else {
+        if (!this.history.length) {
+          this.imgErro = true;
+        }
+        this.checkArea();
         return false;
       }
+    },
+    checkArea() {
+      console.log("99", this.city);
+      if (this.city == "请选择") {
+        this.areaErro = true;
+        this.errText = "请输入所在地区";
+        return false;
+      }
+      if (!this.form.province) {
+        this.areaErro = true;
+        this.errText = "请输入省份";
+        return false;
+      }
+      if (!this.form.city) {
+        this.areaErro = true;
+        this.errText = "请输入城市";
+        return false;
+      }
+      if (!this.form.district) {
+        this.areaErro = true;
+        this.errText = "请输入地区";
+        return false;
+      }
+      this.areaErro = false;
+      return true;
     },
     toAddress() {
       this.mask = true;
@@ -173,10 +227,16 @@ export default {
       this.addInp = false;
       this.city =
         data.province.value + " " + data.city.value + " " + data.area.value;
+      this.form.province = data.province.value;
+      this.form.city = data.city.value;
+      this.form.district = data.area.value;
       this.mask = false;
       this.addInp = false;
     },
     chooseImage() {
+      if (this.history.length >= 3) {
+        return false;
+      }
       this.$wechat.chooseImage({
         count: 3,
         sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
@@ -220,7 +280,8 @@ export default {
     },
     updateValue: function(value) {
       if (value === null) value = defaultImage;
-      console.log("value", value);
+      console.log("imgvalue", value);
+      this.history = value;
     },
     deleteImg(item, index) {
       this.deleteImgIndex = index;
@@ -245,7 +306,7 @@ export default {
     height: 420px;
     background-color: $bg-color;
     color: #fff;
-    .title {
+    .nav-title {
       margin-left: 8px;
       display: flex;
       align-content: center;
@@ -258,6 +319,7 @@ export default {
       }
       span {
         font-size: 32px;
+        line-height: 30px;
       }
     }
   }
@@ -289,6 +351,18 @@ export default {
     }
   }
   .select-city {
+    position: relative;
+    padding-bottom: 14px;
+    &:after {
+      content: " ";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 2px;
+      border-bottom: 2px solid #e1e1e1;
+      color: #d5d5d6;
+    }
     .select-box {
       display: flex;
       font-size: 32px;

@@ -1,6 +1,6 @@
 const state = {
     userInfo: {
-        id: 5,
+        id: 6,
         access_token: '69fde8eb10c3cf4d7442d09c5b7359ea',
         openid: 'ou12Jt24UjMA7pA5bVZ4uB-Jjapw',
         nickname: '王勇🇨🇳',
@@ -14,7 +14,7 @@ const state = {
         balance: '5203.00'
     },
     memberInfo: null,
-    token: '69fde8eb10c3cf4d7442d09c5b7359ea'
+    token: '83bfd0b6f59f8506fff0096d5336d57b'
 }
 
 const mutations = {
