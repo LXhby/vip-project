@@ -24,9 +24,9 @@
 
               <v-list-tile-content>
                 <v-badge color="red" v-if="item.badge" class="badge-num">
-                  <template v-slot:badge>
+                  <!-- <template v-slot:badge>
                     <span>5</span>
-                  </template>
+                  </template>-->
                   <div>{{item.title}}</div>
                 </v-badge>
                 <v-list-tile-title v-else v-html="item.title"></v-list-tile-title>

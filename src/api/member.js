@@ -101,3 +101,21 @@ export function putForumorder(id, info) {
         }
     })
 }
+/**查看是否有银行卡 */
+export function checkBank(id) {
+    return request({
+        url: 'accounts',
+        method: 'get',
+        params: {
+            'AccountSearch[user_id]': id
+        }
+    })
+}
+/**添加银行卡 */
+export function addBank(data) {
+    return request({
+        url: 'accounts',
+        method: 'post',
+        data: data
+    })
+}
