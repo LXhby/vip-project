@@ -74,7 +74,13 @@ export function getmember_order() {
         method: 'get'
     })
 }
-
+// 首页轮播
+export function getColumn() {
+    return request({
+        url: 'column',
+        method: 'get'
+    })
+}
 /**获取会员产品信息 */
 export function getProdInfo() {
     return request({

@@ -32,7 +32,7 @@
                 <p>{{post.content}}</p>
                 <v-layout row wrap>
                   <v-flex v-for="(postImg, i) in post.images" :key="`3${i}`" xs4>
-                    <img :src="baseUrl + postImg">
+                    <img :src="baseUrl + postImg" :preview="postImg">
                   </v-flex>
                 </v-layout>
               </div>
@@ -377,6 +377,7 @@ export default {
 
             this.postInfo.push(ele);
           });
+          this.$previewRefresh()
 
           console.log(" this.postInfo", this.postInfo);
 

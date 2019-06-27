@@ -40,6 +40,18 @@ export function getMyReward(id, page) {
         }
     })
 }
+// 我的学友
+export function getClassmates(id, page) {
+    return request({
+        url: 'users',
+        method: 'get',
+        params: {
+            "UserSearch[from_user_id]": id,
+            page: page,
+            "per-page": 10
+        }
+    })
+}
 /**消息服务中心 */
 export function newsCenter(data) {
     return request({
