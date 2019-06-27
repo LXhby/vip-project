@@ -74,7 +74,7 @@ export default {
   methods: {
     initData() {
       this.courseList = [];
-      this.$refs.fullbox.style.left = "0px";
+
       getSameList(this.bundle_id).then(res => {
         var arr = res.data.items;
         this.allLength = arr.length;
@@ -99,7 +99,6 @@ export default {
         //向左划
         console.log("this,", this.index);
         if (this.index == -(this.allLength - 3)) {
-          console.log("this.index", this.index);
           return false;
         }
         this.index = this.index - 1;
@@ -128,6 +127,7 @@ export default {
         };
         this.$emit("handlechange", info);
         this.initData();
+        this.$refs.fullbox.style.left = "0px";
       }
     }
   }

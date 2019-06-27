@@ -63,6 +63,9 @@ export default {
     if (name == "Newscenter") {
       this.activeBtn = "my";
     }
+    if (name == "Rewardout") {
+      this.activeBtn = "my";
+    }
     console.log("this.$router", this.$route);
   }
 };
