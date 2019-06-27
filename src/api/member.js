@@ -65,3 +65,39 @@ export function newsCenter(data) {
         }
     })
 }
+/**获取开户的银行 */
+export function getBank() {
+    return request({
+        url: 'config/params?key=bank_icons',
+        method: 'get',
+    })
+}
+/**查看是否有该订单 */
+export function checkForumOrder(data) {
+    return request({
+        url: 'forum-orders/' + data.forum_orderid,
+        method: 'get',
+        params: {
+            user_id: data.user_id,
+        }
+
+    })
+}
+/**根据课程id查找 bundle_id*/
+/**根据课程id获取信息 */
+export function getbundle_id(id) {
+    return request({
+        url: 'forums/' + id,
+        method: 'get'
+    })
+}
+/**签到会议 */
+export function putForumorder(id, info) {
+    return request({
+        url: 'forum-orders/' + id,
+        method: 'put',
+        data: {
+            is_signed_in: info
+        }
+    })
+}

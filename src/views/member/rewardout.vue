@@ -86,6 +86,25 @@
         <p>* 如您在提现过程中遇到问题可致电010-888888（后台设置）;</p>
       </div>
     </div>
+    <v-bottom-sheet v-model="sheet">
+      <div>
+        <h3>添加提现银行卡</h3>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="formdata.name"
+            :counter="10"
+            :rules="[v => !!v || '请输入姓名']"
+            placeholder="持卡人"
+            required
+          ></v-text-field>
+
+          <v-text-field v-model="formdata.number" :rules="emailRules" placeholder="卡号" required></v-text-field>
+
+          <v-select :items="banks" label="开户银行" v-model="formdata.bank"></v-select>
+          <v-btn color="warning" @click="submit">提交</v-btn>
+        </v-form>
+      </div>
+    </v-bottom-sheet>
     <common-bottom></common-bottom>
   </div>
 </template>
@@ -94,6 +113,7 @@
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import { getBank } from "@/api/member";
 export default {
   components: {
     MemberDetail,
@@ -103,8 +123,29 @@ export default {
   data() {
     return {
       dialog: false,
-      radioGroup: ""
+      radioGroup: "",
+      sheet: true,
+      valid: false,
+      formdata: {
+        name: "",
+        number: "",
+        bank: ""
+      },
+      banks: []
     };
+  },
+  created() {
+    getBank().then(res => {
+      console.log(res);
+      for (let i in res.data) {
+        this.banks.push(i);
+      }
+      console.log("this.bank", this.banks);
+    });
+  },
+  methods: {
+    request() {},
+    submit() {}
   }
 };
 </script>

@@ -10,31 +10,36 @@
             <div>
               <p class="left">姓名</p>
               <p class="user-info">
-                <span class="maohao">:</span>王晓文
+                <span class="maohao">:</span>
+                {{memberInfo.realname}}
               </p>
             </div>
             <div>
               <p class="left">身份证号</p>
               <p class="user-info">
-                <span class="maohao">:</span>430412198006085112
+                <span class="maohao">:</span>
+                {{memberInfo.idsn}}
               </p>
             </div>
             <div>
               <p class="left">手机</p>
               <p class="user-info">
-                <span class="maohao">:</span>186 1008 8750
+                <span class="maohao">:</span>
+                {{memberInfo.mobile}}
               </p>
             </div>
             <div>
               <p class="left">公司名称</p>
               <p class="user-info">
-                <span class="maohao">:</span>北京拓客云科技有限公司
+                <span class="maohao">:</span>
+                {{memberInfo.company}}
               </p>
             </div>
             <div>
               <p class="left">职务</p>
               <p class="user-info">
-                <span class="maohao">:</span>CEO
+                <span class="maohao">:</span>
+                {{memberInfo.post}}
               </p>
             </div>
           </div>
@@ -45,23 +50,27 @@
             <div>
               <p class="left">课程名称</p>
               <p class="user-info">
-                <span class="maohao">:</span>第一期企业家演说智慧课程
+                <span class="maohao">:</span>
+                {{forumInfo.name}}
               </p>
             </div>
             <div>
               <p class="left">开课时间</p>
               <p class="user-info">
-                <span class="maohao">:</span>2019年4月21日-4月23日
+                <span class="maohao">:</span>
+                {{forumInfo.start_date | changeType}}-{{forumInfo.end_date | changeType}}
               </p>
             </div>
             <div>
               <p class="left">上课地点</p>
               <p class="user-info">
-                <span class="maohao">:</span>北京九华山庄
+                <span class="maohao">:</span>
+                {{forumInfo.address}}
               </p>
             </div>
             <div>
               <p class="left">已学次数</p>
+              <!-- todoing -->
               <p class="user-info">
                 <span class="maohao">:</span>这是您第
                 <span>8</span> 次学习本课程 总学习
@@ -82,23 +91,74 @@
         </div>
       </div>
     </div>
+    <v-snackbar v-model="show" :timeout="2000" color="success" top>签到成功</v-snackbar>
     <div style="height:57px;"></div>
     <common-bottom></common-bottom>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import { checkForumOrder, getbundle_id, putForumorder } from "@/api/member";
+import { mapGetters } from "vuex";
+import { setTimeout } from "timers";
 export default {
   components: {
     MemberDetail,
     CommonBottom,
     PageTitle
   },
+  filters: {
+    changeType(value) {
+      return moment(value).format("YYYY年MM月DD日");
+    }
+  },
+  computed: {
+    ...mapGetters(["id", "userInfo", "memberInfo"])
+  },
+  data() {
+    return {
+      forum_orderid: "",
+      forumInfo: {},
+      show: false
+    };
+  },
+  created() {
+    this.forum_orderid = this.$route.params.id;
+    console.log("this.forum_id ", this.forum_id);
+    //查询是否有订单,没有该订单并且没支付 去别的页面
+    const info = {
+      user_id: this.id,
+      forum_orderid: this.forum_orderid
+    };
+    checkForumOrder(info).then(res => {
+      const info = res.data;
+      if (info.status != "未支付") {
+        getbundle_id(info.forum_id).then(res => {
+          this.forumInfo = res.data;
+        });
+      } else {
+        getbundle_id(info.forum_id).then(res => {
+          this.$router.push({
+            name: "Courseinfo",
+            params: { id: info.forum_id, bundle_id: res.data.bundle_id }
+          });
+        });
+      }
+    });
+  },
   methods: {
-    confirm() {}
+    confirm() {
+      putForumorder(this.forum_orderid, 1).then(res => {
+        this.show = true;
+        setTimeout(() => {
+          this.$router.push({ name: "Buyer" });
+        }, 2000);
+      });
+    }
   }
 };
 </script>

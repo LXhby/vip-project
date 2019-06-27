@@ -23,45 +23,45 @@
     </div>
     <div class="bottom-order">
       <div class="money">
-        <span class="now">￥5800元</span>
-        <span class="orign">原价:￥12800元</span>
+        <span class="now">￥{{courseInfo.price}}元</span>
+        <span class="orign">原价:￥{{courseInfo.original_price}}元</span>
       </div>
       <div class="signbtn" @click="goPay">立即报名</div>
     </div>
-    <v-dialog v-model="dialog" persistent>
-      <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-radio-group v-model="radioGroup">
-                <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
-              </v-radio-group>
-            </v-layout>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn color="blue darken-1" flat @click="dialog = false">确定</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <v-bottom-sheet v-model="sheet">
+      <v-list>
+        <v-subheader>选择课程</v-subheader>
+        <v-list-tile @click="gopay(nowCourse.id)">
+          <v-list-tile-title>第{{ nowCourse.courseIndex }}期({{nowCourse.start_date | changeType}})</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile
+          v-for="tile in tilesList"
+          :key="tile.id"
+          @click="gopay(tile.id)"
+          v-if="tile.status !='已结束'"
+        >
+          <v-list-tile-title>第{{ tile.courseIndex }}期({{tile.start_date | changeType}})</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-bottom-sheet>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 import CommonBottom from "../../component/common_bottom";
 import CourseName from "../../component/course_name";
-import { getCourseInfo } from "@/api/course";
+import { getCourseInfo, getSameList, orderCourse } from "@/api/course";
 import BScroll from "better-scroll";
+import { mapGetters } from "vuex";
 export default {
   name: "ServerCenter",
   components: {
     CommonBottom,
     CourseName
+  },
+  computed: {
+    ...mapGetters(["id", "memberInfo"])
   },
   data() {
     return {
@@ -70,12 +70,20 @@ export default {
       showNav: true,
       courseId: null,
       courseInfo: {},
+      sheet: false,
       dialog: false,
-      radioGroup: 1
+      radioGroup: 1,
+      tilesList: [],
+      nowCourse: {}
     };
   },
   created() {
     this.initData();
+  },
+  filters: {
+    changeType(value) {
+      return moment(value).format("YYYY年MM月DD日");
+    }
   },
   methods: {
     initData() {
@@ -85,9 +93,33 @@ export default {
         this.courseInfo = res.data;
         this.$store.commit("app/setTitle", this.courseInfo.name);
       });
+      this.tilesList = [];
+      getSameList(this.bundle_id).then(res => {
+        var arr = res.data.items;
+        arr.forEach((item, index) => {
+          this.$set(item, "courseIndex", index + 1);
+          if (item.id == this.courseId) {
+            this.nowCourse = item;
+          } else {
+            this.tilesList.push(item);
+          }
+        });
+
+        console.log("this.nowCours", this.nowCourse);
+        console.log("this.courseList", this.tilesList);
+      });
     },
     goPay() {
-      this.dialog = true;
+      this.sheet = true;
+    },
+    gopay(id) {
+      const info = {
+        user_id: this.id,
+        forum_id: id,
+        member_id: this.memberInfo.id,
+        quantity: 1
+      };
+      orderCourse(info).then(res => {});
       // this.$router.push({ name: "cousePay" });
     },
     getnewCourse(val) {

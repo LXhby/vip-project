@@ -103,7 +103,7 @@ export default new Router({
             name: 'cousePay',
             component: Coursepay,
             meta: {
-                title: '支付',
+                title: '课程支付',
             }
         },
         {
@@ -148,7 +148,7 @@ export default new Router({
             }
         },
         {
-            path: '/signin',
+            path: '/signin/:id',
             name: 'Signin',
             component: Signin,
             meta: {
