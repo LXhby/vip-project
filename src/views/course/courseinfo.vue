@@ -5,7 +5,13 @@
         <img :src="baseUrl + courseInfo.banner" alt class="hd-bg" v-if="courseInfo.banner">
       </div>
       <div class="content">
-        <CourseName class="coursename" :course="courseInfo" :bundle_id="bundle_id" :id="courseId"></CourseName>
+        <CourseName
+          class="coursename"
+          :course="courseInfo"
+          :bundle_id="bundle_id"
+          :id="courseId"
+          @handlechange="getnewCourse"
+        ></CourseName>
         <div class="course-info">
           <div class="info-title">
             <p></p>
@@ -22,6 +28,27 @@
       </div>
       <div class="signbtn" @click="goPay">立即报名</div>
     </div>
+    <v-dialog v-model="dialog" persistent>
+      <v-card>
+        <v-card-title>
+          <span class="headline">User Profile</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-radio-group v-model="radioGroup">
+                <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
+              </v-radio-group>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="blue darken-1" flat @click="dialog = false">确定</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -42,23 +69,29 @@ export default {
       bundle_id: "",
       showNav: true,
       courseId: null,
-      courseInfo: {}
+      courseInfo: {},
+      dialog: false,
+      radioGroup: 1
     };
   },
   created() {
-    this.courseId = this.$route.params.id * 1;
-    this.bundle_id = this.$route.params.bundle_id * 1;
     this.initData();
   },
   methods: {
     initData() {
+      this.courseId = this.$route.params.id * 1;
+      this.bundle_id = this.$route.params.bundle_id * 1;
       getCourseInfo(this.courseId).then(res => {
         this.courseInfo = res.data;
         this.$store.commit("app/setTitle", this.courseInfo.name);
       });
     },
     goPay() {
-      this.$router.push({ name: "cousePay" });
+      this.dialog = true;
+      // this.$router.push({ name: "cousePay" });
+    },
+    getnewCourse(val) {
+      this.initData();
     }
   }
 };

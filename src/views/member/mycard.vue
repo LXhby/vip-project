@@ -110,7 +110,7 @@ export default {
   },
   data() {
     return {
-      useritems: null
+      useritems: {}
     };
   },
   created() {
