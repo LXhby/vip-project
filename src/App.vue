@@ -28,6 +28,6 @@ export default {
 };
 </script>
 <style >
-@import "//at.alicdn.com/t/font_1244621_spc2m4d9fc9.css";
+@import "//at.alicdn.com/t/font_1244621_r659ht452y.css";
 </style>
 

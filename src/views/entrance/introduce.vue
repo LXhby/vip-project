@@ -300,9 +300,9 @@ export default {
   }
   .product-info {
     img {
-      width: 40% !important;
+      width: 100% !important;
       height: auto !important;
-      margin-right: 5%;
+      
     }
   }
 }

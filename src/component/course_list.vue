@@ -1,6 +1,6 @@
 <template>
   <div class="course-list">
-    <v-card class="white--text border-radius">
+    <v-card class="white--text border-radius" @click.native="goInfo">
       <v-layout row class="main">
         <v-flex xs10>
           <div style="height:100%;">
@@ -8,7 +8,7 @@
               <div class="hd-title">{{courseName}}</div>
               <div class="time">
                 <i class="iconfont icon-shizhong1"></i>
-                <span>{{courseTime}}</span>
+                <span>{{getTime}}</span>
 
                 <i class="iconfont icon-address"></i>
                 <span>{{courseAddress}}</span>
@@ -20,7 +20,7 @@
           <v-layout row align-center justify-end style="height:100%;">
             <div class="border-radius count-num">
               <p>
-                <i>9</i>天
+                <i>{{time}}</i>天
               </p>
               <span>倒计时</span>
             </div>
@@ -32,8 +32,45 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
-  props: ["courseName", "courseAddress", "courseTime"]
+  props: [
+    "courseName",
+    "courseAddress",
+    "courseTime",
+    "courseId",
+    "courseendTime",
+    "bundle_id"
+  ],
+  data() {
+    return {
+      getTime: "",
+      time: ""
+    };
+  },
+  created() {
+    this.getTime = this.courseTime + "-" + this.courseendTime;
+    var end_date = moment(this.courseTime);
+    var start_date = moment(
+      new Date(new Date(new Date().toLocaleDateString()).getTime())
+    );
+
+    var seconds = end_date.diff(start_date, "seconds");
+    //分钟
+    var mintus = seconds / 60;
+    //小时
+    var hours = mintus / 60;
+    this.time = hours / 24;
+  },
+  methods: {
+    goInfo() {
+      console.log("888", this.courseId);
+      this.$router.push({
+        name: "Courseinfo",
+        params: { id: this.courseId, bundle_id: this.bundle_id }
+      });
+    }
+  }
 };
 </script>
 

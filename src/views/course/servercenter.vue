@@ -5,9 +5,12 @@
       <page-title title="课程预告"></page-title>
       <div class="herald-info" v-for="(course, index) in courseInfo" :key="index">
         <course-list
-          :courseName="course.courseName"
-          :courseAddress="course.courseAddress"
-          :courseTime="course.courseTime"
+          :courseName="course.data[0].name"
+          :courseAddress="course.data[0].address"
+          :courseTime="course.data[0].start_date"
+          :courseendTime="course.data[0].end_date"
+          :courseId="course.data[0].id"
+          :bundle_id="course.bundle_id"
         />
       </div>
     </div>
@@ -32,23 +35,46 @@ export default {
   },
   data() {
     return {
-      courseInfo: []
+      courseInfo: [],
+      getCourse: []
     };
   },
   created() {
-    findCourse({ "per-page": 5 })
+    findCourse()
       .then(response => {
         const { data } = response;
-        const { items } = data;
-        items.forEach(ele => {
-          let obj = {
-            courseName: ele.name,
-            courseAddress: ele.address,
-            courseTime: changeDate(ele.start_date, ele.end_date)
-          };
-          this.courseInfo.push(obj);
+        const arrList = data.items;
+        var items = [];
+        arrList.forEach(al => {
+          if (al.status != "已结束") {
+            items.push(al);
+          }
         });
-        console.log(this.courseInfo);
+        var map = {},
+          dest = [];
+        for (var i = 0; i < items.length; i++) {
+          var ai = items[i];
+          if (!map[ai.bundle_id]) {
+            //依赖分组字段可自行更改！
+            dest.push({
+              bundle_id: ai.bundle_id, //依赖分组字段可自行更改！
+              data: [ai]
+            });
+            map[ai.bundle_id] = ai; //依赖分组字段可自行更改！
+          } else {
+            for (var j = 0; j < dest.length; j++) {
+              var dj = dest[j];
+              if (dj.bundle_id == ai.bundle_id) {
+                //依赖分组字段可自行更改！
+                dj.data.push(ai);
+                break;
+              }
+            }
+          }
+        }
+
+        console.log("0", dest);
+        this.courseInfo = dest;
       })
       .catch(console.log);
   },

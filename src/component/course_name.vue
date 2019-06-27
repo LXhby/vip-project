@@ -2,49 +2,46 @@
   <div class="common-course-name">
     <div class="course-name">
       <p class="hd-title">
-        <span>某某课程名称</span>
+        <span>{{course.name}}</span>
       </p>
       <div class="course-plan">
-        <i class="iconfont icon-lunbo"></i>
-        <v-layout row class="resultContainer">
-          <v-flex xs4>
-            <div class="item two">
-              <span>第二期</span>
-              <p>2019年7月16日</p>
+        <i class="iconfont icon-lunbo" @click="goPush($event,0)"></i>
+        <div class="resultContainer">
+          <div class="full-box clearfix" ref="fullbox">
+            <div class="item two" ref="courseItem">
+              <span>第{{nowCourse.courseIndex}}期</span>
+              <p>{{nowCourse.start_date | changeType}}</p>
             </div>
-          </v-flex>
-          <v-flex xs4>
-            <div class="item three">
-              <span>第三期</span>
-              <p>2018年12月16日</p>
+
+            <div
+              :class="[item.status=='已结束'?'one':'three','item' ]"
+              v-for="(item,index) in courseList"
+              :key="index"
+            >
+              <span>第{{item.courseIndex}}期</span>
+              <p>{{item.start_date| changeType }}</p>
             </div>
-          </v-flex>
-          <v-flex xs4>
-            <div class="item one">
-              <span>第一期</span>
-              <p>2019年7月16日</p>
-            </div>
-          </v-flex>
-        </v-layout>
-        <i class="iconfont icon-next1"></i>
+          </div>
+        </div>
+        <i class="iconfont icon-next1" @click="goPush($event,1)"></i>
       </div>
       <div class="course-info">
         <div class="list">
           <p>
             <i class="iconfont icon-shizhong"></i>
-            <span>2019年7月16日 至 2019年7月19日</span>
+            <span>{{course.start_date | changeType}} 至 {{course.end_date | changeType}}</span>
           </p>
           <p>
             <i class="iconfont icon-dizhi"></i>
-            <span>北京·九华山庄宾馆楼</span>
+            <span>{{course.address}}</span>
           </p>
           <p>
             <i class="iconfont icon-renyuan"></i>
-            <span>200人</span>
+            <span>{{course.max_count}}人</span>
           </p>
           <p class="last">
             <i class="iconfont icon-xueyuan-mulu"></i>
-            <span>课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介</span>
+            <span>{{course.summary}}</span>
           </p>
         </div>
       </div>
@@ -53,9 +50,65 @@
 </template>
 
 <script>
+import moment from "moment";
+import { getSameList } from "@/api/course";
 export default {
+  props: ["course", "bundle_id", "id"],
   data() {
-    return {};
+    return {
+      courseList: [],
+      nowCourse: {},
+      saveIndex: "",
+      index: 0,
+      allLength: ""
+    };
+  },
+  created() {
+    console.log("this.bundle_id", this.bundle_id);
+    getSameList(this.bundle_id).then(res => {
+      var arr = res.data.items;
+      this.allLength = arr.length;
+      console.log("tag", this.allLength);
+      arr.forEach((item, index) => {
+        this.$set(item, "courseIndex", index + 1);
+        if (item.id == this.id) {
+          this.nowCourse = item;
+          this.saveIndex = index;
+        } else {
+          this.courseList.push(item);
+        }
+      });
+
+      console.log("this.nowCours", this.nowCourse);
+      console.log("this.courseList", this.courseList);
+    });
+  },
+  filters: {
+    changeType(value) {
+      return moment(value).format("YYYY年MM月DD日");
+    }
+  },
+  methods: {
+    goPush(e, index) {
+      var getWidth = parseInt(getComputedStyle(this.$refs.courseItem)["width"]);
+      if (index) {
+        //向左划
+        console.log("this,", this.index);
+        if (this.index == -(this.allLength - 3)) {
+          console.log("this.index", this.index);
+          return false;
+        }
+        this.index = this.index - 1;
+        this.$refs.fullbox.style.left = getWidth * this.index + "px";
+      } else {
+        if (this.index == 0) {
+          return false;
+        }
+        this.index = this.index + 1;
+
+        this.$refs.fullbox.style.left = getWidth * this.index + "px";
+      }
+    }
   }
 };
 </script>
@@ -88,13 +141,22 @@ export default {
         color: #ccc;
       }
       .resultContainer {
+        overflow: hidden;
+        width: 580px;
         color: rgb(10, 6, 6);
+        .full-box {
+          width: 1000%;
+          position: relative;
+          left: 0px;
+        }
         .item {
+          width: 180px;
+          float: left;
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
           align-items: center;
-          margin: 0 10px;
+          margin-right: 20px;
           height: 60px;
           border-radius: 5px;
           padding: 6px 0;

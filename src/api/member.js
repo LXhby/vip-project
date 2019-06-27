@@ -9,6 +9,16 @@ export function getServeterms() {
         method: 'get'
     })
 }
+//检查是否实名认证
+export function checkIsMember(id) {
+    return request({
+        url: 'members',
+        method: 'get',
+        params: {
+            'MemberSearch[user_id]': id
+        }
+    })
+}
 // 我的名片
 export function getCard(id) {
     return request({
@@ -36,7 +46,7 @@ export function newsCenter(data) {
         url: 'wechat-notifications',
         method: 'get',
         params: {
-            'wechatNotificationSearch[type]': data.type,
+            'WechatNotificationSearch[type]': data.type,
             page: data.page,
             "per-page": 10,
             sort: '-send_at'

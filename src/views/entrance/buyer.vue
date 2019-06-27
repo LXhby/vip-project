@@ -14,8 +14,8 @@
                 <marquee-item v-for="(item,index) in list" :key="index">
                   <div class="bd-title">
                     <div class="title-img">
-                      <img src="https://hwt.xesimg.com/teacher/2018/12/19/15452183396925.jpg">
-                      <p>王*文购买了学习型中国会员</p>
+                      <img :src="item.user.headimgurl" v-if="item.user.headimgurl">
+                      <p>{{item.member?item.member.realname:item.user.nickname}}购买了{item.membership.name}}</p>
                     </div>
                     <div class="erweima">
                       <i class="iconfont icon-erweima"></i>
@@ -37,18 +37,21 @@
 import CommonBottom from "@/component/common_bottom";
 import Marquee from "@/component/marquee/marquee";
 import MarqueeItem from "@/component/marquee/marquee-item";
-import { getmember_order } from "@/api/index";
+import { getmember_order, getAllInfo } from "@/api/index";
+import { mapGetters } from "vuex";
 export default {
   components: {
     CommonBottom,
     Marquee,
     MarqueeItem
   },
-
+  computed: {
+    ...mapGetters(["id"])
+  },
   data() {
     return {
       bottomNav: "recent",
-      list: [1, 2, 3, 4],
+      list: [],
       items: [
         {
           src:
@@ -73,8 +76,13 @@ export default {
     };
   },
   created() {
+    //进来首页查询用户信息并保存
+    getAllInfo(this.id).then(res => {
+      this.$store.commit("user/setUserInfo", res.data);
+      this.$store.commit("user/setmemberInfo", res.data.member);
+    });
     getmember_order().then(res => {
-      this.list = res.data;
+      this.list = res.data.items;
     });
   }
 };

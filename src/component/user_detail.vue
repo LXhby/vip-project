@@ -23,7 +23,7 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-chip class="star-cart white--text">
+            <v-chip class="star-cart white--text" @click="goUser">
               <v-avatar color="indigo">
                 <v-icon dark>fas fa-star</v-icon>
               </v-avatar>我的名片
@@ -34,15 +34,15 @@
       </v-list>
       <v-layout row class="list-num white--text">
         <v-flex xs4>
-          <span>16</span>
+          <span>{{userInfo.share_user_count}}</span>
           <p>学友</p>
         </v-flex>
         <v-flex xs4>
-          <span>16</span>
+          <span>{{userInfo.forum_order_count}}</span>
           <p>上课</p>
         </v-flex>
         <v-flex xs4>
-          <span>16</span>
+          <span>{{userInfo.income}}</span>
           <p>奖金</p>
         </v-flex>
       </v-layout>
@@ -56,17 +56,18 @@ import { getAllInfo } from "@/api/index";
 import { mapGetters } from "vuex";
 export default {
   data() {
-    return {
-      userInfo: {}
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["id"])
+    ...mapGetters(["userInfo"])
   },
   created() {
-    getAllInfo(this.id).then(res => {
-      this.userInfo = res.data;
-    });
+    console.log(this.userInfo, "this.userInfo");
+  },
+  methods: {
+    goUser() {
+      this.$router.push({ name: "Mycard" });
+    }
   }
 };
 </script>

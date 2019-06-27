@@ -32,7 +32,7 @@
                 <p>{{post.content}}</p>
                 <v-layout row wrap>
                   <v-flex v-for="(postImg, i) in post.images" :key="`3${i}`" xs4>
-                    <img :src="baseUrl + postImg" aspect-ratio="1.7">
+                    <img :src="baseUrl + postImg">
                   </v-flex>
                 </v-layout>
               </div>
@@ -177,8 +177,25 @@ export default {
   },
   filters: {
     timeAgo(value) {
-      console.log("value", value);
-      return Moment(value).toNow();
+      var start_date = Moment(value);
+      var end_date = Moment();
+      var seconds = end_date.diff(start_date, "seconds");
+      var mintus = seconds / 60;
+      //小时
+      var hours = mintus / 60;
+      if (hours > 24) {
+        return Moment(value).format("YYYY年MM月DD日");
+      } else {
+        if (hours) {
+          return parseInt(hours) + "小时前";
+        } else {
+          if (mintus) {
+            return parseInt(mintus) + "分钟前";
+          } else {
+            return parseInt(seconds) + "秒前";
+          }
+        }
+      }
     }
   },
   data() {
@@ -357,10 +374,12 @@ export default {
           const { items } = data;
           items.forEach(ele => {
             Object.assign(ele, { show: false });
+
             this.postInfo.push(ele);
           });
 
           console.log(" this.postInfo", this.postInfo);
+
           if ($state) {
             if (response.data._meta.pageCount > 0) {
               $state.loaded();
@@ -371,6 +390,7 @@ export default {
               $state.complete();
             }
           }
+
           this.page++;
         })
         .catch(error => {

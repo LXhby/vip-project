@@ -12,6 +12,7 @@ import Infoprefect from '../views/enrollment/infoprefect'
 // 课程
 import ServerCenter from '../views/course/servercenter'
 import Courseinfo from '../views/course/courseinfo'
+import Coursepay from '../views/course/coursePay'
 // 商圈
 import Business from '../views/businessarea/business'
 // 会员中心
@@ -98,13 +99,17 @@ export default new Router({
             }
         },
         {
-            path: '/courseinfo',
+            path: '/cousePay',
+            name: 'cousePay',
+            component: Coursepay,
+            meta: {
+                title: '支付',
+            }
+        },
+        {
+            path: '/courseinfo/:id/:bundle_id',
             name: 'Courseinfo',
             component: Courseinfo,
-            meta: {
-                title: '某某课程名称',
-                auth: false
-            }
         },
         {
             path: '/business',
@@ -129,7 +134,7 @@ export default new Router({
             name: 'Mycard',
             component: Mycard,
             meta: {
-                title: '王晓文的学创会会员名片',
+                title: '名片',
                 auth: false
             }
         },

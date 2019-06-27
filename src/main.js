@@ -14,15 +14,10 @@ import VueWechatTitle from 'vue-wechat-title'
 import {
   wx
 } from "./utils/wx";
-import VueTimeago from 'vue-timeago'
-Vue.use(VueTimeago, {
-  name: 'Timeago', // component name, `timeago` by default
-  locale: 'en',
-  locales: {
-    'zh-CN': require('date-fns/locale/zh_cn'),
-    ja: require('date-fns/locale/ja')
-  }
-})
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
+
 
 Vue.prototype.$wechat = wx;
 
@@ -63,6 +58,7 @@ Vue.use(Vuetify, {
 })
 import "./permission"
 import Moment from 'moment'
+
 Vue.filter('convertTime', function (data, formatStr) {
   return Moment(data).format(formatStr)
 })
