@@ -2,7 +2,7 @@
   <div class="introduce">
     <div class="bg">
       <v-carousel class="swiper" hide-delimiters>
-        <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src"></v-carousel-item>
+        <v-carousel-item v-for="(column,i) in columns" :key="i" :src="column.image"></v-carousel-item>
       </v-carousel>
     </div>
     <div class="main">
@@ -37,7 +37,7 @@
 import CommonBottom from "@/component/common_bottom";
 import Marquee from "@/component/marquee/marquee";
 import MarqueeItem from "@/component/marquee/marquee-item";
-import { getmember_order, getAllInfo } from "@/api/index";
+import { getmember_order, getAllInfo, getColumn } from "@/api/index";
 import { mapGetters } from "vuex";
 export default {
   components: {
@@ -52,27 +52,7 @@ export default {
     return {
       bottomNav: "recent",
       list: [],
-      items: [
-        {
-          src:
-            "https://hw.xesimg.com/ad/2019-01-22/4b49cae69b530d03f34419478c809ecb.png"
-        },
-
-        {
-          src:
-            "https://hwt.xesimg.com/ad/2019-01-03/3d5ac1c6d2ba10ea5faca09b4c26dfb8.jpg"
-        },
-
-        {
-          src:
-            "https://hw.xesimg.com/ad/2019-06-13/1c54dd1e716ac8557e83d30c65a037a1.jpg"
-        },
-
-        {
-          src:
-            "https://hw.xesimg.com/ad/2019-06-03/cd3967caafe596c58093916b1b7c04dc.jpg"
-        }
-      ]
+      columns: []
     };
   },
   created() {
@@ -81,9 +61,17 @@ export default {
       this.$store.commit("user/setUserInfo", res.data);
       this.$store.commit("user/setmemberInfo", res.data.member);
     });
-    getmember_order().then(res => {
-      this.list = res.data.items;
-    });
+    getmember_order()
+      .then(res => {
+        this.list = res.data.items;
+        console.log(this.list)
+      })
+      .catch(console.log);
+    getColumn()
+      .then(res => {
+        this.columns = res.data.items;
+      })
+      .catch(console.log);
   }
 };
 </script>

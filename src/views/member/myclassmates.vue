@@ -4,28 +4,32 @@
     <div class="main">
       <page-title title="我的学友"></page-title>
       <v-list three-line>
-        <template v-for="(item, index) in items">
+        <template v-for="item in list">
           <v-list-tile avatar>
             <v-list-tile-avatar class="item-avatar">
-              <img src="https://cdn.vuetifyjs.com/images/lists/1.jpg">
+              <img :src="item.headimgurl">
               <i class="iconfont icon-renzhengdunpaianquanbaozhangzhibao"></i>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>
-                <p>王晓文 CEO</p>
+                <p>{{item.realname}} {{item.post}}</p>
               </v-list-tile-title>
               <v-list-tile-sub-title>
-                <p>北京拓客云科技有限公司</p>
+                <p>{{item.company}}</p>
                 <span>贡献奖金：119元</span>
-                <span>贡献学友：119人</span>
-                <span class="recoment">推荐人：王勇</span>
+                <span>贡献学友：{{list.length}}人</span>
+                <span class="recoment">推荐人：{{userInfo.realname}}</span>
               </v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-divider></v-divider>
         </template>
       </v-list>
-      <div class="bottom-tip">-- 我是有底线的 --</div>
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" spinner="spiral">
+        <span slot="no-more">
+          <div class="bottom-tip">-- 我是有底线的 --</div>
+        </span>
+      </infinite-loading>
       <div style="height:56px;"></div>
     </div>
     <common-bottom></common-bottom>
@@ -33,6 +37,9 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { getClassmates } from "@/api/member";
+import InfiniteLoading from "vue-infinite-loading";
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
@@ -40,12 +47,42 @@ export default {
   components: {
     MemberDetail,
     CommonBottom,
-    PageTitle
+    PageTitle,
+    InfiniteLoading
+  },
+  computed: {
+    ...mapGetters(["id", "userInfo"])
   },
   data() {
     return {
-      items: [1, 2, 3, 4, 5, 6]
+      list: [],
+      page: 1
     };
+  },
+  methods: {
+    infiniteHandler($state) {
+      this.fetchPage($state);
+    },
+    fetchPage($state) {
+      getClassmates(this.id, this.page).then(response => {
+        response.data.items.forEach(element => {
+          this.list.push(element);
+        });
+        console.log(this.userInfo)
+        if ($state) {
+          if (response.data._meta.pageCount > 0) {
+            $state.loaded();
+          }
+          if (
+            response.data._meta.currentPage >= response.data._meta.pageCount
+          ) {
+            $state.complete();
+          }
+        }
+        this.page++;
+      });
+      // todoing
+    }
   }
 };
 </script>

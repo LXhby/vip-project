@@ -85,7 +85,7 @@
             <span>图片展示</span>
           </div>
           <div class="imgs">
-            <img :src="baseUrl+img" v-for="(img, index) in useritems.images" :key="index">
+            <img :src="baseUrl+img" v-for="(img, index) in useritems.images" :key="index" :preview="index">
           </div>
         </div>
       </div>
@@ -127,6 +127,8 @@ export default {
               this.userInfo.membership_name +
               "名片"
           );
+          this.$previewRefresh()
+
         } else {
           this.$router.push({ name: "Authentication" });
         }

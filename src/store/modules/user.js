@@ -14,7 +14,12 @@ const state = {
         balance: '5203.00'
     },
     memberInfo: {
-        realname: "小胡"
+        mobile: '13697267448',
+        realname: "小胡",
+        id: 22,
+        idsn: '421181199511189460',
+        company: '小米',
+        post: '总经理'
     },
     token: '83bfd0b6f59f8506fff0096d5336d57b'
 }

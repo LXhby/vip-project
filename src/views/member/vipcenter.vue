@@ -81,7 +81,6 @@ export default {
           title: "上课记录"
         },
         {
-          url: "/signin",
           icon: "icon-ziyuan1",
           title: "会议签到"
         }

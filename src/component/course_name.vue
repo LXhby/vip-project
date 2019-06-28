@@ -8,18 +8,18 @@
         <i class="iconfont icon-lunbo" @click="goPush($event,0)"></i>
         <div class="resultContainer">
           <div class="full-box clearfix" ref="fullbox">
-            <div class="item two" ref="courseItem">
-              <span>第{{nowCourse.courseIndex}}期</span>
-              <p>{{nowCourse.start_date | changeType}}</p>
+            <div class="item-box" ref="courseItem">
+              <div class="item two">
+                <span>第{{nowCourse.courseIndex}}期</span>
+                <p>{{nowCourse.start_date | changeType}}</p>
+              </div>
             </div>
 
-            <div
-              :class="[item.status=='已结束'?'one':'three','item' ]"
-              v-for="(item,index) in courseList"
-              :key="index"
-            >
-              <span>第{{item.courseIndex}}期</span>
-              <p>{{item.start_date| changeType }}</p>
+            <div class="item-box" v-for="(item,index) in courseList" :key="index">
+              <div :class="[item.status=='已结束'?'one':'three','item' ]" @click="goOtherCourse(item)">
+                <span>第{{item.courseIndex}}期</span>
+                <p>{{item.start_date| changeType }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -64,24 +64,7 @@ export default {
     };
   },
   created() {
-    console.log("this.bundle_id", this.bundle_id);
-    getSameList(this.bundle_id).then(res => {
-      var arr = res.data.items;
-      this.allLength = arr.length;
-      console.log("tag", this.allLength);
-      arr.forEach((item, index) => {
-        this.$set(item, "courseIndex", index + 1);
-        if (item.id == this.id) {
-          this.nowCourse = item;
-          this.saveIndex = index;
-        } else {
-          this.courseList.push(item);
-        }
-      });
-
-      console.log("this.nowCours", this.nowCourse);
-      console.log("this.courseList", this.courseList);
-    });
+    this.initData();
   },
   filters: {
     changeType(value) {
@@ -89,13 +72,33 @@ export default {
     }
   },
   methods: {
+    initData() {
+      this.courseList = [];
+
+      getSameList(this.bundle_id).then(res => {
+        var arr = res.data.items;
+        this.allLength = arr.length;
+        console.log("tag", this.allLength);
+        arr.forEach((item, index) => {
+          this.$set(item, "courseIndex", index + 1);
+          if (item.id == this.id) {
+            this.nowCourse = item;
+            this.saveIndex = index;
+          } else {
+            this.courseList.push(item);
+          }
+        });
+
+        console.log("this.nowCours", this.nowCourse);
+        console.log("this.courseList", this.courseList);
+      });
+    },
     goPush(e, index) {
       var getWidth = parseInt(getComputedStyle(this.$refs.courseItem)["width"]);
       if (index) {
         //向左划
         console.log("this,", this.index);
         if (this.index == -(this.allLength - 3)) {
-          console.log("this.index", this.index);
           return false;
         }
         this.index = this.index - 1;
@@ -107,6 +110,24 @@ export default {
         this.index = this.index + 1;
 
         this.$refs.fullbox.style.left = getWidth * this.index + "px";
+      }
+    },
+    goOtherCourse(item) {
+      console.log("item", item);
+      if (item.status == "已结束") {
+        return false;
+      } else {
+        this.$router.push({
+          name: "Courseinfo",
+          params: { id: item.id, bundle_id: item.bundle_id }
+        });
+        const info = {
+          id: item.id,
+          bundle_id: item.bundle_id
+        };
+        this.$emit("handlechange", info);
+        this.initData();
+        this.$refs.fullbox.style.left = "0px";
       }
     }
   }
@@ -148,15 +169,20 @@ export default {
           width: 1000%;
           position: relative;
           left: 0px;
+          .item-box {
+            float: left;
+            width: 200px;
+            padding-right: 20px;
+          }
         }
         .item {
           width: 180px;
-          float: left;
+
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
           align-items: center;
-          margin-right: 20px;
+
           height: 60px;
           border-radius: 5px;
           padding: 6px 0;

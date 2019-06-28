@@ -25,3 +25,11 @@ export function getSameList(id) {
         }
     })
 }
+//下课程订单
+export function orderCourse(data) {
+    return request({
+        url: 'forum-orders',
+        method: 'post',
+        data: data
+    })
+}
