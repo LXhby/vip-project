@@ -5,7 +5,7 @@
       <page-title title="会员服务"></page-title>
       <v-layout row class="nav-list">
         <v-flex v-for="(item, index) in arr" :key="index" xs4>
-          <div class="each-item" @click="goPage(item.url)">
+          <div class="each-item" @click="goPages(item.url)">
             <div class="item-avatar">
               <i :class="['iconfont',item.icon]"></i>
             </div>
@@ -17,16 +17,16 @@
       <v-container fluid class="ul-list">
         <v-list>
           <template v-for="(item, i) in items">
-            <v-list-tile :key="item.title" avatar @click="goPage(item.url)">
+            <v-list-tile :key="item.title" avatar @click="goPage(item)">
               <v-list-tile-avatar>
                 <i :class="['iconfont',item.icon]"></i>
               </v-list-tile-avatar>
 
               <v-list-tile-content>
                 <v-badge color="red" v-if="item.badge" class="badge-num">
-                  <template v-slot:badge>
+                  <!-- <template v-slot:badge>
                     <span>5</span>
-                  </template>
+                  </template>-->
                   <div>{{item.title}}</div>
                 </v-badge>
                 <v-list-tile-title v-else v-html="item.title"></v-list-tile-title>
@@ -51,16 +51,19 @@
 import MemberDetail from "@/component/user_detail";
 import CommonBottom from "@/component/common_bottom";
 import PageTitle from "@/component/page_title";
+import { getHotPhone } from "@/api/member";
 export default {
   components: {
     MemberDetail,
     CommonBottom,
     PageTitle
   },
+
   data() {
     return {
       router: {}, // 跳转route
       width: 300,
+      hotphone: "",
       arr: [
         {
           url: "/mycard",
@@ -99,12 +102,24 @@ export default {
 
         { url: "/serverrules", icon: "icon-aixin", title: "服务条款" },
 
-        { icon: "icon-kefu-tianchong", title: "客服电话" }
+        { icon: "icon-kefu-tianchong", title: "客服电话", call: true }
       ]
     };
   },
+  created() {
+    getHotPhone().then(res => {
+      this.hotphone = res.data;
+    });
+  },
   methods: {
-    goPage(url) {
+    goPage(item) {
+      if (item.call) {
+        window.location.href = `tel:${this.hotphone}`;
+      } else {
+        this.$router.push(item.url);
+      }
+    },
+    goPages(url) {
       this.$router.push(url);
     }
   }

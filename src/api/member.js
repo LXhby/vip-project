@@ -53,3 +53,13 @@ export function newsCenter(data) {
         }
     })
 }
+/**获取热线电话 */
+export function getHotPhone() {
+    return request({
+        url: 'config/get',
+        params: {
+            key: 'service_phone',
+        },
+        method: 'get'
+    })
+}
