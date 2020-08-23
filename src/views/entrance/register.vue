@@ -158,7 +158,6 @@ export default {
   },
   created() {
     console.log('created')
-    console.log('created2')
     getmember_order().then(res => {
       console.log("res", res);
       this.list = res.data.items;
