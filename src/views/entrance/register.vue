@@ -157,10 +157,10 @@ export default {
     }
   },
   created() {
-    console.log('release4')
+    console.log('release9')
     getmember_order().then(res => {
       this.list = res.data.items;
-    });
+    })
   }
 };
 </script>
