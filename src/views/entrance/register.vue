@@ -143,7 +143,6 @@ export default {
           mobile: this.form.mobile
         })
           .then(response => {
-            console.log(response);
             if (response.data.success) {
               this.startTimer();
             } else {
