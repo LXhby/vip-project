@@ -108,7 +108,7 @@ export default {
           //判断有没有订单  跳转路由
 
 
-          console.log("this.userInfo.id", this.userInfo.id);
+
           checkmemberorders(this.userInfo.id).then(res => {
             if (res.data.items.length) {
               //有订单跳会员详情
