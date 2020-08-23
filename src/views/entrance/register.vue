@@ -157,7 +157,7 @@ export default {
     }
   },
   created() {
-    console.log('created+de+rele+re2+f3')
+    console.log('created+de+rele+re2+f3+re2.1')
     getmember_order().then(res => {
       this.list = res.data.items;
     })
