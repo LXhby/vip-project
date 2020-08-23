@@ -106,7 +106,7 @@ export default {
         activateVip(this.userInfo.id, info).then(res => {
           this.snackbar = true;
           //判断有没有订单  跳转路由
-          this.$store.commit("user/setUserInfo", res.data);
+
           console.log("this.$store", this.$store);
           console.log("this.userInfo.id", this.userInfo.id);
           checkmemberorders(this.userInfo.id).then(res => {
