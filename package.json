@@ -24,7 +24,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-px2rem": "^0.3.0",
     "postcss-px2rem-exclude": "0.0.6",
-    "qs": "^6.7.0",
+    "qs": "^6.7.3",
     "v-clipboard": "^2.2.2",
     "v-distpicker": "^1.2.1",
     "vee-validate": "^2.2.11",
